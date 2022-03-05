@@ -265,6 +265,14 @@
 <p>Spark大数据的计算分析引擎</p>
 </blockquote>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/04/Spark/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -378,55 +386,14 @@
 <ul>
 <li>HDFS读数据</li>
 </ul>
-<ol>
-<li>Client向NameNode请求下载文件，NameNode查询元数据，定位文件块所在DataNode地址</li>
-<li>从(先就近后随机)DataNode请求读取数据</li>
-<li>DataNode传输数据给Client(Packet)</li>
-<li>Client(Packet)接受，先本地缓存后写入目标文件</li>
-</ol>
-<ul>
-<li>NameNode和SecondaryNameNode工作机制</li>
-</ul>
-<p>1)NameNode启动</p>
-<ol>
-<li>首次启动格式化，创建Fsimage，Edits，之后启动load edits和fsimage到内存</li>
-<li>Client对元数据进行增删改请求</li>
-<li>NameNode记录操作日志</li>
-<li>NameNode在内存中对数据增删改</li>
-</ol>
-<p>2)SecondaryNode工作</p>
-<ol>
-<li>2NN询问NN是否要CheckPoint</li>
-<li>2NN请求执行CheckPoint</li>
-<li>NN滚动正在写的Edits，将滚动前的edits和fsimage拷贝到2NN</li>
-<li>2NN加载edits和fsimage到内存，并进行合并，生成新的fsimage.checkpoint</li>
-<li>拷贝fsimage.checkpoint到NN，NN将fsimage.checkpoint更名为fsimage</li>
-</ol>
-<ul>
-<li>DataNode工作机制</li>
-</ul>
-<ol>
-<li>一个数据块在DataNode上以文件形式存储在磁盘，分别是数据本身和元数据(数据块长度，数据块校验和，时间戳)</li>
-<li>DataNode启动后向NameNode注册，通过后周期性(1h)向NameNode上报所有块信息</li>
-<li>心跳3s/次，心跳返回结果带有NameNode给DataNode的命令，若超过10min没有收到某个DataNode的心跳，则认为节点已挂</li>
-<li>集群运行中可以服役新节点或退役旧节点</li>
-</ol>
-<ul>
-<li>DataNode保证数据完整性</li>
-</ul>
-<ol>
-<li>当DataNode读取Block，会计算CheckSum</li>
-<li>若计算后的CheckSum与Block创建时值不同，说明Block已损</li>
-<li>Client读取其他DataNode上的Block，DataNode在其文件创建后周期验证CheckSum</li>
-</ol>
-<ul>
-<li>HDFS HA高可用</li>
-</ul>
-<blockquote>
-<p>HA即高可用(7*24不间断服务)</p>
-<p>实现高可用最关键的策略是消除单点故障，通过配置Active/Standby两个NameNodes实现集群中对NameNode的热备</p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/03/Hadoop/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
