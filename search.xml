@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Spark</title>
-    <url>/2022/03/04/Spark/</url>
-    <content><![CDATA[<blockquote>
-<p>Spark大数据的计算分析引擎</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>数据</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hadoop</title>
     <url>/2022/03/03/Hadoop/</url>
     <content><![CDATA[<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><ul>
@@ -102,5 +91,16 @@
 <p>实现高可用最关键的策略是消除单点故障，通过配置Active/Standby两个NameNodes实现集群中对NameNode的热备</p>
 </blockquote>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Spark</title>
+    <url>/2022/03/04/Spark/</url>
+    <content><![CDATA[<blockquote>
+<p>Spark大数据的计算分析引擎</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>数据</tag>
+      </tags>
   </entry>
 </search>
