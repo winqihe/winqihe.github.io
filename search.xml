@@ -5,6 +5,8 @@
     <url>/2022/03/05/HBase/</url>
     <content><![CDATA[<h4 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h4><ul>
 <li><p>HBase如何写数据</p>
+<span id="more"></span>
+
 <p>Client写入，存入MemStore一直到MemStore满，Flush成一个StoreFile增长到一定阈值，出发Compact合并，多个StoreFile合并成一个StoreFile同时进行版本合并和数据删除，当StoreFiles Compact后形成越来与大的StoreFile，单个StoreFile大小超过一定阈值(10G)触发split，把当前Region Split成两个Region，Region会下线，新Split除两个Region会被HMaster分配到相应HRegionServer，Region得以分压</p>
 </li>
 <li><p>HDFS和HBase使用场景</p>
@@ -63,6 +65,8 @@
     <content><![CDATA[<h4 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h4><ul>
 <li>HDFS优缺点：</li>
 </ul>
+<span id="more"></span>
+
 <p>优点：高容错性，适合大规模数据处理，廉价成本</p>
 <p>缺点：不适合低延时数据访问，无法高效对大量小文件存储，不支持并发写入，文件随即修改。</p>
 <ul>
@@ -170,14 +174,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Kafka</title>
-    <url>/2022/03/05/Kafka/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>中间件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spark</title>
     <url>/2022/03/04/Spark/</url>
     <content><![CDATA[<blockquote>
@@ -186,6 +182,14 @@
 ]]></content>
       <tags>
         <tag>数据</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kafka</title>
+    <url>/2022/03/05/Kafka/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>中间件</tag>
       </tags>
   </entry>
 </search>
