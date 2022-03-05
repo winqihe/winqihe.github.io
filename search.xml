@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>HBase</title>
+    <url>/2022/03/05/HBase/</url>
+    <content><![CDATA[<h4 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h4><ul>
+<li><p>HBase如何写数据</p>
+<p>Client写入，存入MemStore一直到MemStore满，Flush成一个StoreFile增长到一定阈值，出发Compact合并，多个StoreFile合并成一个StoreFile同时进行版本合并和数据删除，当StoreFiles Compact后形成越来与大的StoreFile，单个StoreFile大小超过一定阈值(10G)触发split，把当前Region Split成两个Region，Region会下线，新Split除两个Region会被HMaster分配到相应HRegionServer，Region得以分压</p>
+</li>
+<li><p>HDFS和HBase使用场景</p>
+<p>首先Hbase基于HDFS存储的</p>
+<p>HDFS：一次写入多次读取，数据一致性，容错和恢复机制</p>
+<p>HBase：瞬间写入量很大，数据需要长久保存，不适用于有join和多级索引及表关系复杂数据模型，大数据量且有快速随机访问的需求，业务场景简单</p>
+</li>
+<li><p>HBase存储结构</p>
+<p>HBase表通过rowkey按照一定范围被分割成多个子表HRegion(一个HRegion超过256要分为2个)，由HRegionServer管理，HMaster管理HRegion</p>
+<p>HRegion存取一个子表时会创建一个HRegion对象，对表的每个列簇创建一个store实例，每个store都有0或多个StoreFile对应，每个StoreFile对应一个HFile</p>
+</li>
+<li><p>HBase RowKey设计原则</p>
+<p>长度原则：100 字节以内，8 的倍数最好，可能的情况下越短越好。</p>
+<p>散列原则：高位散列，低位时间字段。避免热点问题。</p>
+<p>唯一原则：分利用这个排序的特点，将经常读取的数据存储到一块，将最近可能会被访问的数据放到一起</p>
+</li>
+<li><p>HBase列簇设计</p>
+<p>原则：在合理范围内能尽量少的减少列簇就尽量减少列簇，因为列簇是共享 region 的，每个列簇数据相差太大导致查询效率低下</p>
+<p>最优：将所有相关性很强的 key-value 都放在同一个列簇下，这样既能做到查 询效率最高，也能保持尽可能少的访问不同的磁盘文件。</p>
+</li>
+<li><p>热点现象怎么解决</p>
+<p>某个小的时段内，对 HBase 的读写请求集中到极少数的 Region 上，导致这些 region 所在的 RegionServer 处理请求量骤增，负载量明显偏大，而其他的 RgionServer 明显空闲</p>
+<p>热点发生在大量的 client 直接访问集群的一个或极少数个节点</p>
+<ol>
+<li>加盐：在 rowkey 的前面增加随机数，使得它和之前的 rowkey 的开头不同。加盐之后的 rowkey 就会根据随机生成的前缀分散到各个 region 上， 以避免热点</li>
+<li>哈希：哈希可以使负载分散到整个集群，但是读却是可以预测的</li>
+<li>反转：反转固定长度或者数字格式的 rowkey，可以使得 rowkey 中经常改变的部分（最没有意义的部分）放在前面。</li>
+<li>时间戳反转</li>
+<li>HBase建表预分区：创建 HBase 表时，就预先根据可能的 RowKey 划分出多 个 region 而不是默认的一个，从而可以将后续的读写操作负载均衡到不 同的 region 上，避免热点现象。</li>
+</ol>
+</li>
+<li><p>HBase compact（minor major）</p>
+<p>在 hbase 中每当有 memstore 数据 flush 到磁盘之后，就形成一个 storefile， 当 storeFile 的数量达到一定程度就需要将 storefile 文件来进行 compaction</p>
+<ol>
+<li><p>合并文件</p>
+</li>
+<li><p>清洗过期多余版本数据</p>
+</li>
+<li><p>提高读写数据的效率</p>
+</li>
+<li><p>minor用来部分文件的合并以及包括minVersion=0并且设置ttl的过期版本清理，不做删除数据，多版本数据清理</p>
+</li>
+<li><p>major对Region下的HStore下所有StoreFile执行合并，最终合并出一个文件</p>
+</li>
+</ol>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>大数据</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hadoop</title>
     <url>/2022/03/03/Hadoop/</url>
     <content><![CDATA[<h4 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h4><ul>
@@ -113,6 +170,14 @@
       </tags>
   </entry>
   <entry>
+    <title>Kafka</title>
+    <url>/2022/03/05/Kafka/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>中间件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spark</title>
     <url>/2022/03/04/Spark/</url>
     <content><![CDATA[<blockquote>
@@ -121,14 +186,6 @@
 ]]></content>
       <tags>
         <tag>数据</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kafka</title>
-    <url>/2022/03/05/Kafka/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>中间件</tag>
       </tags>
   </entry>
 </search>
