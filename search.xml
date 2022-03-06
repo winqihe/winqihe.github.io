@@ -12,10 +12,10 @@
 <p>column：列，HBase中的column由column family（列簇）以及qualif ier（列名）两部分组成，两者中间使用”:”相连。column family在表创建的时候需要指定，用户不能随意增减。一个column family下可以设置任意多个qualif ier，因此可以理解为HBase中的列可以动态增加，理论上甚至可以扩展到上百万列。</p>
 <p>timestamp：时间戳，每个cell在写入HBase的时候都会默认分配一个时间戳作为该cell的版本，当然，用户也可以在写入的时候自带时间戳。HBase支持多版本特性，即同一rowkey、column下可以有多个value存在，这些value使用timestamp作为版本号，版本越大，表示数据越新。</p>
 <p>cell：单元格，由五元组（row, column, timestamp, type, value）组成的结构，其中type表示Put/Delete这样的操作类型，timestamp代表这个cell的版本。这个结构在数据库中实际是以KV结构存储的，其中（row, column, timestamp, type）是K，value字段对应KV结构的V。</p>
-<p><img src="/.com//Users\winqihe\AppData\Roaming\Typora\typora-user-images\image-20220306095301033.png" alt="image-20220306095301033"></p>
+<p><img src="/.com//image-20220306154752069.png" alt="image-20220306154752069"></p>
 <p>​                                                                            （HBase逻辑视图）</p>
 <p><strong>体系架构：</strong></p>
-<p><img src="/.com//Users\winqihe\AppData\Roaming\Typora\typora-user-images\image-20220306100005039.png" alt="image-20220306100005039"></p>
+<p><img src="/.com//image-20220306154811916.png" alt="image-20220306154811916"></p>
 <p>​                                                                                （体系架构）                                                                    </p>
 <ol>
 <li><p>Client：丰富的编程接口，Client访问数据行前要先通过元数据表定位目标数据所在RegionServer，发请求给RegionServer，这些元数据也会被缓存到本地。</p>
@@ -37,30 +37,39 @@
 <p>缺点：不支持复杂聚合运算，没有二级索引功能，不支持全局跨行事务</p>
 <h4 id="依赖服务"><a href="#依赖服务" class="headerlink" title="依赖服务"></a>依赖服务</h4><p><strong>ZooKeeper</strong></p>
 <p><strong>HDFS</strong></p>
-<h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><h4 id="RegionServer结构"><a href="#RegionServer结构" class="headerlink" title="RegionServer结构"></a>RegionServer结构</h4><p><img src="/.com//image-20220306154025407.png" alt="image-20220306154025407"></p>
-<h4 id="HBase面试题解"><a href="#HBase面试题解" class="headerlink" title="HBase面试题解"></a>HBase面试题解</h4><ul>
-<li><p>HBase如何写数据</p>
+<h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><h4 id="RegionServer结构"><a href="#RegionServer结构" class="headerlink" title="RegionServer结构"></a>RegionServer结构</h4><p>一个RegionServer由一或多个HLog，BlockCache及多个Region组成，RegionServer负责Region的数据读写，一个Region由多个store组成，Store存放对应列簇数据，Store包含一个MemStore和多个HFile。</p>
+<p><img src="/.com//image-20220306154025407.png" alt="image-20220306154025407"></p>
+<p>​                                                                                （RegionServer结构）</p>
+<p><strong>HLog</strong>：用来保证数据写入的可靠性</p>
+<p>HBase中系统故障恢复及主从复制都基于HLog实现，数据以追加的形式先写入HLog，再写入MemStore，如果RegionServer宕机，此时写入MemStore中但尚未Flush磁盘数据丢失，需要回访HLog补救丢失数据，HBase主从复制需要主集群将HLog日志发送给从集群，完成集群间复制</p>
+<p><img src="/.com//image-20220306155654549.png" alt="image-20220306155654549"></p>
+<p>​                                                                                （HLog文件结构）</p>
+<p>HLog文件生成后不会永久存储在系统中，使命完成后，文件会失效最终删除</p>
+<p><img src="/.com//image-20220306160001897.png" alt="image-20220306160001897"></p>
+<p>​                                                                                （HLog声明周期）</p>
+<p><strong>MemStore：</strong>MemStore作为一个缓存级的存储组件，缓存最近写入的数据</p>
+<p>此外HFile中KeyValue数据需按Key排序，根据有序Key建立索引树，提升数据读取效率，数据在落盘生成HFile前应完成排序，MemStore执行KeyValue排序</p>
+<p><strong>HFile：</strong>MemStore数据落盘会形成文件写入HDFS，即HFile</p>
+<p>HFile文件由各种不同类型的Block构成，虽然Block类型不同，但却有相同数据结构</p>
+<p><strong>BlockCache</strong>：将数据块缓存在内存提高数据读取性能</p>
+<p>(通过这种方式来提升读取性能)客户端通过读取某个Block，先检查Block是否存在于BlockCache，存在直接加载不存在从HFile中加载，加载后缓存到BlockCache。</p>
+<h4 id="读写流程"><a href="#读写流程" class="headerlink" title="读写流程"></a>读写流程</h4><h4 id="HBase面试题解"><a href="#HBase面试题解" class="headerlink" title="HBase面试题解"></a>HBase面试题解</h4><p><strong>HBase如何写数据</strong></p>
 <p>Client写入，存入MemStore一直到MemStore满，Flush成一个StoreFile增长到一定阈值，出发Compact合并，多个StoreFile合并成一个StoreFile同时进行版本合并和数据删除，当StoreFiles Compact后形成越来与大的StoreFile，单个StoreFile大小超过一定阈值(10G)触发split，把当前Region Split成两个Region，Region会下线，新Split除两个Region会被HMaster分配到相应HRegionServer，Region得以分压</p>
-</li>
-<li><p>HDFS和HBase使用场景</p>
+<p><strong>HDFS和HBase使用场景</strong></p>
 <p>首先Hbase基于HDFS存储的</p>
 <p>HDFS：一次写入多次读取，数据一致性，容错和恢复机制</p>
 <p>HBase：瞬间写入量很大，数据需要长久保存，不适用于有join和多级索引及表关系复杂数据模型，大数据量且有快速随机访问的需求，业务场景简单</p>
-</li>
-<li><p>HBase存储结构</p>
+<p><strong>HBase存储结构</strong></p>
 <p>HBase表通过rowkey按照一定范围被分割成多个子表HRegion(一个HRegion超过256要分为2个)，由HRegionServer管理，HMaster管理HRegion</p>
 <p>HRegion存取一个子表时会创建一个HRegion对象，对表的每个列簇创建一个store实例，每个store都有0或多个StoreFile对应，每个StoreFile对应一个HFile</p>
-</li>
-<li><p>HBase RowKey设计原则</p>
+<p><strong>HBase RowKey设计原则</strong></p>
 <p>长度原则：100 字节以内，8 的倍数最好，可能的情况下越短越好。</p>
 <p>散列原则：高位散列，低位时间字段。避免热点问题。</p>
 <p>唯一原则：分利用这个排序的特点，将经常读取的数据存储到一块，将最近可能会被访问的数据放到一起</p>
-</li>
-<li><p>HBase列簇设计</p>
+<p><strong>HBase列簇设计</strong></p>
 <p>原则：在合理范围内能尽量少的减少列簇就尽量减少列簇，因为列簇是共享 region 的，每个列簇数据相差太大导致查询效率低下</p>
 <p>最优：将所有相关性很强的 key-value 都放在同一个列簇下，这样既能做到查 询效率最高，也能保持尽可能少的访问不同的磁盘文件。</p>
-</li>
-<li><p>热点现象怎么解决</p>
+<p><strong>热点现象怎么解决</strong></p>
 <p>某个小的时段内，对 HBase 的读写请求集中到极少数的 Region 上，导致这些 region 所在的 RegionServer 处理请求量骤增，负载量明显偏大，而其他的 RgionServer 明显空闲</p>
 <p>热点发生在大量的 client 直接访问集群的一个或极少数个节点</p>
 <ol>
@@ -70,8 +79,7 @@
 <li>时间戳反转</li>
 <li>HBase建表预分区：创建 HBase 表时，就预先根据可能的 RowKey 划分出多 个 region 而不是默认的一个，从而可以将后续的读写操作负载均衡到不 同的 region 上，避免热点现象。</li>
 </ol>
-</li>
-<li><p>HBase compact（minor major）</p>
+<p><strong>HBase compact（minor major）</strong></p>
 <p>在 hbase 中每当有 memstore 数据 flush 到磁盘之后，就形成一个 storefile， 当 storeFile 的数量达到一定程度就需要将 storefile 文件来进行 compaction</p>
 <ol>
 <li><p>合并文件</p>
@@ -85,8 +93,6 @@
 <li><p>major对Region下的HStore下所有StoreFile执行合并，最终合并出一个文件</p>
 </li>
 </ol>
-</li>
-</ul>
 ]]></content>
       <tags>
         <tag>大数据</tag>
@@ -205,6 +211,11 @@
       <tags>
         <tag>Hadoop</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Spark</title>
+    <url>/2022/03/06/Spark-1/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>Kafka</title>
