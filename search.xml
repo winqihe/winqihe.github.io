@@ -41,13 +41,11 @@
 <p>定位Meta表：</p>
 <p>客户端在做任何数据操作时，都要先确定数据在哪个Region上，然后再根据Region的RegionServer信息，去对应的RegionServer上读取数据，HBase系统内部设计了一张特殊的表——hbase:meta表，专门用来存放整个集群所有的Region信息。hbase:meta中的hbase指的是namespace，HBase容许针对不同的业务设计不同的namespace，系统表采用统一的namespace，即hbase；meta指的是hbase这个namespace下的表名。</p>
 <p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h00gqa64zqj30r507vdgm.jpg"></p>
-<pre><code>                                                                &lt;center&gt;Hbase:meta结构&lt;/center&gt;
-</code></pre>
+<p>​                                                                    <center>Hbase:meta结构</center></p>
 <p><font color="red"> HBase作为一个分布式数据库系统，一个大的集群可能承担数千万的查询写入请求，而hbase:meta表只有一个Region，如果所有的流量都先请求hbase:meta表找到Region，再请求Region所在的RegionServer，那么hbase:meta表的将承载巨大的压力，这个Region将马上成为热点Region，且根本无法承担数千万的流量。那么，如何解决这个问题呢</font></p>
 <p>把hbase:meta表的Region信息缓存在HBase客户端</p>
 <p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h00gu71x0zj30q309ldgz.jpg"></p>
-<pre><code>                                                                        &lt;center&gt;客户端定义Region&lt;/center&gt;
-</code></pre>
+<p>​                                                                                <center>客户端定义Region</center></p>
 <p>少量写和批量写：</p>
 <p>HBase提供了3种常见的数据写入API：</p>
 <p>table.put(put)：在服务端先写WAL，然后写MemStore，一旦MemStore写满就f lush到磁盘上。特点是，默认每次写入都需要执行一次RPC和磁盘持久化。因此，写入吞吐量受限于磁盘带宽、网络带宽以及f lush的速度。但它能保证每次写入操作都持久化到磁盘，不会有任何数据丢失。最重要的是，它能保证put操作的原子性。</p>
