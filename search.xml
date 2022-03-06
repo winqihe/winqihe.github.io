@@ -53,7 +53,21 @@
 <p>HFile文件由各种不同类型的Block构成，虽然Block类型不同，但却有相同数据结构</p>
 <p><strong>BlockCache</strong>：将数据块缓存在内存提高数据读取性能</p>
 <p>(通过这种方式来提升读取性能)客户端通过读取某个Block，先检查Block是否存在于BlockCache，存在直接加载不存在从HFile中加载，加载后缓存到BlockCache。</p>
-<h4 id="读写流程"><a href="#读写流程" class="headerlink" title="读写流程"></a>读写流程</h4><h4 id="HBase面试题解"><a href="#HBase面试题解" class="headerlink" title="HBase面试题解"></a>HBase面试题解</h4><p><strong>HBase如何写数据</strong></p>
+<h4 id="读写流程"><a href="#读写流程" class="headerlink" title="读写流程"></a>读写流程</h4><p><strong>写入流程</strong></p>
+<p><img src="/.com//image-20220306162641994.png" alt="image-20220306162641994"></p>
+<p>​                                                                                （HBase写入流程）</p>
+<p>整体架构上可分为三阶段：</p>
+<p>客户端处理：客户端将写入请求预处理，根据元数据定位到写入数据的RegionServer，将请求发送给对应RegionServer</p>
+<p>Region写入：RegionServer收到请求将数据解析，先写入WAL，在写入对应Region列簇对应的MemStore</p>
+<p>MemStore Flush：当Region中的MemStore达到一定阈值时，将会Flush操作将内存中数据写入文件(HFile)</p>
+<p><strong>BulkLoad</strong></p>
+<p>首先使用MapReduce将待写入数据转换为HFile文件，再直接将这些HFile文件加载到集群中，BulkLoad没有将写请求发送给RegionServer处理，有效避免了给RegionServer带来较大的写入压力</p>
+<p><img src="/.com//image-20220306165914584.png" alt="image-20220306165914584"></p>
+<p>​                                                                                (BulkLoad工作流程)</p>
+<p>BulkLoad主要有两个阶段：</p>
+<p>HFile生成阶段：</p>
+<p>HFile导入阶段：</p>
+<h4 id="HBase面试题解"><a href="#HBase面试题解" class="headerlink" title="HBase面试题解"></a>HBase面试题解</h4><p><strong>HBase如何写数据</strong></p>
 <p>Client写入，存入MemStore一直到MemStore满，Flush成一个StoreFile增长到一定阈值，出发Compact合并，多个StoreFile合并成一个StoreFile同时进行版本合并和数据删除，当StoreFiles Compact后形成越来与大的StoreFile，单个StoreFile大小超过一定阈值(10G)触发split，把当前Region Split成两个Region，Region会下线，新Split除两个Region会被HMaster分配到相应HRegionServer，Region得以分压</p>
 <p><strong>HDFS和HBase使用场景</strong></p>
 <p>首先Hbase基于HDFS存储的</p>
