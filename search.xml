@@ -3,10 +3,46 @@
   <entry>
     <title>HBase</title>
     <url>/2022/03/05/HBase/</url>
-    <content><![CDATA[<h4 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h4><ul>
-<li><p>HBase如何写数据</p>
+    <content><![CDATA[<h2 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h2><p>本文内容摘录至《HBase原理与实践》</p>
 <span id="more"></span>
 
+<h4 id="Hbase概述"><a href="#Hbase概述" class="headerlink" title="Hbase概述"></a>Hbase概述</h4><p><strong>基本概念：</strong></p>
+<p>table：表，一个表包含多行数据。</p>
+<p>row：行，一行数据包含一个唯一标识rowkey、多个column以及对应的值。在HBase中，一张表中所有row都按照rowkey的字典序由小到大排序。</p>
+<p>column：列，HBase中的column由column family（列簇）以及qualif ier（列名）两部分组成，两者中间使用”:”相连。column family在表创建的时候需要指定，用户不能随意增减。一个column family下可以设置任意多个qualif ier，因此可以理解为HBase中的列可以动态增加，理论上甚至可以扩展到上百万列。</p>
+<p>timestamp：时间戳，每个cell在写入HBase的时候都会默认分配一个时间戳作为该cell的版本，当然，用户也可以在写入的时候自带时间戳。HBase支持多版本特性，即同一rowkey、column下可以有多个value存在，这些value使用timestamp作为版本号，版本越大，表示数据越新。</p>
+<p>cell：单元格，由五元组（row, column, timestamp, type, value）组成的结构，其中type表示Put/Delete这样的操作类型，timestamp代表这个cell的版本。这个结构在数据库中实际是以KV结构存储的，其中（row, column, timestamp, type）是K，value字段对应KV结构的V。</p>
+<p><img src="/C:/Users\winqihe\AppData\Roaming\Typora\typora-user-images\image-20220306095301033.png" alt="image-20220306095301033"></p>
+<p>​                                                                            （HBase逻辑视图）</p>
+<p><strong>体系架构：</strong></p>
+<p><img src="/C:/Users\winqihe\AppData\Roaming\Typora\typora-user-images\image-20220306100005039.png" alt="image-20220306100005039"></p>
+<p>​                                                                                （体系架构）                                                                    </p>
+<ol>
+<li><p>Client：丰富的编程接口，Client访问数据行前要先通过元数据表定位目标数据所在RegionServer，发请求给RegionServer，这些元数据也会被缓存到本地。</p>
+</li>
+<li><p>Zookeeper：实现Master高可用(异常宕机进行选举)，管理系统核心元数据(保存元数据表所在的RegionServer地址)，参与RegionServer宕机恢复(心跳机制)，实现分布式表锁</p>
+</li>
+<li><p>Master：处理各种管理请求(建表、修改表、权限操作、切分表、合并数据分片以及Compaction)，管理集群中的RegionServer(RegionServer中Region的负载均衡、RegionServer的宕机恢复以及Region的迁移)，清理过期日志以及文件，Master会每隔一段时间检查HDFS中HLog是否过期、HFile是否已经被删除，并在过期之后将其删除</p>
+</li>
+<li><p>RegionServer：响应用户的IO请求，由WAL(HLog),BlockCache,多个Region构成</p>
+<p>WAL(HLog):实现数据高可靠性，数据写入缓存前先顺序写入HLog，实现HBase集群间主从复制通过回放主集群推送过来的HLog日志实现主从复制。</p>
+<p>BlockCache:HBase系统中的读缓存，客户端从磁盘读取数据之后通常会将数据缓存到系统内存中，后续访问同一行数据可以直接从内存中获取而不需要访问磁盘。</p>
+<p>Region:数据表的一个分片，当数据表大小超过阈值就会水平切分，分裂为两个Region，一个Region由一个或多个Store构成，Store个数取决于列簇个数，每个列簇的数据存放在一起形成一个存储单元Store，每个Store由一个MemStore和一或多个HFile组成，写入数据先写入MemStore，到一定阈值(128M)将Flush成HFile，随着HFile数越来越多，将会执行Compact合并成大文件</p>
+</li>
+<li><p>HDFS：HBase底层依赖HDFS存储数据，用户数据文件、HLog日志文件等最终都会写入HDFS落盘</p>
+</li>
+</ol>
+<p><strong>HBase特性：</strong></p>
+<p>优点：容量大，良好可扩展性，稀疏性，高性能，多版本，支持过期，Hadoop原生支持</p>
+<p>缺点：不支持复杂聚合运算，没有二级索引功能，不支持全局跨行事务</p>
+<h4 id="基础数据结构与算法"><a href="#基础数据结构与算法" class="headerlink" title="基础数据结构与算法"></a>基础数据结构与算法</h4><p><strong>跳跃表</strong></p>
+<p><strong>LSM树</strong></p>
+<p><strong>布隆过滤器</strong></p>
+<p><strong>存储引擎MiniBase</strong></p>
+<h4 id="HBase依赖服务"><a href="#HBase依赖服务" class="headerlink" title="HBase依赖服务"></a>HBase依赖服务</h4><p><strong>ZooKeeper</strong></p>
+<p><strong>HDFS</strong></p>
+<h4 id="HBase客户端"><a href="#HBase客户端" class="headerlink" title="HBase客户端"></a>HBase客户端</h4><h4 id="HBase面试题解"><a href="#HBase面试题解" class="headerlink" title="HBase面试题解"></a>HBase面试题解</h4><ul>
+<li><p>HBase如何写数据</p>
 <p>Client写入，存入MemStore一直到MemStore满，Flush成一个StoreFile增长到一定阈值，出发Compact合并，多个StoreFile合并成一个StoreFile同时进行版本合并和数据删除，当StoreFiles Compact后形成越来与大的StoreFile，单个StoreFile大小超过一定阈值(10G)触发split，把当前Region Split成两个Region，Region会下线，新Split除两个Region会被HMaster分配到相应HRegionServer，Region得以分压</p>
 </li>
 <li><p>HDFS和HBase使用场景</p>
