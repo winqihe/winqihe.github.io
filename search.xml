@@ -110,17 +110,14 @@
 <p>HBase系统中，分片迁移就是Region迁移，Region在迁移的过程中不需迁移实际数据，只需将读写服务迁移</p>
 <p>迁移过程涉及到Region迁移过程涉及多种状态的改变；迁移过程中涉及Master、ZooKeeper（ZK）以及RegionServer等多个组件的相互协调。</p>
 <p><img src="https://i.bmp.ovh/imgs/2022/03/d9e83ebcda3a28bd.png"></p>
-<pre><code>                                                                            &lt;center&gt;Region状态&lt;/center&gt;
-</code></pre>
+<p>​                                                                    <center>Region状态</center></p>
 <p>执行过程中，Region分为unassign阶段和assign阶段</p>
 <p>unassign表示Region从源RegionServer上下线</p>
 <p><img src="https://i.bmp.ovh/imgs/2022/03/f6bc751c1dc2bfff.png"></p>
-<pre><code>                                                                &lt;center&gt;Region unassign阶段&lt;/center&gt;
-</code></pre>
+<p>​                                                                            <center>Region unassign阶段</center></p>
 <p>assign表示Region在目标RegionServer上上线</p>
 <p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00fd07wtfj30q00deab0.jpg"></p>
-<pre><code>                                                                        &lt;center&gt;Region assign阶段&lt;/center&gt;
-</code></pre>
+<p>​                                                                    <center>Region assign阶段</center></p>
 <p>Region迁移操作伴随着Region状态的不断变迁：思考一下</p>
 <p>为什么需要这些状态？</p>
 <p>无论是unassign操作还是assign操作，都是由多个子操作组成，涉及多个组件的协调合作，只有通过记录Region状态才能知道当前unassign或者assign的进度，在异常发生后才能根据具体进度继续执行</p>
@@ -159,8 +156,7 @@
 <p>Master：采用基本的热备方式来实现Master高可用，</p>
 <p>RegionServer：RegionServer发生宕机，HBase马上会检测到，并在检测到宕机后将宕机RegionServer上所有Region重新分配到集群其他正常RegionServer，再根据HLog恢复丢失数据。</p>
 <p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h00g0bqfc9j30hv0bot9g.jpg"></p>
-<pre><code>                                                                            &lt;center&gt;RegionServer故障恢复&lt;/center&gt;
-</code></pre>
+<p>​                                                            <center>RegionServer故障恢复</center></p>
 <p>Master检测RegionServer宕机：</p>
 <p>HBase使用ZooKeeper协助Master检测RegionServer宕机，使用ZooKeeper临时节点机制，RegionServer注册成临时节点之后，Master会watch在/rs节点上（该节点下的所有子节点一旦发生离线就会通知Master），这样一旦RegionServer发生宕机，RegionServer注册到/rs节点下的临时节点就会离线，这个消息会马上通知给Master，Master检测到RegionServer宕机。</p>
 <p> 切分未持久化数据的HLog：</p>
@@ -174,8 +170,7 @@
 <li>Distributed Log Splitting：Log Splitting的分布式实现，借助Master和所有RegionServer的计算能力进行日志切分，其中Master是协调者，RegionServer是实际的工作者</li>
 </ol>
 <p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00gjapb9rj30s9080q3e.jpg"></p>
-<pre><code>                                                                        &lt;center&gt;Distributed Log Splitting&lt;/center&gt;
-</code></pre>
+<p>​                                                                            <center>Distributed Log Splitting</center></p>
 <p>Distributed Log Replay：</p>
 <p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h00gk7vr1ij30q202fglu.jpg"></p>
 <p>​                                                                            <center>Distributed Log Replay</center></p>
@@ -198,18 +193,15 @@
 <p><strong>Snatshot原理</strong></p>
 <p>Snatshot流程：将MemStore中的缓存数据f lush到文件中；为所有HFile文件分别新建引用指针，这些指针元数据就是Snapshot。</p>
 <p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00h8k684kj30ps0bejsf.jpg"></p>
-<pre><code>                                                                                &lt;center&gt;snatshot原理&lt;/center&gt;
-</code></pre>
+<p>​                                                                        <center>snatshot原理</center></p>
 <p><strong>两阶段提交</strong></p>
 <p>HBase使用两阶段提交（Two-Phase Commit，2PC）协议来保证Snapshot的分布式原子性</p>
 <p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h00haw7033j30ro0bcgmm.jpg"></p>
-<pre><code>                                                            &lt;center&gt;两阶段提交原理&lt;/center&gt;
-</code></pre>
+<p>​                                                                <center>两阶段提交原理</center></p>
 <p><strong>Snapshot核心实现</strong></p>
 <p> Region实现Snapshot</p>
 <p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h00hcn988gj30p70agq3u.jpg"></p>
-<pre><code>                                                        &lt;center&gt;snatshot基本流程&lt;/center&gt;
-</code></pre>
+<p>​                                                                <center>snatshot基本流程</center></p>
 <blockquote>
 <p>Region生成的Snapshot文件是临时文件，在/hbase/.hbase-snapshot/.tmp目录下，因为Snapshot过程通常特别快，所以很难看到单个Region生成的Snapshot文件。</p>
 </blockquote>
