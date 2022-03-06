@@ -12,10 +12,10 @@
 <p>column：列，HBase中的column由column family（列簇）以及qualif ier（列名）两部分组成，两者中间使用”:”相连。column family在表创建的时候需要指定，用户不能随意增减。一个column family下可以设置任意多个qualif ier，因此可以理解为HBase中的列可以动态增加，理论上甚至可以扩展到上百万列。</p>
 <p>timestamp：时间戳，每个cell在写入HBase的时候都会默认分配一个时间戳作为该cell的版本，当然，用户也可以在写入的时候自带时间戳。HBase支持多版本特性，即同一rowkey、column下可以有多个value存在，这些value使用timestamp作为版本号，版本越大，表示数据越新。</p>
 <p>cell：单元格，由五元组（row, column, timestamp, type, value）组成的结构，其中type表示Put/Delete这样的操作类型，timestamp代表这个cell的版本。这个结构在数据库中实际是以KV结构存储的，其中（row, column, timestamp, type）是K，value字段对应KV结构的V。</p>
-<p><img src="/.com//image-20220306154752069.png" alt="image-20220306154752069"></p>
+<p><img src="/HBase.assets/image-20220306154752069.png" alt="image-20220306154752069"></p>
 <p>​                                                                            （HBase逻辑视图）</p>
 <p><strong>体系架构：</strong></p>
-<p><img src="/.com//image-20220306154811916.png" alt="image-20220306154811916"></p>
+<p><img src="/HBase.assets/image-20220306154811916.png" alt="image-20220306154811916"></p>
 <p>​                                                                                （体系架构）                                                                    </p>
 <ol>
 <li><p>Client：丰富的编程接口，Client访问数据行前要先通过元数据表定位目标数据所在RegionServer，发请求给RegionServer，这些元数据也会被缓存到本地。</p>
@@ -38,14 +38,14 @@
 <h4 id="依赖服务"><a href="#依赖服务" class="headerlink" title="依赖服务"></a>依赖服务</h4><p><strong>ZooKeeper</strong></p>
 <p><strong>HDFS</strong></p>
 <h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><h4 id="RegionServer结构"><a href="#RegionServer结构" class="headerlink" title="RegionServer结构"></a>RegionServer结构</h4><p>一个RegionServer由一或多个HLog，BlockCache及多个Region组成，RegionServer负责Region的数据读写，一个Region由多个store组成，Store存放对应列簇数据，Store包含一个MemStore和多个HFile。</p>
-<p><img src="/.com//image-20220306154025407.png" alt="image-20220306154025407"></p>
+<p><a href="https://s3.bmp.ovh/imgs/2022/03/8343fa265a93d486.png">https://s3.bmp.ovh/imgs/2022/03/8343fa265a93d486.png</a></p>
 <p>​                                                                                （RegionServer结构）</p>
 <p><strong>HLog</strong>：用来保证数据写入的可靠性</p>
 <p>HBase中系统故障恢复及主从复制都基于HLog实现，数据以追加的形式先写入HLog，再写入MemStore，如果RegionServer宕机，此时写入MemStore中但尚未Flush磁盘数据丢失，需要回访HLog补救丢失数据，HBase主从复制需要主集群将HLog日志发送给从集群，完成集群间复制</p>
-<p><img src="/.com//image-20220306155654549.png" alt="image-20220306155654549"></p>
+<p><img src="/HBase.assets/image-20220306155654549.png" alt="image-20220306155654549"></p>
 <p>​                                                                                （HLog文件结构）</p>
 <p>HLog文件生成后不会永久存储在系统中，使命完成后，文件会失效最终删除</p>
-<p><img src="/.com//image-20220306160001897.png" alt="image-20220306160001897"></p>
+<p><img src="/HBase.assets/image-20220306160001897.png" alt="image-20220306160001897"></p>
 <p>​                                                                                （HLog声明周期）</p>
 <p><strong>MemStore：</strong>MemStore作为一个缓存级的存储组件，缓存最近写入的数据</p>
 <p>此外HFile中KeyValue数据需按Key排序，根据有序Key建立索引树，提升数据读取效率，数据在落盘生成HFile前应完成排序，MemStore执行KeyValue排序</p>
@@ -54,7 +54,7 @@
 <p><strong>BlockCache</strong>：将数据块缓存在内存提高数据读取性能</p>
 <p>(通过这种方式来提升读取性能)客户端通过读取某个Block，先检查Block是否存在于BlockCache，存在直接加载不存在从HFile中加载，加载后缓存到BlockCache。</p>
 <h4 id="读写流程"><a href="#读写流程" class="headerlink" title="读写流程"></a>读写流程</h4><p><strong>写入流程</strong></p>
-<p><img src="/.com//image-20220306162641994.png" alt="image-20220306162641994"></p>
+<p><img src="/HBase.assets/image-20220306162641994.png" alt="image-20220306162641994"></p>
 <p>​                                                                                （HBase写入流程）</p>
 <p>整体架构上可分为三阶段：</p>
 <p>客户端处理：客户端将写入请求预处理，根据元数据定位到写入数据的RegionServer，将请求发送给对应RegionServer</p>
@@ -62,12 +62,24 @@
 <p>MemStore Flush：当Region中的MemStore达到一定阈值时，将会Flush操作将内存中数据写入文件(HFile)</p>
 <p><strong>BulkLoad</strong></p>
 <p>首先使用MapReduce将待写入数据转换为HFile文件，再直接将这些HFile文件加载到集群中，BulkLoad没有将写请求发送给RegionServer处理，有效避免了给RegionServer带来较大的写入压力</p>
-<p><img src="/.com//image-20220306165914584.png" alt="image-20220306165914584"></p>
+<p><img src="/HBase.assets/image-20220306165914584.png" alt="image-20220306165914584"></p>
 <p>​                                                                                (BulkLoad工作流程)</p>
 <p>BulkLoad主要有两个阶段：</p>
-<p>HFile生成阶段：</p>
-<p>HFile导入阶段：</p>
-<h4 id="HBase面试题解"><a href="#HBase面试题解" class="headerlink" title="HBase面试题解"></a>HBase面试题解</h4><p><strong>HBase如何写数据</strong></p>
+<p>HFile生成阶段：会跑一个MR任务，mapper由自己实现，reducer由HBase负责，这阶段将为每个Region生成一个对应的HFile文件</p>
+<p>HFile导入阶段：HFile准备好后，使用工具completebulkload将HFile加载到HBase集群。</p>
+<p><strong>读取流程</strong></p>
+<p>相比写流程，读数据却复杂的多，查询可能涉及到多个Region，多块缓存甚至多个数据存储文件；由于更新和删除操作的实现导致读取却加大了难度，读取过程需要根据版本进行过滤，对已经标记删除的数据也要进行过滤。</p>
+<p>大致分为四个流程</p>
+<p>Client-Server读取交互逻辑：Client首先会从ZooKeeper中获取元数据hbase:meta表所在的RegionServer，然后根据待读写rowkey发送请求到元数据所在RegionServer，获取数据所在的目标RegionServer和Region（并将这部分元数据信息缓存到本地），最后将请求进行封装发送到目标RegionServer进行处理。</p>
+<p>Server端Scan框架体系：一次scan可能会同时扫描一张表的多个Region，客户端会根据hbase:meta元数据将扫描的起始区间[startKey, stopKey)进行切分，切分成多个互相独立的查询子区间，每个子区间对应一个Region，RegionServer接收到客户端的get/scan请求之后做了两件事情：首先构建scanner iterator体系；然后执行next函数获取KeyValue，并对其进行条件过滤。</p>
+<p>过滤淘汰不符合查询条件的HFile：经过Scanner体系的构建，KeyValue此时已经可以由小到大依次经过KeyValueScanner获得，但这些KeyValue是否满足用户设定的TimeRange条件、版本号条件以及Filter条件还需要进一步的检查—&gt;根据KeyRange过滤；根据TimeRange过滤；根据布隆过滤器进行过滤</p>
+<p>从HFile中读取待查找Key：根据HFile索引树定位目标Block；BlockCache中检索目标Block； HDFS文件中检索目标Block；从Block中读取待查找KeyValue</p>
+<h4 id="Compaction实现"><a href="#Compaction实现" class="headerlink" title="Compaction实现"></a>Compaction实现</h4><p>我们知道HFile小文件过多会导致读取效率过低，所以Compaction应运而生，Compaction核心功能是将小文件合并成大文件，提升读取效率</p>
+<p><strong>Compaction工作原理</strong></p>
+<p>Compaction是从Region的一个Store中选部分HFile来合并，合并原理：先从待合并文件中读出keyvalue，再由小到大排序成一个新文件，新文件代替之前文件对外提供服务</p>
+<p>HBase中有两种Compaction：Minor Compaction和Major Compaction</p>
+<p>Minor模式选取部分小的相邻的HFile，合成一个大的HFile，Major模式是将一个Store中所有的HFile合并成一个HFile，还会</p>
+<h4 id="负载均衡实现"><a href="#负载均衡实现" class="headerlink" title="负载均衡实现"></a>负载均衡实现</h4><h4 id="宕机恢复原理"><a href="#宕机恢复原理" class="headerlink" title="宕机恢复原理"></a>宕机恢复原理</h4><h4 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h4><h4 id="调优相关"><a href="#调优相关" class="headerlink" title="调优相关"></a>调优相关</h4><h4 id="HBase面试题解"><a href="#HBase面试题解" class="headerlink" title="HBase面试题解"></a>HBase面试题解</h4><p><strong>HBase如何写数据</strong></p>
 <p>Client写入，存入MemStore一直到MemStore满，Flush成一个StoreFile增长到一定阈值，出发Compact合并，多个StoreFile合并成一个StoreFile同时进行版本合并和数据删除，当StoreFiles Compact后形成越来与大的StoreFile，单个StoreFile大小超过一定阈值(10G)触发split，把当前Region Split成两个Region，Region会下线，新Split除两个Region会被HMaster分配到相应HRegionServer，Region得以分压</p>
 <p><strong>HDFS和HBase使用场景</strong></p>
 <p>首先Hbase基于HDFS存储的</p>
