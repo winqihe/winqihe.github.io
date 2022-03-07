@@ -3,7 +3,10 @@
   <entry>
     <title>Hadoop</title>
     <url>/2022/03/03/Hadoop/</url>
-    <content><![CDATA[<h4 id="HDFS概述"><a href="#HDFS概述" class="headerlink" title="HDFS概述"></a>HDFS概述</h4><p><strong>HDFS优缺点</strong></p>
+    <content><![CDATA[<h4 id="HDFS概述"><a href="#HDFS概述" class="headerlink" title="HDFS概述"></a>HDFS概述</h4><p>记录HDFS,MapReduce,Yarn。</p>
+<span id="more"></span>
+
+<p><strong>HDFS优缺点</strong></p>
 <p>优点：高容错性，适合大规模数据处理，廉价成本</p>
 <p>缺点：不适合低延时数据访问，无法高效对大量小文件存储，不支持并发写入，文件随即修改。</p>
 <p><strong>HDFS组成架构</strong></p>
