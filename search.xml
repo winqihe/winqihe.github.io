@@ -3,10 +3,10 @@
   <entry>
     <title>Hadoop</title>
     <url>/2022/03/03/Hadoop/</url>
-    <content><![CDATA[<h4 id="HDFS概述"><a href="#HDFS概述" class="headerlink" title="HDFS概述"></a>HDFS概述</h4><p>记录HDFS,MapReduce,Yarn。</p>
+    <content><![CDATA[<p><strong>HDFS MapReduce YARN</strong></p>
 <span id="more"></span>
 
-<p><strong>HDFS优缺点</strong></p>
+<h4 id="HDFS概述"><a href="#HDFS概述" class="headerlink" title="HDFS概述"></a>HDFS概述</h4><p><strong>HDFS优缺点</strong></p>
 <p>优点：高容错性，适合大规模数据处理，廉价成本</p>
 <p>缺点：不适合低延时数据访问，无法高效对大量小文件存储，不支持并发写入，文件随即修改。</p>
 <p><strong>HDFS组成架构</strong></p>
@@ -109,23 +109,50 @@
 <p>Zookeeper 集群：为主备切换控制器提供主备选举支持；</p>
 <p>共享存储系统：共享存储系统是实现 NameNode 的高可用最为关键的部分，共享存储系统保存了 NameNode 在运行过程中所产生的 HDFS 的元数据。主 NameNode 和备 NameNode 通过共享存储系统实现元数据同步。在进行主备切换的时候，新的主 NameNode 在确认元数据完全同步之后才能继续对外提供服务。</p>
 <p>DataNode 节点：主 NameNode 和备 NameNode 需要共享 HDFS 的数据块和 DataNode 之间的映射关系，为了使故障切换能够快速进行，DataNode 会同时向主 NameNode 和备 NameNode 上报数据块的位置信息。</p>
-<h4 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h4><ul>
-<li>MapReduce优缺点</li>
-</ul>
-<p>优点：易于编程，良好扩展性，高容错性，适合PB级以上海量数据离线处理</p>
-<p>缺点：不擅长实时计算，不擅长流式计算，不擅长DAG计算</p>
-<ul>
-<li>MapReduce核心思想</li>
-</ul>
+<h4 id="MapReduce概述"><a href="#MapReduce概述" class="headerlink" title="MapReduce概述"></a>MapReduce概述</h4><p>官方文档的解释是：Hadoop Map/Reduce是一个使用简易的软件框架，基于它写出来的应用程序能够运行在由上千个商用机器组成的大型集群上，并以一种可靠容错的方式并行处理上T级别的数据集。</p>
+<p>一个Map/Reduce <em>作业（job）</em> 通常会把输入的数据集切分为若干独立的数据块，由 <em>map任务（task）</em>以完全并行的方式处理它们。框架会对map的输出先进行排序， 然后把结果输入给<em>reduce任务</em>。通常作业的输入和输出都会被存储在文件系统中。 整个框架负责任务的调度和监控，以及重新执行已经失败的任务。</p>
+<p>Map/Reduce框架由一个单独的master JobTracker 和每个集群节点一个slave TaskTracker共同组成。master负责调度构成一个作业的所有任务，这些任务分布在不同的slave上，master监控它们的执行，重新执行已经失败的任务。而slave仅负责执行由master指派的任务。</p>
+<p><strong>MapReduce核心思想</strong></p>
 <ol>
 <li>分布式的计算通常要分为至少两个阶段</li>
 <li>第一阶段的MapTask并发实例，完全并行运行</li>
 <li>第二阶段的ReduceTask并发实例互不相干，但数据依赖于上个阶段所有MapTask并发实例的输出</li>
 <li>MapReduce编程模型只能包含一个Map和Reduce阶段</li>
 </ol>
-<ul>
-<li>Shuffle机制</li>
-</ul>
+<h4 id="MapReduce架构"><a href="#MapReduce架构" class="headerlink" title="MapReduce架构"></a>MapReduce架构</h4><p>MapReduce体系结构主要由四个部分组成，分别是：Client、JobTracker、TaskTracker以及Task</p>
+<p>JobTracker是用于调度工作的，TaskTracker是用于执行工作的。<strong>一个Hadoop集群中只有一台JobTracker</strong><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h018835rytj30kc0cadgl.jpg"></p>
+<p>客户端向JobTracker提交一个作业，JobTracker把作业拆分为多份分配给TaskTracker执行，TaskTracker每隔一段时间会向JobTracker发送Heartbeat，如果一段时间内JobTracker没有收到来至TaskTracker的Heartbeat，将认为TaskTracker挂掉了，会把该TaskTracker的作业分配给其他TaskTracker</p>
+<h4 id="MapReduce执行过程"><a href="#MapReduce执行过程" class="headerlink" title="MapReduce执行过程"></a>MapReduce执行过程</h4><p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h018evc6mwj30jw0f1aav.jpg"></p>
+<p>1、客户端启动一个job<br>2、向JobTracker请求一个JobID<br>3、将运行作业所需要的资源文件复制到HDFS上，包括MapReduce程序打包的JAR文件、配置文件和客户端计算所得的输入划分信息。这些文件都存放在JobTracker专门为该作业创建的文件夹中，文件夹名为该作业JobID。JAR文件默认会有10个副本，输入划分信息告诉JobTracker应该为这个作业启动多少个map任务等信息。<br>4、JobTracker接收到作业后将其放在作业队列中，等待JobTracker对其进行调度。当JobTracker根据自己的调度算法调度该作业时，会根据输入划分信息为每个划分创建一个map任务，并将map任务分配给TaskTracker执行。这里需要注意的是，map任务不是随便分配给某个TaskTracker的，Data-Local（数据本地化）将map任务分配给含有该map处理的数据库的TaskTracker上，同时将程序JAR包复制到该TaskTracker上运行，但是分配reducer任务时不考虑数据本地化。<br>5、TaskTracker每隔一段时间给JobTracker发送一个Heartbeat告诉JobTracker它仍然在运行，同时心跳还携带很多比如map任务完成的进度等信息。当JobTracker收到作业的最后一个任务完成信息时，便把作业设置成“成功”，JobClient再传达信息给用户。</p>
+<p><strong>输入输出</strong></p>
+<p>Map/Reduce框架运转在&lt;key, value&gt; 键值对上， 框架把作业的输入看为是一组&lt;key, value&gt; 键值对，同样也产出一组 &lt;key, value&gt; 键值对做为作业的输出，这两组键值对的类型可能不同。</p>
+<blockquote>
+<p>(input) &lt;k1, v1&gt; -&gt; <strong>map</strong> -&gt; &lt;k2, v2&gt; -&gt; <strong>combine</strong> -&gt; &lt;k2, v2&gt; -&gt; <strong>reduce</strong> -&gt; &lt;k3, v3&gt; (output)</p>
+</blockquote>
+<p><strong>MapReduce优缺点</strong></p>
+<p>优点：易于编程，良好扩展性，高容错性，适合PB级以上海量数据离线处理</p>
+<p>缺点：不擅长实时计算，不擅长流式计算，不擅长DAG计算</p>
+<h4 id="Map和Reduce"><a href="#Map和Reduce" class="headerlink" title="Map和Reduce"></a>Map和Reduce</h4><p><strong>(input) -&gt;map-&gt; -&gt;combine-&gt; -&gt;reduce-&gt; (output)</strong></p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h018j4wxuyj30kc0b60u1.jpg"></p>
+<p><strong>map</strong>：map任务可细分四个阶段：record reader、mapper、combiner和partitioner。map任务的输出被称为中间键和中间值，会被发送到reducer做后续处理。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h018kcz9j0j30k509q0tc.jpg"></p>
+<ol>
+<li>读取HDFS中的文件。每一行解析成一个&lt;k,v&gt;。每一个键值对调用一次map函数。&lt;0,helloyou&gt; &lt;10,hello me&gt;</li>
+<li>覆盖map()，接收（1）中产生的&lt;k,v&gt;，进行处理，转换为新的&lt;k,v&gt;输出。&lt;hello,1&gt;&lt;you,1&gt;&lt;hello,1&gt;&lt;me,1&gt;</li>
+<li>对（2）输出的&lt;k,v&gt;进行<strong>分区</strong>，默认分为一个区。</li>
+<li>对不同分区中的数据进行<strong>按照Key排序、分组</strong>。分组指的是相同key的value放到一个集合中。排序后：&lt;hello,1&gt;&lt;hello,1&gt;&lt;me,1&gt; &lt;you,1&gt;，分组后：&lt;hello,{1,1}&gt;&lt;me,{1}&gt;&lt;you,{1}&gt;</li>
+<li>对分组后的数据进行<strong>合并归约</strong></li>
+</ol>
+<p><strong>reduce</strong>：reduce任务也分为四个阶段：混排（shuffle）、排序（sort）、reducer和输出格式（output format）</p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h018m68e0sj30k509q0tc.jpg"></p>
+<ol>
+<li>多个map任务的输出，按照不同的分区，通过网络copy到不同的reduce节点上。（shuffle）</li>
+<li>对多个map的输出进行<strong>合并、排序</strong>。覆盖reduce函数，接收的是分组后的数据，实现自己的业务逻辑，&lt;hello,2&gt;&lt;me,1&gt;&lt;you,1&gt;处理后，产生新的&lt;k,v&gt;输出。</li>
+<li>对reduce输出的&lt;k,v&gt;写到HDFS中。</li>
+</ol>
+<h4 id="Shuffle机制"><a href="#Shuffle机制" class="headerlink" title="Shuffle机制"></a><strong>Shuffle机制</strong></h4><p>mapper 阶段处理的数据如何传递给 reducer 阶段，是 MapReduce 框架中 最关键的一个流程，就叫 Shuffle</p>
+<p>Shuffle: 数据混洗 ——（核心机制：数据分区，排序，局部聚合，缓存，拉取，再合并 排序）,具体说就是就是将 MapTask 输出的处理结果数据，按照 Partitioner 组件制定的规则分发 给 ReduceTask，并在分发的过程中，对数据按 key 进行了分区和排序</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h018q2xrp5j30p60djq4e.jpg"></p>
 <ol>
 <li>Collect阶段：MapTask的数据输出到环形缓冲区</li>
 <li>Spill阶段：当内存中数据量到一定阈值，会将数据写入本地磁盘(将数据写入磁盘前需要对数据进行一次排序)，如果配置combiner会将相同分区号和key的数据进行排序</li>
