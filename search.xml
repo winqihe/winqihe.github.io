@@ -66,9 +66,7 @@
 <p>editlog在NameNode已经启动情况下对HDFS进行的各种更新操作进行记录，HDFS客户端执行所有的写操作都会被记录到editlog中</p>
 <p>namenode在被格式化后会在/data/tmp/dfs/name/current目录下产生相应文件：</p>
 <p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h0148rc90jj30ba02g3yg.jpg"></p>
-<h4 id="DataNode工作机制"><a href="#DataNode工作机制" class="headerlink" title="DataNode工作机制"></a>DataNode工作机制</h4><ol>
-<li>一个数据块在DataNode上以文件形式存储在磁盘，分别是数据本身和元数据(数据块长度，数据块校验和，时间戳)</li>
-</ol>
+<h4 id="DataNode工作机制"><a href="#DataNode工作机制" class="headerlink" title="DataNode工作机制"></a>DataNode工作机制</h4><p>​    一个数据块在DataNode上以文件形式存储在磁盘，分别是数据本身和元数据(数据块长度，数据块校验和，时间戳)</p>
 <p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h013jtur26j30cf022aa0.jpg"></p>
 <ol>
 <li>DataNode启动后向NameNode注册，通过后周期性(1h)向NameNode上报所有块信息</li>
