@@ -35,10 +35,12 @@
 <meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h02kef8mpbj30hr0cmq3c.jpg">
 <meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h02kewzqs2j30ik07cweq.jpg">
 <meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h02nqgxyjwj3084071mx8.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082w7mmly8h02qwqpzbmj30lj0b1abb.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082w7mmly8h02qzccphpj30fr07cmxc.jpg">
 <meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h01kwjxgm6j30uw06nwfg.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082w7mmly8h01l88927fj30lt09mwey.jpg">
 <meta property="article:published_time" content="2022-03-04T13:01:52.000Z">
-<meta property="article:modified_time" content="2022-03-08T10:40:49.812Z">
+<meta property="article:modified_time" content="2022-03-08T12:47:06.051Z">
 <meta property="article:author" content="Keven He">
 <meta property="article:tag" content="数据 Spark">
 <meta name="twitter:card" content="summary">
@@ -160,7 +162,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Spark概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-RDD"><span class="nav-number">2.</span> <span class="nav-text">Spark RDD</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Spark概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-RDD%E5%8F%8A%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">Spark RDD及编程接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">Spark运行模式及原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E8%B0%83%E5%BA%A6%E7%AE%A1%E7%90%86%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">Spark调度管理原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">Spark存储管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-Streaming"><span class="nav-number">6.</span> <span class="nav-text">Spark Streaming</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text"></span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -263,7 +265,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-08 18:40:49" itemprop="dateModified" datetime="2022-03-08T18:40:49+08:00">2022-03-08</time>
+      <time title="修改时间：2022-03-08 20:47:06" itemprop="dateModified" datetime="2022-03-08T20:47:06+08:00">2022-03-08</time>
     </span>
 
   
@@ -273,14 +275,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.2k</span>
+      <span>6.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>14 分钟</span>
     </span>
 </div>
 
@@ -312,7 +314,7 @@
 <p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h02j0862b7j30ky04ijrl.jpg"></p>
 <p>Spark要做的是将批处理，交互式处理，流式处理融合到一个软件栈中</p>
 <p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h02j2w0ltxj30mu092mxt.jpg"></p>
-<h4 id="Spark-RDD"><a href="#Spark-RDD" class="headerlink" title="Spark RDD"></a>Spark RDD</h4><p><strong>HelloWorld</strong></p>
+<h4 id="Spark-RDD及编程接口"><a href="#Spark-RDD及编程接口" class="headerlink" title="Spark RDD及编程接口"></a>Spark RDD及编程接口</h4><p><strong>HelloWorld</strong></p>
 <p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h02j5gw5b9j30pg047t90.jpg"></p>
 <ul>
 <li>对于Spark程序来讲，所有的操作的前提是要有一个Spark上下文，创建上下文过程中，程序会向集群申请资源并构建运行环境。</li>
@@ -369,7 +371,189 @@
 <p>HashPartitioner的原理图：</p>
 <p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h02nqgxyjwj3084071mx8.jpg"></p>
 <p><strong>集合创建操作</strong></p>
-<p>RDD：弹性分布式数据集，是分布式内存的一个抽象概念，提供了一种高度受限的共享内存模型；</p>
+<p>RDD的创建可由内部集合类型来生成，Spark提供了parallelize和makeRDD两类函数实现从集合生成RDD，但makeRDD中提供了一个可以指定每一个分区preferredLocations参数的实现版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.makeRDD(1 to 10,3)</span><br><span class="line">rdd.collectPartitions()</span><br><span class="line">val collect = Seq(1 to 10,Seq(&quot;host1&quot;,&quot;host3&quot;)),(11 to 20, Seq(&quot;host2&quot;)))</span><br><span class="line">val rdd =sc.makeRDD(collect)</span><br><span class="line">rdd.preferreedLocations(rdd.partitions(0))</span><br><span class="line">rdd.preferredLocations(rdd.partitions(1))</span><br></pre></td></tr></table></figure>
+
+<p><strong>存储创建操作</strong></p>
+<p>主要是hadoopRDD和newHadoopRDD两个编程接口，包含了四个参数(输入格式；键类型；值类型；分区值)</p>
+<p><strong>转换操作(transformation operation)</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Transformation</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>map</strong>(<em>func</em>)</td>
+<td align="left">将处理的数据逐条进行映射转换(类型或值)</td>
+</tr>
+<tr>
+<td align="left"><strong>filter</strong>(<em>func</em>)</td>
+<td align="left">将数据根据指定的规则进行筛选过滤</td>
+</tr>
+<tr>
+<td align="left"><strong>flatMap</strong>(<em>func</em>)</td>
+<td align="left">将处理的数据进行扁平化后再进行映射处理</td>
+</tr>
+<tr>
+<td align="left"><strong>mapPartitions</strong>(<em>func</em>)</td>
+<td align="left">将待处理的数据以分区为单位发送到计算节点进行处理</td>
+</tr>
+<tr>
+<td align="left"><strong>mapPartitionsWithIndex</strong>(<em>func</em>)</td>
+<td align="left">将待处理的数据以分区为单位发送到计算节点进行处理，在处理时同时可以获取当前分区索引。</td>
+</tr>
+<tr>
+<td align="left"><strong>sample</strong>(<em>withReplacement</em>, <em>fraction</em>, <em>seed</em>)</td>
+<td align="left">根据指定的规则从数据集中抽取数据</td>
+</tr>
+<tr>
+<td align="left"><strong>union</strong>(<em>otherDataset</em>)</td>
+<td align="left">对源 RDD 和参数 RDD 求并集后返回一个新的 RDD</td>
+</tr>
+<tr>
+<td align="left"><strong>intersection</strong>(<em>otherDataset</em>)</td>
+<td align="left">对源 RDD 和参数 RDD 求交集后返回一个新的 RDD</td>
+</tr>
+<tr>
+<td align="left"><strong>distinct</strong>([<em>numPartitions</em>]))</td>
+<td align="left">将数据集中重复的数据去重</td>
+</tr>
+<tr>
+<td align="left"><strong>groupByKey</strong>([<em>numPartitions</em>])</td>
+<td align="left">将数据源的数据根据 key 对 value 进行分组</td>
+</tr>
+<tr>
+<td align="left"><strong>reduceByKey</strong>(<em>func</em>, [<em>numPartitions</em>])</td>
+<td align="left">可以将数据按照相同的 Key 对 Value 进行聚合</td>
+</tr>
+<tr>
+<td align="left"><strong>aggregateByKey</strong>(<em>zeroValue</em>)(<em>seqOp</em>, <em>combOp</em>, [<em>numPartitions</em>])</td>
+<td align="left">将数据根据不同的规则进行分区内计算和分区间计算</td>
+</tr>
+<tr>
+<td align="left"><strong>sortByKey</strong>([<em>ascending</em>], [<em>numPartitions</em>])</td>
+<td align="left">在一个(K,V)的 RDD 上调用，K 必须实现 Ordered 接口(特质)，返回一个按照 key 进行排序的RDD</td>
+</tr>
+<tr>
+<td align="left"><strong>join</strong>(<em>otherDataset</em>, [<em>numPartitions</em>])</td>
+<td align="left">在类型为(K,V)和(K,W)的 RDD 上调用，返回一个相同 key 对应的所有元素连接在一起的 (K,(V,W))的 RDD</td>
+</tr>
+<tr>
+<td align="left"><strong>cogroup</strong>(<em>otherDataset</em>, [<em>numPartitions</em>])</td>
+<td align="left">在类型为(K,V)和(K,W)的 RDD 上调用，返回一个(K,(Iterable,Iterable))类型的 RDD</td>
+</tr>
+<tr>
+<td align="left"><strong>coalesce</strong>(<em>numPartitions</em>)</td>
+<td align="left">根据数据量缩减分区，用于大数据集过滤后，提高小数据集的执行效率 当 spark 程序中，存在过多的小任务的时候，可以通过 coalesce 方法，收缩合并分区，减少 分区的个数，减小任务调度成本</td>
+</tr>
+<tr>
+<td align="left"><strong>repartition</strong>(<em>numPartitions</em>)</td>
+<td align="left">该操作内部其实执行的是 coalesce 操作，参数 shuffle 的默认值为 true。无论是将分区数多的 RDD 转换为分区数少的 RDD，还是将分区数少的 RDD 转换为分区数多的 RDD，repartition 操作都可以完成，因为无论如何都会经 shuffle 过程。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p><font color="red">reduceByKey 和 groupByKey 的区别？</font></p>
+<p>Shuffle角度：reduceByKey 和 groupByKey 都存在 shuffle 的操作，但是 reduceByKey 可以在 shuffle 前对分区内相同 key 的数据进行预聚合（combine）功能，这样会减少落盘的 数据量，而 groupByKey 只是进行分组，不存在数据量减少的问题，reduceByKey 性能比较 高。</p>
+<p> 功能的角度：reduceByKey 其实包含分组和聚合的功能。GroupByKey 只能分组，不能聚 合，所以在分组聚合的场合下，推荐使用 reduceByKey，如果仅仅是分组而不需要聚合。那 么还是只能使用 groupByKe</p>
+<p><strong>控制操作(control operation)</strong></p>
+<ul>
+<li>cache():RDD[T]</li>
+<li>persist():RDD[T]</li>
+<li>persist(level:StorageLevel):RDD[T]</li>
+</ul>
+<p>Spark通过持久化操作将RDD持久化到不同层次的存储介质中，方便重复使用</p>
+<ul>
+<li>checkpoint</li>
+</ul>
+<p>checkpoint接口将RDD持久化到HDFS上，于persist(若也存在磁盘上)的区别是checkpoint会切断此RDD之前的依赖关系</p>
+<p>checkpoint主要作用：Spark长时间运行，过长的依赖将会耗用大量系统资源，定期将RDD进行checkpoint操作，可有效地节省系统资源；过长的依赖关系会出现节点失败RDD容错重新计算的成本将会大大提升</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val rdd =sc.makeRDD(1 to 4,1)</span><br><span class="line">val flatMapRDD= rdd.flatMap(x=&gt;Seq(x,x))</span><br><span class="line">sc.setCheckpointDir(&quot;temp&quot;)</span><br><span class="line">flatMapRDD.checkpoint()</span><br><span class="line">flatMapRDD.dependencies.head.rdd</span><br><span class="line">flatMapRDD.collect()</span><br><span class="line">flatMapRDD.dependencies.head.rdd</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>行动操作(action operation)</strong></p>
+<p>Spark中触发action operation将会触发一次Spark调度并返回相应结果</p>
+<table>
+<thead>
+<tr>
+<th align="left">Action</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>reduce</strong>(<em>func</em>)</td>
+<td align="left">聚集 RDD 中的所有元素，先聚合分区内数据，再聚合分区间数据</td>
+</tr>
+<tr>
+<td align="left"><strong>collect</strong>()</td>
+<td align="left">在驱动程序中，以数组 Array 的形式返回数据集的所有元素</td>
+</tr>
+<tr>
+<td align="left"><strong>count</strong>()</td>
+<td align="left">返回 RDD 中元素的个数</td>
+</tr>
+<tr>
+<td align="left"><strong>first</strong>()</td>
+<td align="left">返回 RDD 中的第一个元素</td>
+</tr>
+<tr>
+<td align="left"><strong>take</strong>(<em>n</em>)</td>
+<td align="left">返回一个由 RDD 的前 n 个元素组成的数组</td>
+</tr>
+<tr>
+<td align="left"><strong>takeOrdered</strong>(<em>n</em>, <em>[ordering]</em>)</td>
+<td align="left">返回该 RDD 排序后的前 n 个元素组成的数组</td>
+</tr>
+<tr>
+<td align="left"><strong>saveAsTextFile</strong>(<em>path</em>)</td>
+<td align="left">将数据保存到不同格式的文件中</td>
+</tr>
+<tr>
+<td align="left"><strong>countByKey</strong>()</td>
+<td align="left">统计每种 key 的个数</td>
+</tr>
+<tr>
+<td align="left"><strong>foreach</strong>(<em>func</em>)</td>
+<td align="left">分布式遍历 RDD 中的每一个元素，调用指定函数</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h4 id="Spark运行模式及原理"><a href="#Spark运行模式及原理" class="headerlink" title="Spark运行模式及原理"></a>Spark运行模式及原理</h4><p>实际应用中，Spark应用程序的运行模式取决于SparkContext的MASTER环境变量的值</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h02qwqpzbmj30lj0b1abb.jpg"></p>
+<p>其实这些模式从根本上都是将Spark应用分为任务调度和任务执行</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h02qzccphpj30fr07cmxc.jpg"></p>
+<p><strong>Local模式</strong></p>
+<p><strong>Standalone模式</strong></p>
+<p><strong>Local Cluster模式</strong></p>
+<p><strong>Mesos模式</strong></p>
+<p><strong>YARN standalone/YARN cluster模式</strong></p>
+<p><strong>YARN client模式</strong></p>
+<p><strong>各种模式细节比较</strong></p>
+<h4 id="Spark调度管理原理"><a href="#Spark调度管理原理" class="headerlink" title="Spark调度管理原理"></a>Spark调度管理原理</h4><h4 id="Spark存储管理"><a href="#Spark存储管理" class="headerlink" title="Spark存储管理"></a>Spark存储管理</h4><h4 id="Spark-Streaming"><a href="#Spark-Streaming" class="headerlink" title="Spark Streaming"></a>Spark Streaming</h4><h4 id><a href="#" class="headerlink" title></a></h4><p>RDD：弹性分布式数据集，是分布式内存的一个抽象概念，提供了一种高度受限的共享内存模型；</p>
 <p>DAG：有向无环图，反应RDD之间依赖关系</p>
 <p>Executor：运行在Work Node上的进程，负责运行任务，并为应用程序存储数据</p>
 <p>Application：用户编写的Spark程序</p>
@@ -437,13 +621,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">21k</span>
+    <span title="站点总字数">24k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">48 分钟</span>
+    <span title="站点阅读时长">54 分钟</span>
   </span>
 </div>
 
