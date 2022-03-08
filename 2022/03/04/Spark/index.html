@@ -20,18 +20,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","width":240,"display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Spark大数据的计算分析引擎">
+    <meta name="description" content="Spark大数据的计算分析引擎  官网 https:&#x2F;&#x2F;spark.apache.org&#x2F;   本文摘录于《Spark大数据处理技术》">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spark">
 <meta property="og:url" content="http://example.com/2022/03/04/Spark/index.html">
 <meta property="og:site_name" content="WenQi&#96;s Blog">
-<meta property="og:description" content="Spark大数据的计算分析引擎">
+<meta property="og:description" content="Spark大数据的计算分析引擎  官网 https:&#x2F;&#x2F;spark.apache.org&#x2F;   本文摘录于《Spark大数据处理技术》">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h02j0862b7j30ky04ijrl.jpg">
+<meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h02j2w0ltxj30mu092mxt.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h02j5gw5b9j30pg047t90.jpg">
+<meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h02jiomgszj30lh0ckdgp.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h02jtb7ww4j30ki05jt96.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h02kef8mpbj30hr0cmq3c.jpg">
+<meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h02kewzqs2j30ik07cweq.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h02nqgxyjwj3084071mx8.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h01kwjxgm6j30uw06nwfg.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082w7mmly8h01l88927fj30lt09mwey.jpg">
 <meta property="article:published_time" content="2022-03-04T13:01:52.000Z">
-<meta property="article:modified_time" content="2022-03-04T13:03:08.415Z">
+<meta property="article:modified_time" content="2022-03-08T10:40:49.812Z">
 <meta property="article:author" content="Keven He">
-<meta property="article:tag" content="数据">
+<meta property="article:tag" content="数据 Spark">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h02j0862b7j30ky04ijrl.jpg">
 
 
 <link rel="canonical" href="http://example.com/2022/03/04/Spark/">
@@ -136,7 +147,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -149,6 +160,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Spark概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-RDD"><span class="nav-number">2.</span> <span class="nav-text">Spark RDD</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -163,7 +175,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -243,9 +255,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-03-04 21:01:52 / 修改时间：21:03:08" itemprop="dateCreated datePublished" datetime="2022-03-04T21:01:52+08:00">2022-03-04</time>
+      <time title="创建时间：2022-03-04 21:01:52" itemprop="dateCreated datePublished" datetime="2022-03-04T21:01:52+08:00">2022-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-08 18:40:49" itemprop="dateModified" datetime="2022-03-08T18:40:49+08:00">2022-03-08</time>
     </span>
 
   
@@ -255,14 +273,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>15</span>
+      <span>3.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>7 分钟</span>
     </span>
 </div>
 
@@ -274,8 +292,96 @@
     
     <div class="post-body" itemprop="articleBody">
         <blockquote>
-<p>Spark大数据的计算分析引擎</p>
+<p>Spark大数据的计算分析引擎  官网 <a target="_blank" rel="noopener" href="https://spark.apache.org/">https://spark.apache.org/</a></p>
 </blockquote>
+<ul>
+<li>本文摘录于《Spark大数据处理技术》</li>
+</ul>
+<span id="more"></span>
+
+<h4 id="Spark概述"><a href="#Spark概述" class="headerlink" title="Spark概述"></a><strong>Spark概述</strong></h4><blockquote>
+<p>Apache Spark is a unified analytics engine for large-scale data processing</p>
+</blockquote>
+<p>按照现在流行的大数据处理场景划分，可以将大数据处理分为三种情况：</p>
+<ul>
+<li>复杂的批量数据处理，通常时间跨度为数十分钟到数小时</li>
+<li>基于历史数据的交互式查询，通常时间跨度为数十秒到数分钟</li>
+<li>基于实时数据流的数据处理，通常时间跨度为数百毫秒到数秒</li>
+</ul>
+<p>在Spark Core基础上衍生出能同时处理上面三种情形的统一大数据处理平台</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h02j0862b7j30ky04ijrl.jpg"></p>
+<p>Spark要做的是将批处理，交互式处理，流式处理融合到一个软件栈中</p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h02j2w0ltxj30mu092mxt.jpg"></p>
+<h4 id="Spark-RDD"><a href="#Spark-RDD" class="headerlink" title="Spark RDD"></a>Spark RDD</h4><p><strong>HelloWorld</strong></p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h02j5gw5b9j30pg047t90.jpg"></p>
+<ul>
+<li>对于Spark程序来讲，所有的操作的前提是要有一个Spark上下文，创建上下文过程中，程序会向集群申请资源并构建运行环境。</li>
+<li>通过sc变量并利用textFile接口从HDFS文件系统读取文件，返回file变量</li>
+<li>对file进行过滤操作，生成新的变量filterRDD</li>
+<li>对filterRDD进行cache操作(方便重用filterRDD)</li>
+<li>对filterRDD进行计数，返回结果</li>
+</ul>
+<p>这个程序中涉及到众多概念：</p>
+<ul>
+<li>弹性式分布式数据集 RDD</li>
+<li>创建操作(creation operation)：RDD初始创建是SparkContext负责，将内存集合或外部文件系统作为输入源</li>
+<li>转换操作(transformation operation)：将一个RDD通过一定操作转变为另一个RDD</li>
+<li>控制操作(control operation)：对RDD进行持久化，让RDD保存磁盘或内存中，方便重复使用</li>
+<li>行动操作(action operation)：Spark是惰性计算的，RDD所有行动操作，都会触发Spark作业运行</li>
+</ul>
+<p>RDD和操作之间关系：经过输入操作，转换操作，控制操作，输出操作来完成一个作业</p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h02jiomgszj30lh0ckdgp.jpg"></p>
+<p><strong>Spark RDD</strong></p>
+<p>RDD是弹性分布式数据集，即一个RDD代表一个被分区的只读数据集，RDD有两种生成途径：来自内存集合和外部存储系统；通过RDD的转换操作</p>
+<p>RDD继承关系(lineage)构建可以通过记录作用在RDD上的转换操作，可以有效进行容错处理</p>
+<p>一般情况下抽象的RDD需要包含这五个接口</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h02jtb7ww4j30ki05jt96.jpg"></p>
+<p><strong>RDD分区(partitions)</strong></p>
+<p>对于RDD来说，分区数涉及到RDD进行并行计算的粒度，每一个RDD分区的计算操作都在一个单独的任务中被执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.parallelize(1 to 100,2)</span><br><span class="line">//1-100的数组转为RDD，第二个参数执行分区数</span><br><span class="line">rdd.partitions.size</span><br><span class="line">//查看RDD被划分的分区数</span><br></pre></td></tr></table></figure>
+
+<p><strong>RDD优先位置(preferredLocations)</strong></p>
+<p>RDD优先位置属性与Spark中的调度相关，返回的是RDD的每个partition存储的位置，“移动数据不如移动计算”所以Spark任务调度时候尽可能将任务分配到数据块存储位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.textFile(&quot;hdfs://10.0.2.19:8000/bigfile&quot;)</span><br><span class="line">//读取bigfile生成rdd</span><br><span class="line">val hadoopRDD =rdd.dependencies(0).rdd</span><br><span class="line">//通过rdd依赖关系找到原始hadoopRDD</span><br><span class="line">hadoopRDD.partitions.size</span><br><span class="line">hadoopRDD.preferredLocations(hadoopRDD.partition(0))</span><br><span class="line">//返回partition(0)所在的机器位置</span><br></pre></td></tr></table></figure>
+
+<p><strong>RDD依赖关系(dependencies)</strong></p>
+<p>由于RDD是粗粒度操作数据集，每个转换操作都会生成一个新的RDD，所以RDD之间会形成类似流水线(pipline)的前后依赖关系，Spark中有两种类型依赖。</p>
+<p>窄依赖(Narrow Dependencies)：每一个父RDD的分区最多只能被子RDD的一个分区使用</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h02kef8mpbj30hr0cmq3c.jpg"></p>
+<p>宽依赖(Wide Dependencies)：多个子RDD的分区会依赖于同一个父RDD的分区</p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h02kewzqs2j30ik07cweq.jpg"></p>
+<p>Spark中明确区分宽窄依赖原因？</p>
+<ol>
+<li>窄依赖可以在集群的一个节点上如流水线一样执行，可以计算所有父RDD分区，相反宽依赖需要取得父RDD的所有分区上的数据进行计算，将执行类似MapReduce一样的Shuffle操作</li>
+<li>对于窄依赖，节点计算失败后恢复会更有效，只需重新计算对应父RDD的分区，而且可以在其他节点上并行的计算，相反在宽依赖依赖关系中，一个节点失败会导致其父RDD的多个分区重新计算</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val rdd =sc.makeRDD(1 to 10)</span><br><span class="line">val mapRDD= rdd.map(x=&gt;(x,x))</span><br><span class="line">mapRDD.dependencies</span><br><span class="line">val shuffleRDD = mapRDD.partitionBy(new org.apache.spark.HashPartitioner(3))</span><br><span class="line">shuffleRDD.dependencies</span><br></pre></td></tr></table></figure>
+
+<p><strong>RDD分区计算(compute)</strong></p>
+<p>RDD的计算都是以partition为单位的，而且RDD中的compute函数都是在对迭代器进行复合，不需要保存每次计算结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.parallelize(1 to 10,2)</span><br><span class="line">val map_rdd = rdd.map(a=&gt;a+1)</span><br><span class="line">val filter_rdd = map_rdd.filter(a=&gt;(a&gt;3))</span><br><span class="line">val context = new org.apache.spark.TaskContext(0,0,0)</span><br><span class="line">val iter0 = filter_rdd.compute(filter_rdd.partition(0),context)</span><br><span class="line">iter0.toList</span><br><span class="line">val iter1 = filter_rdd.compute(filter_rdd.partition(0),context)</span><br><span class="line">iter1.toList</span><br><span class="line">//在rdd上进行map和filter，由于compute函数只返回相应分区数据的迭代器，只有最后实例化才能显示出两个分区最终计算结果</span><br></pre></td></tr></table></figure>
+
+<p><strong>RDD分区函数(partitioner)</strong></p>
+<p>Spark目前有两种类型分区函数：HashPartitioner(哈希分区)和RangePartitioner(区域分区)，而且partitioner这个属性只存在于(K,V)类型的RDD中，对于非(K,V)类型的partitioner的值就是None，partitioner函数既决定了RDD本身的分区数量，也可作为其父RDD Shuffle输出(MapOutput)中每个分区进行数据切割的依据</p>
+<p>使用HashPartitioner说明一下partitioner的功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val rdd =sc.makeRDD(1 to 10,2).map(x=&gt;(x,x))</span><br><span class="line">rdd.partitioner</span><br><span class="line">val group_rdd = rdd.groupByKey(new org.apache.spark.HashPartitioner(3))</span><br><span class="line">//new 了HashPartitioner对象</span><br><span class="line">group_rdd.partitioner</span><br><span class="line">group_rdd.collectPartitions()</span><br></pre></td></tr></table></figure>
+
+<p>HashPartitioner的原理图：</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h02nqgxyjwj3084071mx8.jpg"></p>
+<p><strong>集合创建操作</strong></p>
+<p>RDD：弹性分布式数据集，是分布式内存的一个抽象概念，提供了一种高度受限的共享内存模型；</p>
+<p>DAG：有向无环图，反应RDD之间依赖关系</p>
+<p>Executor：运行在Work Node上的进程，负责运行任务，并为应用程序存储数据</p>
+<p>Application：用户编写的Spark程序</p>
+<p>Task：运行在Executor上的工作单元</p>
+<p>Job：一个Job包含多个RDD以及作用在RDD上的各种操作</p>
+<p>Stage：作业的基本调度单位，一个作业会分为多组任务，每组任务叫做Stage</p>
+<p>Spark运行场景：</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h01kwjxgm6j30uw06nwfg.jpg"></p>
+<p><strong>Spark运行架构</strong></p>
+<p>采用主从架构，包含一个Master(Driver)和多个Worker</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h01l88927fj30lt09mwey.jpg"></p>
+<p><strong>Spark部署</strong></p>
 
     </div>
 
@@ -285,7 +391,7 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%95%B0%E6%8D%AE/" rel="tag"><i class="fa fa-tag"></i># 数据</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE-Spark/" rel="tag"><i class="fa fa-tag"></i># 数据 Spark</a>
           </div>
 
         
@@ -331,13 +437,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">18k</span>
+    <span title="站点总字数">21k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">40 分钟</span>
+    <span title="站点阅读时长">48 分钟</span>
   </span>
 </div>
 
