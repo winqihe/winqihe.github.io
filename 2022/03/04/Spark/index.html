@@ -44,8 +44,11 @@
 <meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h03y9juahsj30n80cnmz7.jpg">
 <meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h03yah7hklj30ny092q3o.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082w7mmly8h03yisqxnfj30n109rgmk.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h04s6ljwgfj30pl08pmxw.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h04s9jnhcij30hv04zq32.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h04sd4t22lj30pe083mxw.jpg">
 <meta property="article:published_time" content="2022-03-04T13:01:52.000Z">
-<meta property="article:modified_time" content="2022-03-09T14:19:36.985Z">
+<meta property="article:modified_time" content="2022-03-10T07:17:33.865Z">
 <meta property="article:author" content="Keven He">
 <meta property="article:tag" content="数据 Spark">
 <meta name="twitter:card" content="summary">
@@ -167,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Spark概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-RDD%E5%8F%8A%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">Spark RDD及编程接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E8%B0%83%E5%BA%A6%E7%AE%A1%E7%90%86%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">Spark调度管理原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">Spark存储管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-Streaming"><span class="nav-number">5.</span> <span class="nav-text">Spark Streaming</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Spark概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-RDD%E5%8F%8A%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">Spark RDD及编程接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E8%B0%83%E5%BA%A6%E7%AE%A1%E7%90%86%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">Spark调度管理原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">Spark存储管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-Streaming"><span class="nav-number">5.</span> <span class="nav-text">Spark Streaming</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E8%B0%83%E4%BC%98"><span class="nav-number">6.</span> <span class="nav-text">Spark调优</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -270,7 +273,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-09 22:19:36" itemprop="dateModified" datetime="2022-03-09T22:19:36+08:00">2022-03-09</time>
+      <time title="修改时间：2022-03-10 15:17:33" itemprop="dateModified" datetime="2022-03-10T15:17:33+08:00">2022-03-10</time>
     </span>
 
   
@@ -280,14 +283,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>8.3k</span>
+      <span>9.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>18 分钟</span>
+      <span>21 分钟</span>
     </span>
 </div>
 
@@ -572,8 +575,7 @@
 <p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h03znoilg5j30kd09k3zc.jpg"></p>
 <p>当一个属于中间过程调度阶段的任务完成后，DAGScheduler会检查对应的调度阶段的所有任务是否都完成了，都完成了将再次扫描一次等待列表中的所有调度阶段的列表，检查是否还有任何依赖的调度阶段未完成，若没有，说明调度阶段处理就绪状态，可以再次尝试提交</p>
 <p><strong>任务集的提交</strong></p>
-<p><strong>完成状态的监控</strong></p>
-<p><strong>任务结果的获取</strong></p>
+<p>调度阶段的提交，最终会被转换成一个任务集的提交，DAGScheduler通过TaskScheduler接口提交任务集，这个任务集最终会触发TaskScheduler构建一个TaskSetManager的实例来管理这个任务集的生命周期，对于DAGScheduler来说提交调度阶段的工作到此完成，而TaskScheduler的具体实现会在得到资源时，通过TaskSetManager调度具体的任务到对应的Executor节点上进行运算</p>
 <h4 id="Spark存储管理"><a href="#Spark存储管理" class="headerlink" title="Spark存储管理"></a>Spark存储管理</h4><p><strong>RDD持久化</strong></p>
 <p>分区和数据块的关系：</p>
 <p>在操作RDD时，这些操作都将施行在每一个分区上，可以说RDD上的运算都是基于分区的，但在存储管理模块，接触到的是数据块(block)，存储管理模块中对数据的存取都是以数据块为单位的，分区其实是一个逻辑上的概念，而数据块是物理上的数据实体</p>
@@ -604,7 +606,38 @@
 <p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h03yisqxnfj30n109rgmk.jpg"></p>
 <p><strong>广播(Broadcast)变量持久化</strong></p>
 <p>为了加速一些对小块数据的读取，最好数据在所有节点都有一份拷贝，每个任务都能从本节点拷贝读取数据而不用通过远程传输获取数据，广播变量实现了这个功能，广播变量由存储管理模块进行管理的，另外广播变量数据块是以MEMORY_AND_DISK持久化存储本节点的存储管理模块，通过设置过期清洗机制，Spark内部会清理过期的广播变量</p>
-<h4 id="Spark-Streaming"><a href="#Spark-Streaming" class="headerlink" title="Spark Streaming"></a>Spark Streaming</h4>
+<h4 id="Spark-Streaming"><a href="#Spark-Streaming" class="headerlink" title="Spark Streaming"></a>Spark Streaming</h4><p>用于快速构建可扩展，高吞吐，高容错的流处理程序</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h04s6ljwgfj30pl08pmxw.jpg"></p>
+<p>DStream(离散数据流)代表了一个数据流，数据流可从外部输入源获得也可以通过输入流的转换获得，DStream是通过一组时间序列上连续的RDD来表示</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h04s9jnhcij30hv04zq32.jpg"></p>
+<p><strong>DEMO</strong></p>
+<p>获取指定端口上的数据并进行词频统计</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">object NetworkWordCount &#123;</span><br><span class="line"></span><br><span class="line">  def main(args: Array[String]) &#123;</span><br><span class="line"></span><br><span class="line">    /*指定时间间隔为 5s*/</span><br><span class="line">    val sparkConf = new SparkConf().setAppName(&quot;NetworkWordCount&quot;).setMaster(&quot;local[2]&quot;)</span><br><span class="line">    val ssc = new StreamingContext(sparkConf, Seconds(5))</span><br><span class="line"></span><br><span class="line">    /*创建文本输入流,并进行词频统计*/</span><br><span class="line">    val lines = ssc.socketTextStream(&quot;hadoop001&quot;, 9999)</span><br><span class="line">    lines.flatMap(_.split(&quot; &quot;)).map(x =&gt; (x, 1)).reduceByKey(_ + _).print()</span><br><span class="line"></span><br><span class="line">    /*启动服务*/</span><br><span class="line">    ssc.start()</span><br><span class="line">    /*等待服务结束*/</span><br><span class="line">    ssc.awaitTermination()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>nc -lk 9999</code>打开端口写入测试数据</p>
+<p>Spark Streaming 编程的入口类是 StreamingContext，在创建时候需要指明 <code>sparkConf</code> 和 <code>batchDuration</code>(批次时间)，Spark 流处理本质是将流数据拆分为一个个批次，然后进行微批处理，<code>batchDuration</code> 就是批次拆分的时间间隔。这个时间可以根据业务需求和服务器性能进行指定，如果业务要求低延迟并且服务器性能也允许，则这个时间可以指定得很短。</p>
+<p>DStream 是 Spark Streaming 提供的基本抽象。它表示连续的数据流。在内部，DStream 由一系列连续的 RDD 表示。所以从本质上而言，应用于 DStream 的任何操作都会转换为底层 RDD 上的操作。</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h04sd4t22lj30pe083mxw.jpg"></p>
+<h4 id="Spark调优"><a href="#Spark调优" class="headerlink" title="Spark调优"></a>Spark调优</h4><p><strong>RDD调优</strong></p>
+<ul>
+<li>RDD复用</li>
+<li>尽早进行filter</li>
+<li>读取大量小文件用wholeTextFiles</li>
+<li>mapPartition和foreachPartition替代map和foreach操作</li>
+<li>filter+coalesce/repartition(减少分区)</li>
+<li>设置合理的并行度</li>
+<li>repartition/coalesce调节并行度</li>
+<li>reduceByKey本地预聚合</li>
+<li>使用持久化+checkpoint</li>
+<li>使用广播变量使用Kryo序列化</li>
+</ul>
+<p><strong>Shuffle调优</strong></p>
+<ul>
+<li>map和reduce端缓冲区大小</li>
+<li>reduce端重试次数和等待时间间隔</li>
+<li>bypass机制开启阈值</li>
+</ul>
+
     </div>
 
     
@@ -659,13 +692,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">26k</span>
+    <span title="站点总字数">28k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">59 分钟</span>
+    <span title="站点阅读时长">1:02</span>
   </span>
 </div>
 
