@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","width":240,"display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Spark大数据的计算分析引擎  官网 https:&#x2F;&#x2F;spark.apache.org&#x2F;   本文摘录于《Spark大数据处理技术》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark">
+<meta property="og:url" content="http://example.com/2022/03/04/Spark/index.html">
+<meta property="og:site_name" content="WenQi&#96;s Blog">
+<meta property="og:description" content="Spark大数据的计算分析引擎  官网 https:&#x2F;&#x2F;spark.apache.org&#x2F;   本文摘录于《Spark大数据处理技术》">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h02j0862b7j30ky04ijrl.jpg">
+<meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h02j2w0ltxj30mu092mxt.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h02j5gw5b9j30pg047t90.jpg">
+<meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h02jiomgszj30lh0ckdgp.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h02jtb7ww4j30ki05jt96.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h02kef8mpbj30hr0cmq3c.jpg">
+<meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h02kewzqs2j30ik07cweq.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h02nqgxyjwj3084071mx8.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h03z89yka2j30ds06zgm0.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h03zhvod2yj30jb0a1gm9.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h03zi7zjjdj30i90bkgmn.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h03zoa22rzj30ne05eaau.jpg">
+<meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h03znoilg5j30kd09k3zc.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h03xgwdkm8j30hp06adg2.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h03y9juahsj30n80cnmz7.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h03yah7hklj30ny092q3o.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082w7mmly8h03yisqxnfj30n109rgmk.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h04s6ljwgfj30pl08pmxw.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h04s9jnhcij30hv04zq32.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h04sd4t22lj30pe083mxw.jpg">
+<meta property="article:published_time" content="2022-03-04T13:01:52.000Z">
+<meta property="article:modified_time" content="2022-03-10T07:17:33.865Z">
+<meta property="article:author" content="Keven He">
+<meta property="article:tag" content="数据 Spark">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h02j0862b7j30ky04ijrl.jpg">
+
+
+<link rel="canonical" href="http://example.com/2022/03/04/Spark/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/03/04/Spark/","path":"2022/03/04/Spark/","title":"Spark"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spark | WenQi`s Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">WenQi`s Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">No thing is impossible!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首&emsp;&emsp;页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关&emsp;&emsp;于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标&emsp;&emsp;签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分&emsp;&emsp;类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归&emsp;&emsp;档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜&emsp;&emsp;索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Spark概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-RDD%E5%8F%8A%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">Spark RDD及编程接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E8%B0%83%E5%BA%A6%E7%AE%A1%E7%90%86%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">Spark调度管理原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">Spark存储管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark-Streaming"><span class="nav-number">5.</span> <span class="nav-text">Spark Streaming</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spark%E8%B0%83%E4%BC%98"><span class="nav-number">6.</span> <span class="nav-text">Spark调优</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Keven He"
+      src="/images/avator.jpg">
+  <p class="site-author-name" itemprop="name">Keven He</p>
+  <div class="site-description" itemprop="description">No thing is impossible!</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/weixin_45462732" title="Blog → https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_45462732" rel="noopener" target="_blank"><i class="fa fa-coffee fa-fw"></i>Blog</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/04/Spark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avator.jpg">
+      <meta itemprop="name" content="Keven He">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WenQi`s Blog">
+      <meta itemprop="description" content="No thing is impossible!">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spark | WenQi`s Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spark
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-04 21:01:52" itemprop="dateCreated datePublished" datetime="2022-03-04T21:01:52+08:00">2022-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-10 15:17:33" itemprop="dateModified" datetime="2022-03-10T15:17:33+08:00">2022-03-10</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span></span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>NaN:aN</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>Spark大数据的计算分析引擎  官网 <a target="_blank" rel="noopener" href="https://spark.apache.org/">https://spark.apache.org/</a></p>
+</blockquote>
+<ul>
+<li>本文摘录于《Spark大数据处理技术》</li>
+</ul>
+<span id="more"></span>
+
+<h4 id="Spark概述"><a href="#Spark概述" class="headerlink" title="Spark概述"></a><strong>Spark概述</strong></h4><blockquote>
+<p>Apache Spark is a unified analytics engine for large-scale data processing</p>
+</blockquote>
+<p>按照现在流行的大数据处理场景划分，可以将大数据处理分为三种情况：</p>
+<ul>
+<li>复杂的批量数据处理，通常时间跨度为数十分钟到数小时</li>
+<li>基于历史数据的交互式查询，通常时间跨度为数十秒到数分钟</li>
+<li>基于实时数据流的数据处理，通常时间跨度为数百毫秒到数秒</li>
+</ul>
+<p>在Spark Core基础上衍生出能同时处理上面三种情形的统一大数据处理平台</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h02j0862b7j30ky04ijrl.jpg"></p>
+<p>Spark要做的是将批处理，交互式处理，流式处理融合到一个软件栈中</p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h02j2w0ltxj30mu092mxt.jpg"></p>
+<h4 id="Spark-RDD及编程接口"><a href="#Spark-RDD及编程接口" class="headerlink" title="Spark RDD及编程接口"></a>Spark RDD及编程接口</h4><p><strong>HelloWorld</strong></p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h02j5gw5b9j30pg047t90.jpg"></p>
+<ul>
+<li>对于Spark程序来讲，所有的操作的前提是要有一个Spark上下文，创建上下文过程中，程序会向集群申请资源并构建运行环境。</li>
+<li>通过sc变量并利用textFile接口从HDFS文件系统读取文件，返回file变量</li>
+<li>对file进行过滤操作，生成新的变量filterRDD</li>
+<li>对filterRDD进行cache操作(方便重用filterRDD)</li>
+<li>对filterRDD进行计数，返回结果</li>
+</ul>
+<p>这个程序中涉及到众多概念：</p>
+<ul>
+<li>弹性式分布式数据集 RDD</li>
+<li>创建操作(creation operation)：RDD初始创建是SparkContext负责，将内存集合或外部文件系统作为输入源</li>
+<li>转换操作(transformation operation)：将一个RDD通过一定操作转变为另一个RDD</li>
+<li>控制操作(control operation)：对RDD进行持久化，让RDD保存磁盘或内存中，方便重复使用</li>
+<li>行动操作(action operation)：Spark是惰性计算的，RDD所有行动操作，都会触发Spark作业运行</li>
+</ul>
+<p>RDD和操作之间关系：经过输入操作，转换操作，控制操作，输出操作来完成一个作业</p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h02jiomgszj30lh0ckdgp.jpg"></p>
+<p><strong>Spark RDD</strong></p>
+<p>RDD是弹性分布式数据集，即一个RDD代表一个被分区的只读数据集，RDD有两种生成途径：来自内存集合和外部存储系统；通过RDD的转换操作</p>
+<p>RDD继承关系(lineage)构建可以通过记录作用在RDD上的转换操作，可以有效进行容错处理</p>
+<p>一般情况下抽象的RDD需要包含这五个接口</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h02jtb7ww4j30ki05jt96.jpg"></p>
+<p><strong>RDD分区(partitions)</strong></p>
+<p>对于RDD来说，分区数涉及到RDD进行并行计算的粒度，每一个RDD分区的计算操作都在一个单独的任务中被执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.parallelize(1 to 100,2)</span><br><span class="line">//1-100的数组转为RDD，第二个参数执行分区数</span><br><span class="line">rdd.partitions.size</span><br><span class="line">//查看RDD被划分的分区数</span><br></pre></td></tr></table></figure>
+
+<p><strong>RDD优先位置(preferredLocations)</strong></p>
+<p>RDD优先位置属性与Spark中的调度相关，返回的是RDD的每个partition存储的位置，“移动数据不如移动计算”所以Spark任务调度时候尽可能将任务分配到数据块存储位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.textFile(&quot;hdfs://10.0.2.19:8000/bigfile&quot;)</span><br><span class="line">//读取bigfile生成rdd</span><br><span class="line">val hadoopRDD =rdd.dependencies(0).rdd</span><br><span class="line">//通过rdd依赖关系找到原始hadoopRDD</span><br><span class="line">hadoopRDD.partitions.size</span><br><span class="line">hadoopRDD.preferredLocations(hadoopRDD.partition(0))</span><br><span class="line">//返回partition(0)所在的机器位置</span><br></pre></td></tr></table></figure>
+
+<p><strong>RDD依赖关系(dependencies)</strong></p>
+<p>由于RDD是粗粒度操作数据集，每个转换操作都会生成一个新的RDD，所以RDD之间会形成类似流水线(pipline)的前后依赖关系，Spark中有两种类型依赖。</p>
+<p>窄依赖(Narrow Dependencies)：每一个父RDD的分区最多只能被子RDD的一个分区使用</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h02kef8mpbj30hr0cmq3c.jpg"></p>
+<p>宽依赖(Wide Dependencies)：多个子RDD的分区会依赖于同一个父RDD的分区</p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h02kewzqs2j30ik07cweq.jpg"></p>
+<p>Spark中明确区分宽窄依赖原因？</p>
+<ol>
+<li>窄依赖可以在集群的一个节点上如流水线一样执行，可以计算所有父RDD分区，相反宽依赖需要取得父RDD的所有分区上的数据进行计算，将执行类似MapReduce一样的Shuffle操作</li>
+<li>对于窄依赖，节点计算失败后恢复会更有效，只需重新计算对应父RDD的分区，而且可以在其他节点上并行的计算，相反在宽依赖依赖关系中，一个节点失败会导致其父RDD的多个分区重新计算</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val rdd =sc.makeRDD(1 to 10)</span><br><span class="line">val mapRDD= rdd.map(x=&gt;(x,x))</span><br><span class="line">mapRDD.dependencies</span><br><span class="line">val shuffleRDD = mapRDD.partitionBy(new org.apache.spark.HashPartitioner(3))</span><br><span class="line">shuffleRDD.dependencies</span><br></pre></td></tr></table></figure>
+
+<p><strong>RDD分区计算(compute)</strong></p>
+<p>RDD的计算都是以partition为单位的，而且RDD中的compute函数都是在对迭代器进行复合，不需要保存每次计算结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.parallelize(1 to 10,2)</span><br><span class="line">val map_rdd = rdd.map(a=&gt;a+1)</span><br><span class="line">val filter_rdd = map_rdd.filter(a=&gt;(a&gt;3))</span><br><span class="line">val context = new org.apache.spark.TaskContext(0,0,0)</span><br><span class="line">val iter0 = filter_rdd.compute(filter_rdd.partition(0),context)</span><br><span class="line">iter0.toList</span><br><span class="line">val iter1 = filter_rdd.compute(filter_rdd.partition(0),context)</span><br><span class="line">iter1.toList</span><br><span class="line">//在rdd上进行map和filter，由于compute函数只返回相应分区数据的迭代器，只有最后实例化才能显示出两个分区最终计算结果</span><br></pre></td></tr></table></figure>
+
+<p><strong>RDD分区函数(partitioner)</strong></p>
+<p>Spark目前有两种类型分区函数：HashPartitioner(哈希分区)和RangePartitioner(区域分区)，而且partitioner这个属性只存在于(K,V)类型的RDD中，对于非(K,V)类型的partitioner的值就是None，partitioner函数既决定了RDD本身的分区数量，也可作为其父RDD Shuffle输出(MapOutput)中每个分区进行数据切割的依据</p>
+<p>使用HashPartitioner说明一下partitioner的功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val rdd =sc.makeRDD(1 to 10,2).map(x=&gt;(x,x))</span><br><span class="line">rdd.partitioner</span><br><span class="line">val group_rdd = rdd.groupByKey(new org.apache.spark.HashPartitioner(3))</span><br><span class="line">//new 了HashPartitioner对象</span><br><span class="line">group_rdd.partitioner</span><br><span class="line">group_rdd.collectPartitions()</span><br></pre></td></tr></table></figure>
+
+<p>HashPartitioner的原理图：</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h02nqgxyjwj3084071mx8.jpg"></p>
+<p><strong>集合创建操作</strong></p>
+<p>RDD的创建可由内部集合类型来生成，Spark提供了parallelize和makeRDD两类函数实现从集合生成RDD，但makeRDD中提供了一个可以指定每一个分区preferredLocations参数的实现版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.makeRDD(1 to 10,3)</span><br><span class="line">rdd.collectPartitions()</span><br><span class="line">val collect = Seq(1 to 10,Seq(&quot;host1&quot;,&quot;host3&quot;)),(11 to 20, Seq(&quot;host2&quot;)))</span><br><span class="line">val rdd =sc.makeRDD(collect)</span><br><span class="line">rdd.preferreedLocations(rdd.partitions(0))</span><br><span class="line">rdd.preferredLocations(rdd.partitions(1))</span><br></pre></td></tr></table></figure>
+
+<p><strong>存储创建操作</strong></p>
+<p>主要是hadoopRDD和newHadoopRDD两个编程接口，包含了四个参数(输入格式；键类型；值类型；分区值)</p>
+<p><strong>转换操作(transformation operation)</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Transformation</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>map</strong>(<em>func</em>)</td>
+<td align="left">将处理的数据逐条进行映射转换(类型或值)</td>
+</tr>
+<tr>
+<td align="left"><strong>filter</strong>(<em>func</em>)</td>
+<td align="left">将数据根据指定的规则进行筛选过滤</td>
+</tr>
+<tr>
+<td align="left"><strong>flatMap</strong>(<em>func</em>)</td>
+<td align="left">将处理的数据进行扁平化后再进行映射处理</td>
+</tr>
+<tr>
+<td align="left"><strong>mapPartitions</strong>(<em>func</em>)</td>
+<td align="left">将待处理的数据以分区为单位发送到计算节点进行处理</td>
+</tr>
+<tr>
+<td align="left"><strong>mapPartitionsWithIndex</strong>(<em>func</em>)</td>
+<td align="left">将待处理的数据以分区为单位发送到计算节点进行处理，在处理时同时可以获取当前分区索引。</td>
+</tr>
+<tr>
+<td align="left"><strong>sample</strong>(<em>withReplacement</em>, <em>fraction</em>, <em>seed</em>)</td>
+<td align="left">根据指定的规则从数据集中抽取数据</td>
+</tr>
+<tr>
+<td align="left"><strong>union</strong>(<em>otherDataset</em>)</td>
+<td align="left">对源 RDD 和参数 RDD 求并集后返回一个新的 RDD</td>
+</tr>
+<tr>
+<td align="left"><strong>intersection</strong>(<em>otherDataset</em>)</td>
+<td align="left">对源 RDD 和参数 RDD 求交集后返回一个新的 RDD</td>
+</tr>
+<tr>
+<td align="left"><strong>distinct</strong>([<em>numPartitions</em>]))</td>
+<td align="left">将数据集中重复的数据去重</td>
+</tr>
+<tr>
+<td align="left"><strong>groupByKey</strong>([<em>numPartitions</em>])</td>
+<td align="left">将数据源的数据根据 key 对 value 进行分组</td>
+</tr>
+<tr>
+<td align="left"><strong>reduceByKey</strong>(<em>func</em>, [<em>numPartitions</em>])</td>
+<td align="left">可以将数据按照相同的 Key 对 Value 进行聚合</td>
+</tr>
+<tr>
+<td align="left"><strong>aggregateByKey</strong>(<em>zeroValue</em>)(<em>seqOp</em>, <em>combOp</em>, [<em>numPartitions</em>])</td>
+<td align="left">将数据根据不同的规则进行分区内计算和分区间计算</td>
+</tr>
+<tr>
+<td align="left"><strong>sortByKey</strong>([<em>ascending</em>], [<em>numPartitions</em>])</td>
+<td align="left">在一个(K,V)的 RDD 上调用，K 必须实现 Ordered 接口(特质)，返回一个按照 key 进行排序的RDD</td>
+</tr>
+<tr>
+<td align="left"><strong>join</strong>(<em>otherDataset</em>, [<em>numPartitions</em>])</td>
+<td align="left">在类型为(K,V)和(K,W)的 RDD 上调用，返回一个相同 key 对应的所有元素连接在一起的 (K,(V,W))的 RDD</td>
+</tr>
+<tr>
+<td align="left"><strong>cogroup</strong>(<em>otherDataset</em>, [<em>numPartitions</em>])</td>
+<td align="left">在类型为(K,V)和(K,W)的 RDD 上调用，返回一个(K,(Iterable,Iterable))类型的 RDD</td>
+</tr>
+<tr>
+<td align="left"><strong>coalesce</strong>(<em>numPartitions</em>)</td>
+<td align="left">根据数据量缩减分区，用于大数据集过滤后，提高小数据集的执行效率 当 spark 程序中，存在过多的小任务的时候，可以通过 coalesce 方法，收缩合并分区，减少 分区的个数，减小任务调度成本</td>
+</tr>
+<tr>
+<td align="left"><strong>repartition</strong>(<em>numPartitions</em>)</td>
+<td align="left">该操作内部其实执行的是 coalesce 操作，参数 shuffle 的默认值为 true。无论是将分区数多的 RDD 转换为分区数少的 RDD，还是将分区数少的 RDD 转换为分区数多的 RDD，repartition 操作都可以完成，因为无论如何都会经 shuffle 过程。</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p><font color="red">reduceByKey 和 groupByKey 的区别？</font></p>
+<p>Shuffle角度：reduceByKey 和 groupByKey 都存在 shuffle 的操作，但是 reduceByKey 可以在 shuffle 前对分区内相同 key 的数据进行预聚合（combine）功能，这样会减少落盘的 数据量，而 groupByKey 只是进行分组，不存在数据量减少的问题，reduceByKey 性能比较 高。</p>
+<p> 功能的角度：reduceByKey 其实包含分组和聚合的功能。GroupByKey 只能分组，不能聚 合，所以在分组聚合的场合下，推荐使用 reduceByKey，如果仅仅是分组而不需要聚合。那 么还是只能使用 groupByKe</p>
+<p><strong>控制操作(control operation)</strong></p>
+<ul>
+<li>cache():RDD[T]</li>
+<li>persist():RDD[T]</li>
+<li>persist(level:StorageLevel):RDD[T]</li>
+</ul>
+<p>Spark通过持久化操作将RDD持久化到不同层次的存储介质中，方便重复使用</p>
+<ul>
+<li>checkpoint</li>
+</ul>
+<p>checkpoint接口将RDD持久化到HDFS上，于persist(若也存在磁盘上)的区别是checkpoint会切断此RDD之前的依赖关系</p>
+<p>checkpoint主要作用：Spark长时间运行，过长的依赖将会耗用大量系统资源，定期将RDD进行checkpoint操作，可有效地节省系统资源；过长的依赖关系会出现节点失败RDD容错重新计算的成本将会大大提升</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val rdd =sc.makeRDD(1 to 4,1)</span><br><span class="line">val flatMapRDD= rdd.flatMap(x=&gt;Seq(x,x))</span><br><span class="line">sc.setCheckpointDir(&quot;temp&quot;)</span><br><span class="line">flatMapRDD.checkpoint()</span><br><span class="line">flatMapRDD.dependencies.head.rdd</span><br><span class="line">flatMapRDD.collect()</span><br><span class="line">flatMapRDD.dependencies.head.rdd</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>行动操作(action operation)</strong></p>
+<p>Spark中触发action operation将会触发一次Spark调度并返回相应结果</p>
+<table>
+<thead>
+<tr>
+<th align="left">Action</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>reduce</strong>(<em>func</em>)</td>
+<td align="left">聚集 RDD 中的所有元素，先聚合分区内数据，再聚合分区间数据</td>
+</tr>
+<tr>
+<td align="left"><strong>collect</strong>()</td>
+<td align="left">在驱动程序中，以数组 Array 的形式返回数据集的所有元素</td>
+</tr>
+<tr>
+<td align="left"><strong>count</strong>()</td>
+<td align="left">返回 RDD 中元素的个数</td>
+</tr>
+<tr>
+<td align="left"><strong>first</strong>()</td>
+<td align="left">返回 RDD 中的第一个元素</td>
+</tr>
+<tr>
+<td align="left"><strong>take</strong>(<em>n</em>)</td>
+<td align="left">返回一个由 RDD 的前 n 个元素组成的数组</td>
+</tr>
+<tr>
+<td align="left"><strong>takeOrdered</strong>(<em>n</em>, <em>[ordering]</em>)</td>
+<td align="left">返回该 RDD 排序后的前 n 个元素组成的数组</td>
+</tr>
+<tr>
+<td align="left"><strong>saveAsTextFile</strong>(<em>path</em>)</td>
+<td align="left">将数据保存到不同格式的文件中</td>
+</tr>
+<tr>
+<td align="left"><strong>countByKey</strong>()</td>
+<td align="left">统计每种 key 的个数</td>
+</tr>
+<tr>
+<td align="left"><strong>foreach</strong>(<em>func</em>)</td>
+<td align="left">分布式遍历 RDD 中的每一个元素，调用指定函数</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h4 id="Spark调度管理原理"><a href="#Spark调度管理原理" class="headerlink" title="Spark调度管理原理"></a>Spark调度管理原理</h4><p><strong>调度概述</strong></p>
+<p>调度的前期是判断多个作业任务的依赖关系，这些作业任务之间可能存在因果的依赖关系，所以DAG有向无环图来表示这种关系</p>
+<p>DAGScheduler负责将作业拆分为不同阶段的具有依赖关系的多批任务，简单理解为任务的逻辑调度</p>
+<p>TaskScheduler负责每个具体任务的实际物理调度</p>
+<blockquote>
+<p>Task：单个分区数据集上最小处理流程单元</p>
+<p>TaskSet：由一组关联的但相互间没有Shuffle依赖关系的任务所组成的任务集</p>
+<p>Stage：一个任务集对应的调度阶段</p>
+<p>Job：由一个RDD action生成的一个或多个调度阶段所组成的一次计算作业</p>
+<p>Application：spark应用程序，由一到多个Job组成</p>
+</blockquote>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h03z89yka2j30ds06zgm0.jpg"></p>
+<p>在Spark运行时，这些计算操作是延迟执行的，并不是所有的RDD操作都会触发Spark向集群提交实际作业，只有需要返回数据或输出数据操作才会触发实际计算工作，其他变换操作知识生成对应的RDD关系链，用来记录依赖关系和所需执行的运算；另外DAGScheduler内部维度了各种“任务/调度阶段/作业”的状态和互相之间的映射关系表，用于在任务状态更新，集群状态更新等情况下，正确维护作业运行逻辑</p>
+<p><strong>作业调度具体工作流程</strong></p>
+<p>每个作业从提交到完成，要经历拆分成任务为最小单位，按一定逻辑依赖关系一次提交执行，并返回结果</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h03zhvod2yj30jb0a1gm9.jpg"></p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h03zi7zjjdj30i90bkgmn.jpg"></p>
+<p><strong>调度任务拆分：</strong></p>
+<p>当一个RDD操作触发计算，向DAGScheduler提交作业时，DAGScheduler需要从RDD依赖链末端的RDD触发，遍历整个RDD依赖链，划分调度阶段，并决定各个调度阶段间的依赖关系，调度阶段的划分是以ShuffleDependency为依据。</p>
+<p><strong>调度阶段的提交：</strong></p>
+<p>在划分调度阶段步骤中会得到一个或多个有依赖关系的调度阶段，其中直接触发作业的RDD关联的调度阶段叫做FinalStage，DAGScheduler进一步从FinalStage生成一个作业实例，两者关系存储在映射表，用于调度阶段全部完成时做一些处理如报告状态，清理作业相关数据等</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h03zoa22rzj30ne05eaau.jpg"></p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h03znoilg5j30kd09k3zc.jpg"></p>
+<p>当一个属于中间过程调度阶段的任务完成后，DAGScheduler会检查对应的调度阶段的所有任务是否都完成了，都完成了将再次扫描一次等待列表中的所有调度阶段的列表，检查是否还有任何依赖的调度阶段未完成，若没有，说明调度阶段处理就绪状态，可以再次尝试提交</p>
+<p><strong>任务集的提交</strong></p>
+<p>调度阶段的提交，最终会被转换成一个任务集的提交，DAGScheduler通过TaskScheduler接口提交任务集，这个任务集最终会触发TaskScheduler构建一个TaskSetManager的实例来管理这个任务集的生命周期，对于DAGScheduler来说提交调度阶段的工作到此完成，而TaskScheduler的具体实现会在得到资源时，通过TaskSetManager调度具体的任务到对应的Executor节点上进行运算</p>
+<h4 id="Spark存储管理"><a href="#Spark存储管理" class="headerlink" title="Spark存储管理"></a>Spark存储管理</h4><p><strong>RDD持久化</strong></p>
+<p>分区和数据块的关系：</p>
+<p>在操作RDD时，这些操作都将施行在每一个分区上，可以说RDD上的运算都是基于分区的，但在存储管理模块，接触到的是数据块(block)，存储管理模块中对数据的存取都是以数据块为单位的，分区其实是一个逻辑上的概念，而数据块是物理上的数据实体</p>
+<p>在Spark中，分区和数据块是一一对应的，存储模块只关心数据块，对于数据块和分区之间的映射是通过名称上的约定进行的，ID号+索引号作为块的名称就建立了分区和块的映射</p>
+<p>在显示调用函数缓存RDD时，Spark内部就建立了RDD分区和数据块之间的映射，当读取缓存的RDD时，根据映射关系，就能从存储管理模块中获取到对应的数据块</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h03xgwdkm8j30hp06adg2.jpg"></p>
+<p>内存缓存：</p>
+<p>当Spark基于内存持久化缓存RDD时，RDD中每一个分区对应的数据块都是会被存储管理模块中的内存缓存(Memory Store所管理的)，内存缓存在内部维护了一个以数据块名称为Key，块内容为Value的哈希表</p>
+<p><font color="red">当内存不是或达到设置的阈值时如何处理?</font></p>
+<p>Spark通过spark.storage.memoryFration来配置(0.6)，JVM内存的60%可被内存缓存用来存储块内容，当占用&gt;60%，spark会丢一些数据块或将一些数据块存储到磁盘上来释放内存缓存空间，若丢掉的RDD 所依赖的父RDD是可被回溯并可用的，是不影响错误恢复机制的</p>
+<p>磁盘缓存：</p>
+<p>spark会将数据块放到磁盘目录下，通过spark.local.dir就配置了缓存在磁盘的目录</p>
+<p>持久化选项：</p>
+<p>当需要将RDD持久化，Spark可以调用persist()或cache()函数，对于RDD持久化，Spark提供了多种持久化选项</p>
+<ul>
+<li>MEMORY_ONLY：RDD以Java对象存储到到JVM内存heap中，超出内存缓存部分将不会缓存，下次需要重新计算</li>
+<li>MEMORY_AND_DISK：和MEMORY_ONLY不同点是超出内存缓存部分将存在磁盘，需要将从磁盘读取</li>
+<li>MEMORY_ONLY_SER：将序列化后的RDD存储到JVM中，占用空间更小，但读取时候需耗费更多CPU资源进行反序列化</li>
+<li>MEMORY_AND_DISK_SER：和MEMORY_ONLY_SER不同是会把内存无法容下分区写入磁盘缓存</li>
+<li>DISK_ONLY：将RDD的分区只缓存到磁盘中</li>
+</ul>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h03y9juahsj30n80cnmz7.jpg"></p>
+<p><strong>Shuffle数据持久化</strong></p>
+<p>每一个Map任务会根据Reduce任务的数量创建出相应的桶，桶的数量是M*R。Map任务产生的结果会根据所设置的分区算法填充到每个桶中，当Reduce任务启动时，会根据自己任务ID和所依赖的Map任务的ID从远端或本地存储管理模块中取得相应的桶作为输入处理</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h03yah7hklj30ny092q3o.jpg"></p>
+<p>和RDD持久化不同的是：首先Shuffle数据块必须在磁盘进行缓存，而不能选择在内存缓存，其次RDD基于磁盘持久化中，每个数据块对应一个文件，在Shuffle数据块持久化中，Shuffle数据块表示的只是逻辑概念，Shuffle有两种存储方式：</p>
+<p>一种是将Shuffle数据块映射成文件，另一种是将Shuffle数据块映射成文件中的一段，这种方式要spark.shuffle.consolidateFiles设置为true，这种方式将分时运行的Map任务产生的Shuffle数据块合并到同一个文件中，来减少Shuffle文件的总数</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h03yisqxnfj30n109rgmk.jpg"></p>
+<p><strong>广播(Broadcast)变量持久化</strong></p>
+<p>为了加速一些对小块数据的读取，最好数据在所有节点都有一份拷贝，每个任务都能从本节点拷贝读取数据而不用通过远程传输获取数据，广播变量实现了这个功能，广播变量由存储管理模块进行管理的，另外广播变量数据块是以MEMORY_AND_DISK持久化存储本节点的存储管理模块，通过设置过期清洗机制，Spark内部会清理过期的广播变量</p>
+<h4 id="Spark-Streaming"><a href="#Spark-Streaming" class="headerlink" title="Spark Streaming"></a>Spark Streaming</h4><p>用于快速构建可扩展，高吞吐，高容错的流处理程序</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h04s6ljwgfj30pl08pmxw.jpg"></p>
+<p>DStream(离散数据流)代表了一个数据流，数据流可从外部输入源获得也可以通过输入流的转换获得，DStream是通过一组时间序列上连续的RDD来表示</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h04s9jnhcij30hv04zq32.jpg"></p>
+<p><strong>DEMO</strong></p>
+<p>获取指定端口上的数据并进行词频统计</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">object NetworkWordCount &#123;</span><br><span class="line"></span><br><span class="line">  def main(args: Array[String]) &#123;</span><br><span class="line"></span><br><span class="line">    /*指定时间间隔为 5s*/</span><br><span class="line">    val sparkConf = new SparkConf().setAppName(&quot;NetworkWordCount&quot;).setMaster(&quot;local[2]&quot;)</span><br><span class="line">    val ssc = new StreamingContext(sparkConf, Seconds(5))</span><br><span class="line"></span><br><span class="line">    /*创建文本输入流,并进行词频统计*/</span><br><span class="line">    val lines = ssc.socketTextStream(&quot;hadoop001&quot;, 9999)</span><br><span class="line">    lines.flatMap(_.split(&quot; &quot;)).map(x =&gt; (x, 1)).reduceByKey(_ + _).print()</span><br><span class="line"></span><br><span class="line">    /*启动服务*/</span><br><span class="line">    ssc.start()</span><br><span class="line">    /*等待服务结束*/</span><br><span class="line">    ssc.awaitTermination()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>nc -lk 9999</code>打开端口写入测试数据</p>
+<p>Spark Streaming 编程的入口类是 StreamingContext，在创建时候需要指明 <code>sparkConf</code> 和 <code>batchDuration</code>(批次时间)，Spark 流处理本质是将流数据拆分为一个个批次，然后进行微批处理，<code>batchDuration</code> 就是批次拆分的时间间隔。这个时间可以根据业务需求和服务器性能进行指定，如果业务要求低延迟并且服务器性能也允许，则这个时间可以指定得很短。</p>
+<p>DStream 是 Spark Streaming 提供的基本抽象。它表示连续的数据流。在内部，DStream 由一系列连续的 RDD 表示。所以从本质上而言，应用于 DStream 的任何操作都会转换为底层 RDD 上的操作。</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h04sd4t22lj30pe083mxw.jpg"></p>
+<h4 id="Spark调优"><a href="#Spark调优" class="headerlink" title="Spark调优"></a>Spark调优</h4><p><strong>RDD调优</strong></p>
+<ul>
+<li>RDD复用</li>
+<li>尽早进行filter</li>
+<li>读取大量小文件用wholeTextFiles</li>
+<li>mapPartition和foreachPartition替代map和foreach操作</li>
+<li>filter+coalesce/repartition(减少分区)</li>
+<li>设置合理的并行度</li>
+<li>repartition/coalesce调节并行度</li>
+<li>reduceByKey本地预聚合</li>
+<li>使用持久化+checkpoint</li>
+<li>使用广播变量使用Kryo序列化</li>
+</ul>
+<p><strong>Shuffle调优</strong></p>
+<ul>
+<li>map和reduce端缓冲区大小</li>
+<li>reduce端重试次数和等待时间间隔</li>
+<li>bypass机制开启阈值</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE-Spark/" rel="tag"><i class="fa fa-tag"></i># 数据 Spark</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/03/Hadoop/" rel="prev" title="Hadoop">
+                  <i class="fa fa-chevron-left"></i> Hadoop
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/05/Kafka/" rel="next" title="Kafka">
+                  Kafka <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fab fa-microblog"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Keven He</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">NaNm</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">NaN:aN</span>
+  </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+-->
+
+<!--以下为添加的代码-->
+      <!--统计start-->
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <div class="powered-by">
+        <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+          本站访客数:<span id="busuanzi_value_site_uv"></span>
+        </span>
+        </div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+
+</html>
