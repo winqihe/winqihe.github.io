@@ -1,25 +1,21 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" >
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","width":240,"display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/avator.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Keven He">
+  <meta name="keywords" content="大数据开发,Spark,Flink,Kafka">
+  
     <meta name="description" content="HBase本文内容摘录于《HBase原理与实践》">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HBase">
@@ -55,257 +51,214 @@
 <meta property="article:modified_time" content="2022-03-10T08:36:54.694Z">
 <meta property="article:author" content="Keven He">
 <meta property="article:tag" content="大数据">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2022/03/078bfb0511e176a0.png">
+  
+  
+  <title>HBase - WenQi`s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-<link rel="canonical" href="http://example.com/2022/03/05/HBase/">
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/03/05/HBase/","path":"2022/03/05/HBase/","title":"HBase"}</script>
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>HBase | WenQi`s Blog</title>
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
 
 
 
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
+  
+<meta name="generator" content="Hexo 5.4.1"></head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
 
-  <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
+<body>
+  
 
-  <div class="site-meta">
+  <header>
+    
 
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">WenQi`s Blog</p>
-      <i class="logo-line"></i>
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>KevenHe</strong>
     </a>
-      <p class="site-subtitle" itemprop="description">No thing is impossible!</p>
-  </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                category
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                tag
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                about
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+      </ul>
     </div>
   </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首&emsp;&emsp;页</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关&emsp;&emsp;于</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标&emsp;&emsp;签</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分&emsp;&emsp;类</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归&emsp;&emsp;档</a></li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜&emsp;&emsp;索
-        </a>
-      </li>
-  </ul>
 </nav>
 
+  
 
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HBase"></span>
+          
+        </div>
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="搜索..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close" role="button">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
-
-</div>
         
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
+          
+  <div class="mt-3">
+    
+    
   </div>
 
-  <aside class="sidebar">
+  <div class="mt-1">
+    
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
+    
 
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HBase"><span class="nav-number">1.</span> <span class="nav-text">HBase</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0%E4%B8%80%E8%A7%88"><span class="nav-number">1.0.1.</span> <span class="nav-text">概述一览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.0.2.</span> <span class="nav-text">依赖服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.0.3.</span> <span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RegionServer%E7%BB%93%E6%9E%84"><span class="nav-number">1.0.4.</span> <span class="nav-text">RegionServer结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E6%B5%81%E7%A8%8B"><span class="nav-number">1.0.5.</span> <span class="nav-text">读写流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Compaction%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.0.6.</span> <span class="nav-text">Compaction实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.0.7.</span> <span class="nav-text">负载均衡实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%95%E6%9C%BA%E6%81%A2%E5%A4%8D%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.8.</span> <span class="nav-text">宕机恢复原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="nav-number">1.0.9.</span> <span class="nav-text">备份与恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98%E8%A7%A3"><span class="nav-number">1.0.10.</span> <span class="nav-text">面试题解</span></a></li></ol></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Keven He"
-      src="/images/avator.jpg">
-  <p class="site-author-name" itemprop="name">Keven He</p>
-  <div class="site-description" itemprop="description">心有猛虎，细嗅蔷薇。</div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">4</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">4</span>
-        <span class="site-state-item-name">标签</span>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author site-overview-item animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://blog.csdn.net/weixin_45462732" title="Blog → https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_45462732" rel="noopener" target="_blank"><i class="fa fa-coffee fa-fw"></i>Blog</a>
-      </span>
+    
+    
   </div>
 
 
-
-        </div>
+        
       </div>
+
+      
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
-
-    
-  <div class="back-to-top" role="button" aria-label="返回顶部">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
   </div>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-    <div class="main-inner post posts-expand">
-
-
-  
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/05/HBase/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avator.jpg">
-      <meta itemprop="name" content="Keven He">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WenQi`s Blog">
-      <meta itemprop="description" content="心有猛虎，细嗅蔷薇。">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="HBase | WenQi`s Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          HBase
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-03-05 21:36:55" itemprop="dateCreated datePublished" datetime="2022-03-05T21:36:55+08:00">2022-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-10 16:36:54" itemprop="dateModified" datetime="2022-03-10T16:36:54+08:00">2022-03-10</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>11k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>24 分钟</span>
-    </span>
 </div>
 
-        </div>
-      </header>
+</div>
 
+  </header>
+
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <h2 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h2><p>本文内容摘录于《HBase原理与实践》</p>
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HBase</h1>
+            
+            <div class="markdown-body">
+              
+              <h2 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h2><p>本文内容摘录于《HBase原理与实践》</p>
 <span id="more"></span>
 
 <h4 id="概述一览"><a href="#概述一览" class="headerlink" title="概述一览"></a>概述一览</h4><p><strong>基本概念：</strong></p>
@@ -314,10 +267,10 @@
 <p>column：列，HBase中的column由column family（列簇）以及qualif ier（列名）两部分组成，两者中间使用”:”相连。column family在表创建的时候需要指定，用户不能随意增减。一个column family下可以设置任意多个qualif ier，因此可以理解为HBase中的列可以动态增加，理论上甚至可以扩展到上百万列。</p>
 <p>timestamp：时间戳，每个cell在写入HBase的时候都会默认分配一个时间戳作为该cell的版本，当然，用户也可以在写入的时候自带时间戳。HBase支持多版本特性，即同一rowkey、column下可以有多个value存在，这些value使用timestamp作为版本号，版本越大，表示数据越新。</p>
 <p>cell：单元格，由五元组（row, column, timestamp, type, value）组成的结构，其中type表示Put/Delete这样的操作类型，timestamp代表这个cell的版本。这个结构在数据库中实际是以KV结构存储的，其中（row, column, timestamp, type）是K，value字段对应KV结构的V。</p>
-<p><img src="https://s3.bmp.ovh/imgs/2022/03/078bfb0511e176a0.png"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/03/078bfb0511e176a0.png" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                            <center>（HBase逻辑视图）</center></p>
 <p><strong>体系架构：</strong></p>
-<p><img src="https://s3.bmp.ovh/imgs/2022/03/0576dba2ceb0e8a3.png"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/03/0576dba2ceb0e8a3.png" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                                <center>（体系架构）</center>                                            </p>
 <ol>
 <li><p>Client：丰富的编程接口，Client访问数据行前要先通过元数据表定位目标数据所在RegionServer，发请求给RegionServer，这些元数据也会被缓存到本地。</p>
@@ -342,11 +295,11 @@
 <h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><p>通过ThriftServer的Java HBase客户端来请求HBase集群。</p>
 <p>定位Meta表：</p>
 <p>客户端在做任何数据操作时，都要先确定数据在哪个Region上，然后再根据Region的RegionServer信息，去对应的RegionServer上读取数据，HBase系统内部设计了一张特殊的表——hbase:meta表，专门用来存放整个集群所有的Region信息。hbase:meta中的hbase指的是namespace，HBase容许针对不同的业务设计不同的namespace，系统表采用统一的namespace，即hbase；meta指的是hbase这个namespace下的表名。</p>
-<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h00gqa64zqj30r507vdgm.jpg"></p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h00gqa64zqj30r507vdgm.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                    <center>Hbase:meta结构</center></p>
 <p><font color="red"> HBase作为一个分布式数据库系统，一个大的集群可能承担数千万的查询写入请求，而hbase:meta表只有一个Region，如果所有的流量都先请求hbase:meta表找到Region，再请求Region所在的RegionServer，那么hbase:meta表的将承载巨大的压力，这个Region将马上成为热点Region，且根本无法承担数千万的流量。那么，如何解决这个问题呢</font></p>
 <p>把hbase:meta表的Region信息缓存在HBase客户端</p>
-<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h00gu71x0zj30q309ldgz.jpg"></p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h00gu71x0zj30q309ldgz.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                                <center>客户端定义Region</center></p>
 <p>少量写和批量写：</p>
 <p>HBase提供了3种常见的数据写入API：</p>
@@ -354,14 +307,14 @@
 <p>table.put(List<Put> puts)：在客户端缓存put，等凑足了一批put，就将这些数据打包成一次RPC发送到服务端，一次性写WAL，并写MemStore。相比第一种方式省去了多次往返RPC以及多次刷盘的开销，吞吐量大大提升。不过，这个RPC操作耗时一般都会长一点，因为一次写入了多行数据。这些put中，可能有一部分失败，失败的那些put操作会经历若干次重试</Put></p>
 <p>bulk load：直接将待写入数据生成HFile，将这些HFile直接加载到对应的Region下的CF内。在生成HFile时，在HBase服务端没有任何RPC调用，只在load HFile时会调用RPC，一种完全离线的快速写入方式。bulk load应该是最快的批量写手段，同时不会对线上的集群产生巨大压力。在load完HFile之后，CF内部会进行Compaction，但是Compaction是异步的且可以限速，所以产生的IO压力是可控的。bulk load对线上集群非常友好。</p>
 <h4 id="RegionServer结构"><a href="#RegionServer结构" class="headerlink" title="RegionServer结构"></a>RegionServer结构</h4><p>一个RegionServer由一或多个HLog，BlockCache及多个Region组成，RegionServer负责Region的数据读写，一个Region由多个store组成，Store存放对应列簇数据，Store包含一个MemStore和多个HFile。</p>
-<p><img src="https://s3.bmp.ovh/imgs/2022/03/8343fa265a93d486.png"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/03/8343fa265a93d486.png" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                                <center>（RegionServer结构）</center></p>
 <p><strong>HLog</strong>：用来保证数据写入的可靠性</p>
 <p>HBase中系统故障恢复及主从复制都基于HLog实现，数据以追加的形式先写入HLog，再写入MemStore，如果RegionServer宕机，此时写入MemStore中但尚未Flush磁盘数据丢失，需要回访HLog补救丢失数据，HBase主从复制需要主集群将HLog日志发送给从集群，完成集群间复制</p>
-<p><img src="https://s3.bmp.ovh/imgs/2022/03/fb81be8e4743af98.png"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/03/fb81be8e4743af98.png" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                               <center> （HLog文件结构）</center></p>
 <p>HLog文件生成后不会永久存储在系统中，使命完成后，文件会失效最终删除</p>
-<p><img src="https://s3.bmp.ovh/imgs/2022/03/eebdaf515bf189bf.png"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/03/eebdaf515bf189bf.png" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                                <center>（HLog声明周期）</center></p>
 <p><strong>MemStore：</strong>MemStore作为一个缓存级的存储组件，缓存最近写入的数据</p>
 <p>此外HFile中KeyValue数据需按Key排序，根据有序Key建立索引树，提升数据读取效率，数据在落盘生成HFile前应完成排序，MemStore执行KeyValue排序</p>
@@ -370,7 +323,7 @@
 <p><strong>BlockCache</strong>：将数据块缓存在内存提高数据读取性能</p>
 <p>(通过这种方式来提升读取性能)客户端通过读取某个Block，先检查Block是否存在于BlockCache，存在直接加载不存在从HFile中加载，加载后缓存到BlockCache。</p>
 <h4 id="读写流程"><a href="#读写流程" class="headerlink" title="读写流程"></a>读写流程</h4><p><strong>写入流程</strong></p>
-<p><img src="https://s3.bmp.ovh/imgs/2022/03/dc380798368f4b30.png"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/03/dc380798368f4b30.png" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                                <center>（HBase写入流程）</center></p>
 <p>整体架构上可分为三阶段：</p>
 <p>客户端处理：客户端将写入请求预处理，根据元数据定位到写入数据的RegionServer，将请求发送给对应RegionServer</p>
@@ -378,7 +331,7 @@
 <p>MemStore Flush：当Region中的MemStore达到一定阈值时，将会Flush操作将内存中数据写入文件(HFile)</p>
 <p><strong>BulkLoad</strong></p>
 <p>首先使用MapReduce将待写入数据转换为HFile文件，再直接将这些HFile文件加载到集群中，BulkLoad没有将写请求发送给RegionServer处理，有效避免了给RegionServer带来较大的写入压力</p>
-<p><img src="https://s3.bmp.ovh/imgs/2022/03/94168ab67f4cc9c0.png"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/03/94168ab67f4cc9c0.png" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                                <center>(BulkLoad工作流程)</center></p>
 <p>BulkLoad主要有两个阶段：</p>
 <p>HFile生成阶段：会跑一个MR任务，mapper由自己实现，reducer由HBase负责，这阶段将为每个Region生成一个对应的HFile文件</p>
@@ -398,7 +351,7 @@
 <p>Compaction核心作用：合并小文件，减少文件数，稳定随机读延迟；提高数据的本地化率；清除无效数据，减小数据存储量，当然它的副作用是会消耗一定系统资源，影响上层业务的读取响应</p>
 <p>compaction基本流程</p>
 <p>HBase将该Compaction交给一个独立线程处理，该线程首先从对应Store中选择合适HFile文件进行合并。</p>
-<p><img src="https://i.bmp.ovh/imgs/2022/03/b5b5c60918ac87f9.png"></p>
+<p><img src="https://i.bmp.ovh/imgs/2022/03/b5b5c60918ac87f9.png" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                                <center>Compaction基本流程</center></p>
 <p>Compaction触发时机：MemStore Flush；后台线程周期性检查及手动触发</p>
 <p>HFile文件合并执行：(先选待合并HFile集合,再选合适处理线程,接着执行合并流程)</p>
@@ -411,14 +364,14 @@
 <h4 id="负载均衡实现"><a href="#负载均衡实现" class="headerlink" title="负载均衡实现"></a>负载均衡实现</h4><p><strong>Region迁移</strong></p>
 <p>HBase系统中，分片迁移就是Region迁移，Region在迁移的过程中不需迁移实际数据，只需将读写服务迁移</p>
 <p>迁移过程涉及到Region迁移过程涉及多种状态的改变；迁移过程中涉及Master、ZooKeeper（ZK）以及RegionServer等多个组件的相互协调。</p>
-<p><img src="https://i.bmp.ovh/imgs/2022/03/d9e83ebcda3a28bd.png"></p>
+<p><img src="https://i.bmp.ovh/imgs/2022/03/d9e83ebcda3a28bd.png" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                    <center>Region状态</center></p>
 <p>执行过程中，Region分为unassign阶段和assign阶段</p>
 <p>unassign表示Region从源RegionServer上下线</p>
-<p><img src="https://i.bmp.ovh/imgs/2022/03/f6bc751c1dc2bfff.png"></p>
+<p><img src="https://i.bmp.ovh/imgs/2022/03/f6bc751c1dc2bfff.png" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                            <center>Region unassign阶段</center></p>
 <p>assign表示Region在目标RegionServer上上线</p>
-<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00fd07wtfj30q00deab0.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00fd07wtfj30q00deab0.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                    <center>Region assign阶段</center></p>
 <p>Region迁移操作伴随着Region状态的不断变迁：思考一下</p>
 <p>为什么需要这些状态？</p>
@@ -442,22 +395,22 @@
 <p><strong>Region分裂</strong></p>
 <p>Region分裂是HBase最核心的功能之一，是实现分布式可扩展性的基础。HBase中，Region分裂有多种触发策略可以配置，一旦触发，HBase会寻找分裂点，然后执行真正的分裂操作</p>
 <p>Region分裂触发策略：</p>
-<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00fbwjmt0j30pp06mjrt.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00fbwjmt0j30pp06mjrt.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                            <center>分裂触发策略</center></p>
 <p>满足Region分裂策略之后就会触发Region分裂。分裂被触发后的第一件事是寻找分裂点，HBase对于分裂点的定义为：整个Region中最大Store中的最大文件中最中心的一个Block的首个rowkey。如果定位到的rowkey是整个文件的首个rowkey或者最后一个rowkey，则认为没有分裂点</p>
 <p>HBase将整个分裂过程包装成了一个事务，目的是保证分裂事务的原子性。整个分裂事务过程分为三个阶段：prepare、execute和rollback</p>
 <p>prepare阶段：在内存中初始化两个子Region，具体生成两个HRegionInfo对象，包含tableName、regionName、startkey、endkey等。同时会生成一个transaction journal，这个对象用来记录分裂的进展</p>
 <p>execute阶段：</p>
-<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00g7f5hbgj30p20i6mzi.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00g7f5hbgj30p20i6mzi.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                                    <center>分裂核心操作</center></p>
 <p>rollback阶段：如果execute阶段出现异常，则执行rollback操作，为了实现回滚，整个分裂过程分为很多子阶段，回滚程序会根据当前进展到哪个子阶段清理对应的垃圾数据。</p>
-<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h00g93t12hj30q80ag763.jpg"></p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h00g93t12hj30q80ag763.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                                <center>Region分裂子阶段</center></p>
 <h4 id="宕机恢复原理"><a href="#宕机恢复原理" class="headerlink" title="宕机恢复原理"></a>宕机恢复原理</h4><p>常见故障分析(RegionServer)：Full GC异常；HDFS异常；HBase bug；机器宕机。</p>
 <p>故障恢复基本原理：</p>
 <p>Master：采用基本的热备方式来实现Master高可用，</p>
 <p>RegionServer：RegionServer发生宕机，HBase马上会检测到，并在检测到宕机后将宕机RegionServer上所有Region重新分配到集群其他正常RegionServer，再根据HLog恢复丢失数据。</p>
-<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h00g0bqfc9j30hv0bot9g.jpg"></p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h00g0bqfc9j30hv0bot9g.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                            <center>RegionServer故障恢复</center></p>
 <p>Master检测RegionServer宕机：</p>
 <p>HBase使用ZooKeeper协助Master检测RegionServer宕机，使用ZooKeeper临时节点机制，RegionServer注册成临时节点之后，Master会watch在/rs节点上（该节点下的所有子节点一旦发生离线就会通知Master），这样一旦RegionServer发生宕机，RegionServer注册到/rs节点下的临时节点就会离线，这个消息会马上通知给Master，Master检测到RegionServer宕机。</p>
@@ -466,15 +419,15 @@
 <ol>
 <li>LogSplitting策略：HBase最初阶段日志切分的整个过程都由Master控制执行</li>
 </ol>
-<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h00ghvcu7cj30t00chab6.jpg"></p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h00ghvcu7cj30t00chab6.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                                    <center>LogSplitting</center></p>
 <ol start="2">
 <li>Distributed Log Splitting：Log Splitting的分布式实现，借助Master和所有RegionServer的计算能力进行日志切分，其中Master是协调者，RegionServer是实际的工作者</li>
 </ol>
-<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00gjapb9rj30s9080q3e.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00gjapb9rj30s9080q3e.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                            <center>Distributed Log Splitting</center></p>
 <p>Distributed Log Replay：</p>
-<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h00gk7vr1ij30q202fglu.jpg"></p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h00gk7vr1ij30q202fglu.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                            <center>Distributed Log Replay</center></p>
 <h4 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h4><p>使用Snapshot在线备份。Snapshot备份以快照技术为基础原理，备份过程不需要拷贝任何数据，因此对当前集群几乎没有任何影响，备份速度非常快而且可以保证数据一致性，Snapshot是HBase非常核心的一个功能，使用在线Snapshot备份可以满足用户很多需求，比如增量备份和数据迁移。</p>
 <p><strong>在线Snapshot备份与恢复的用法</strong></p>
@@ -491,18 +444,18 @@
 <p>clone_snapshot ‘snatshotName’,’tableName’</p>
 </blockquote>
 <p>ExportSnapshot，可以将A集群的快照数据迁移到B集群。ExportSnapshot是HDFS层面的操作，需使用MapReduce进行数据的并行迁移，因此需要在开启MapReduce的机器上进行迁移</p>
-<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00h79o51tj30ou03e3z7.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00h79o51tj30ou03e3z7.jpg" srcset="/img/loading.gif" lazyload></p>
 <p><strong>Snatshot原理</strong></p>
 <p>Snatshot流程：将MemStore中的缓存数据f lush到文件中；为所有HFile文件分别新建引用指针，这些指针元数据就是Snapshot。</p>
-<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00h8k684kj30ps0bejsf.jpg"></p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h00h8k684kj30ps0bejsf.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                        <center>snatshot原理</center></p>
 <p><strong>两阶段提交</strong></p>
 <p>HBase使用两阶段提交（Two-Phase Commit，2PC）协议来保证Snapshot的分布式原子性</p>
-<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h00haw7033j30ro0bcgmm.jpg"></p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h00haw7033j30ro0bcgmm.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                <center>两阶段提交原理</center></p>
 <p><strong>Snapshot核心实现</strong></p>
 <p> Region实现Snapshot</p>
-<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h00hcn988gj30p70agq3u.jpg"></p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h00hcn988gj30p70agq3u.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>​                                                                <center>snatshot基本流程</center></p>
 <blockquote>
 <p>Region生成的Snapshot文件是临时文件，在/hbase/.hbase-snapshot/.tmp目录下，因为Snapshot过程通常特别快，所以很难看到单个Region生成的Snapshot文件。</p>
@@ -558,103 +511,415 @@
 </li>
 </ol>
 
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">#大数据</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HBase</div>
+      <div>http://example.com/2022/03/05/HBase/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Keven He</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年3月5日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/05/Kafka/" title="Kafka">
+                        <span class="hidden-mobile">Kafka</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
     </div>
 
-    
-    
-    
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
 
-    <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag"><i class="fa fa-tag"></i># 大数据</a>
-          </div>
 
-        
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2022/03/05/Kafka/" rel="prev" title="Kafka">
-                  <i class="fa fa-chevron-left"></i> Kafka
-                </a>
-            </div>
-            <div class="post-nav-item">
-            </div>
-          </div>
-    </footer>
-  </article>
+  </aside>
+
+
+    </div>
+  </div>
 </div>
 
 
 
 
 
+  
 
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
 </div>
+
+    
+
+    
   </main>
 
-  <footer class="footer">
+  <footer>
     <div class="footer-inner">
+  
+  
+    <div class="statistics">
+  
+  
 
-
-<div class="copyright">
-  &copy; 2021 – 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fab fa-microblog"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Keven He</span>
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
 </div>
-<div class="wordcount">
-  <span class="post-meta-item">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-line"></i>
-    </span>
-    <span title="站点总字数">28k</span>
-  </span>
-  <span class="post-meta-item">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">1:02</span>
-  </span>
+
+  
+  
+  
 </div>
 
-<!--
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
-  </div>
--->
-
-<!--以下为添加的代码-->
-      <!--统计start-->
-        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-        <div class="powered-by">
-        <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-          本站访客数:<span id="busuanzi_value_site_uv"></span>
-        </span>
-        </div>
-
-
-    </div>
   </footer>
 
+  <!-- Scripts -->
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
 
   
-<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
-<script src="/js/third-party/search/local-search.js"></script>
 
+  
 
+  
 
+  
 
+  
+
+  
 
   
 
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
-
 </html>
