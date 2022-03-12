@@ -397,7 +397,7 @@
 <li>将这两个Region从hbase:meta中删除，并将新生成的Region添加到hbase:meta中。</li>
 <li>将新生成的Region上线。</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">merge_region &#x27;encoded_regionname&#x27;,&#x27;encoded_regionname&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">merge_region</span> <span class="hljs-string">&#x27;encoded_regionname&#x27;</span>,<span class="hljs-string">&#x27;encoded_regionname&#x27;</span><br></code></pre></td></tr></table></figure>
 
 <p><strong>Region分裂</strong></p>
 <p>Region分裂是HBase最核心的功能之一，是实现分布式可扩展性的基础。HBase中，Region分裂有多种触发策略可以配置，一旦触发，HBase会寻找分裂点，然后执行真正的分裂操作</p>
