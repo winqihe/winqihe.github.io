@@ -791,7 +791,131 @@
   <entry>
     <title>Kafka</title>
     <url>/2022/03/05/Kafka/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>Kafka面试题</p>
+<span id="more"></span>
+
+<h4 id="1-kafka用途和使用场景"><a href="#1-kafka用途和使用场景" class="headerlink" title="1 kafka用途和使用场景"></a>1 kafka用途和使用场景</h4><p>日志收集</p>
+<p>消息系统，解耦生产者和消费者</p>
+<p>数据埋点收集，比如用户行为发送到特定kafka的topic，供数据分析使用</p>
+<p>流式处理，比如spark streaming和storm （持续的从一个无边界的数据集读取数据，然后对它们进行处理并生成结果，就是流式处理）</p>
+<h4 id="2-kafka中的ISR、AR代表什么，ISR的伸缩值什么？"><a href="#2-kafka中的ISR、AR代表什么，ISR的伸缩值什么？" class="headerlink" title="2 kafka中的ISR、AR代表什么，ISR的伸缩值什么？"></a>2 kafka中的ISR、AR代表什么，ISR的伸缩值什么？</h4><p>AR：assigned Replicas：分区中所有的副本统称为AR。AR = ISR+OSR</p>
+<p>ISR：In-sync Replicas 所有与leader副本保持一定程度同步的副本（包括leader副本）组成IRS。</p>
+<p>OSR：（out-sync Replicas）与leader副本同步滞后很多的副本（不包括leader副本）组成OSR。</p>
+<p>-—-</p>
+<p>ISR集合的副本必须满足的条件：</p>
+<p>i) 副本所在的节点必须维持着与zk的链接</p>
+<p>ii) 副本最后一条消息的offset与leader副本最后一条消息的offset之间的差值不能超过一定的阈值</p>
+<p>-—</p>
+<p>每个分区的leader副本都会维护此分区的ISR集合，写请求首先由leader副本处理，之后follower副本会从leader副本拉取数据，这个过程有延迟，导致follower副本中保存的消息略少于leader副本，只要不超过阈值就可以容忍。</p>
+<p>-—</p>
+<p>IRS的伸缩性指的是Kafka在启动的时候会开启两个与ISR相关的定时任务，分别是isr-expiration和isr-change-propagation。isr-expiration会周期性的检测每个分区是否需要缩减其ISR。</p>
+<h4 id="3-Kafka中的HW、LEO、LSO、LW分别代表什么？"><a href="#3-Kafka中的HW、LEO、LSO、LW分别代表什么？" class="headerlink" title="3 Kafka中的HW、LEO、LSO、LW分别代表什么？"></a>3 Kafka中的HW、LEO、LSO、LW分别代表什么？</h4><p>高水位主要定义消息可见性，帮助kafka完成副本同步；</p>
+<p>hw：high watermark（高水位）：表示一个特定消息的偏移量，消费者只能拉取到这个offset之前的消息。</p>
+<p>leo：log end offset：表示当前日志文件中下一条写入消息的offset</p>
+<p>lso：last stable offset：它与kafka的事务有关。消费者端可以配置参数isolation.level，这个参数用于配置消费者事务的隔离级别。有两个值：read_uncommitted(默认值)和read_committed。如果开启了事务，消费者只能读取到iso之前的消息。</p>
+<p>LW：low watermark（低水位）：代表AR中最小的logStartOffset。</p>
+<h4 id="4-Kafka怎么实现消息顺序性"><a href="#4-Kafka怎么实现消息顺序性" class="headerlink" title="4 Kafka怎么实现消息顺序性"></a>4 Kafka怎么实现消息顺序性</h4><p>对于生产者端：对于同一个topic，假如有三个分区，我们可以根据key，保证消息的顺序性。对于相同的key，取模以后会发送到相同的分区中。在同一个分区的消息是有序的。</p>
+<p>对于消费者端：对于topic的每个分区，只能被消费者组中的一个消费者实例去消费，又因为同一个分区中消息是有顺序的，所以就保证了消费的顺序性。</p>
+<p>如果需要保证整个topic的消息有序性，就只设置一个分区。</p>
+<h4 id="5-分区器、序列化器、拦截器，以及它们的处理顺序"><a href="#5-分区器、序列化器、拦截器，以及它们的处理顺序" class="headerlink" title="5 分区器、序列化器、拦截器，以及它们的处理顺序"></a>5 分区器、序列化器、拦截器，以及它们的处理顺序</h4><p>整个kafka生产者客户端有两个小城协调运行。这两个线程是主线程和sender线程（发送线程）。</p>
+<p>主线程的作用：由KafkaProducer创建消息，然后通过可能的拦截器、序列化器、分区器的作用之后缓存到消息累加器。</p>
+<p>发送线程的作用：负责将消息累加器中的消息发送到kafka中。</p>
+<p>拦截器：分为生产者拦截器和消费者拦截器。生产者拦截器用于在消息发送前做一些准备工作，也可以用来在发送回调逻辑前做一些定制化的需求。</p>
+<p>序列化器：将key和value序列化成字节数组才可以将消息传入kafka。同样消费者需要用反序列化器把从kafka收到的字节数组转化成相应的对象。</p>
+<p>分区器：如果ProducerRecord指定了分区，就不需要分区器的作用。否则会经过分区器。分区器中的partition方法会根据入参(topic, key 序列化前后的value等)最终返回一个int类型的分区号。</p>
+<p>消息累加器：主要用来缓存消息以便Sender线程批量发送，从而减少网络传输资源。</p>
+<h4 id="6-生产者客户端的整体结构"><a href="#6-生产者客户端的整体结构" class="headerlink" title="6 生产者客户端的整体结构"></a>6 生产者客户端的整体结构</h4><p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h06wrc8wgdj315a0mcacn.jpg" alt="img"></p>
+<p>可参考文档：<a href="https://blog.csdn.net/ThreeAspects/article/details/108130254">https://blog.csdn.net/ThreeAspects/article/details/108130254</a></p>
+<h4 id="7-消费者组的消费者个数如果超过topic的分区数，那么就会有消费者消费不到数据，这句话是否正确。"><a href="#7-消费者组的消费者个数如果超过topic的分区数，那么就会有消费者消费不到数据，这句话是否正确。" class="headerlink" title="7 消费者组的消费者个数如果超过topic的分区数，那么就会有消费者消费不到数据，这句话是否正确。"></a>7 消费者组的消费者个数如果超过topic的分区数，那么就会有消费者消费不到数据，这句话是否正确。</h4><p>首先一个消费者组可以订阅多个topic，默认情况当消费者组中消费者的实例小于订阅topic的分区总数时，会有消费者消费不到数据。但是可以通过自定义分区分配策略，可以将一个消费者实例指定消费所有分区。</p>
+<h4 id="8-有哪些情况会导致重复消费"><a href="#8-有哪些情况会导致重复消费" class="headerlink" title="8 有哪些情况会导致重复消费"></a>8 有哪些情况会导致重复消费</h4><p>如果设置的手动提交位移，但是消费者消费后没有commit offset（程序崩溃、强行kill、消费超时）</p>
+<h4 id="9-有哪些情况会导致消息漏消费"><a href="#9-有哪些情况会导致消息漏消费" class="headerlink" title="9 有哪些情况会导致消息漏消费"></a>9 有哪些情况会导致消息漏消费</h4><p>与消费者有关的几个配置参数</p>
+<p>enable.auto.commit，默认是true，表示会自动提交位移</p>
+<p>auto.commit.interval.ms 默认是5s，在enable.auto.commit为true时，自动提交的间隔。</p>
+<p>max.poll.records 默认是500，单词消费者拉取消息的最大条数</p>
+<p>max.poll.interval.ms 默认是5min，表示如果5分钟内消费者没有消费完上次poll的消息，那么该消费者实例就主动发起离开group的请求。</p>
+<p>-—</p>
+<p>当enable.auto.commit为true时，当上一次poll拉取的数据消费完会进行下一次的poll，在经过auto.commit.interval.ms间隔后，下一次poll的时候，会提交之前所有消费消息的offset。</p>
+<p>举例说明：</p>
+<p>假如只设置一个patition。对于消费者组的中这个消费者实例，我们设置每次拉取20条消息，消费每条消息耗时1s。设置auto.commit.interval.ms为30s。</p>
+<p>可以知道消费组的offset每40s更新一次。因为每次poll会拉20条消息，消费这20条消息需要20s，在下一次拉取消息的时候还不到30s，所以不会提交offset。等第二次消费完成（就是第40s的时候），再次poll的时候，大于30s了，就会提交位移，此时会提交前40条消息的位移。</p>
+<p>—-基于以上的消费逻辑，可知重复消费的情况</p>
+<p>1）customer在消费过程中，应用被强制kill掉或异常退出。比如一次poll了500条，消费到200时，应用被强制退出导致offset没有提交。重启后就会重复消费</p>
+<p>2）消费者消费时间过长，超过了max.poll.interval.ms，如果在该时间段内没有消费完，消费者实例退出group会导致rebalance，进而导致消息重复消费。</p>
+<p>—-解决方案：</p>
+<p>1）提高消费消息的速度，可以异步处理</p>
+<p>2）适当增到max.poll.interval.ms时间，减少没必要的rebalance</p>
+<p>3）在消费者应用程序中先保存消息的唯一标识，每次poll过来先去重再消费。</p>
+<h4 id="10-kafkaConsumer是非线程安全的，如何实现多线程消费？"><a href="#10-kafkaConsumer是非线程安全的，如何实现多线程消费？" class="headerlink" title="10 kafkaConsumer是非线程安全的，如何实现多线程消费？"></a>10 kafkaConsumer是非线程安全的，如何实现多线程消费？</h4><h4 id="11-简述消费者和消费者组的关系"><a href="#11-简述消费者和消费者组的关系" class="headerlink" title="11 简述消费者和消费者组的关系"></a>11 简述消费者和消费者组的关系</h4><h4 id="12-当你通过kafka-topics-sh创建-删除一个topic时，kakfa背后的执行逻辑"><a href="#12-当你通过kafka-topics-sh创建-删除一个topic时，kakfa背后的执行逻辑" class="headerlink" title="12 当你通过kafka-topics.sh创建/删除一个topic时，kakfa背后的执行逻辑"></a>12 当你通过kafka-topics.sh创建/删除一个topic时，kakfa背后的执行逻辑</h4><p>1）会在zk中的/brokers/topics节点下创建一个新的topic节点</p>
+<p>2）触发controller的监听程序</p>
+<p>3）kafka controller负责topic的创建工作，并更新metadata cache</p>
+<h4 id="13-topic的分区是否可以增加（减少），如何增加（减少），如果不可以，为什么？"><a href="#13-topic的分区是否可以增加（减少），如何增加（减少），如果不可以，为什么？" class="headerlink" title="13 topic的分区是否可以增加（减少），如何增加（减少），如果不可以，为什么？"></a>13 topic的分区是否可以增加（减少），如何增加（减少），如果不可以，为什么？</h4><p>可以增加，不可以减少，因为被删除的分区的数据没有办法处理</p>
+<p>增加的命令：bin/kafka-topics.sh –zookeeper localhost：2181/kafka –alter –topic topic-config –patition 3(只能大于之前的值，否则会报错)</p>
+<h4 id="14-创建topic时，如何选择合适的分区数"><a href="#14-创建topic时，如何选择合适的分区数" class="headerlink" title="14 创建topic时，如何选择合适的分区数"></a>14 创建topic时，如何选择合适的分区数</h4><p>根据业务量吧，先测试一个分期的吞吐量，在根据业务数据量，确认需要多少分区</p>
+<h4 id="15-kafka内部有哪些topic，特征和作用是什么"><a href="#15-kafka内部有哪些topic，特征和作用是什么" class="headerlink" title="15 kafka内部有哪些topic，特征和作用是什么"></a>15 kafka内部有哪些topic，特征和作用是什么</h4><p>_customer_offset 保存消费组的偏移量</p>
+<h4 id="16-简述kafka的日志目录结构，kafka有哪些索引文件"><a href="#16-简述kafka的日志目录结构，kafka有哪些索引文件" class="headerlink" title="16 简述kafka的日志目录结构，kafka有哪些索引文件"></a>16 简述kafka的日志目录结构，kafka有哪些索引文件</h4><p>每个分区对应一个文件夹，文件夹的命名 topic-0，topic-1，内部有.log文件和.index文件。</p>
+<h4 id="17-kafka的过期数据清理"><a href="#17-kafka的过期数据清理" class="headerlink" title="17 kafka的过期数据清理"></a>17 kafka的过期数据清理</h4><p>清理的策略有两个，删除和压缩</p>
+<h4 id="18-kafka中的幂等如何实现"><a href="#18-kafka中的幂等如何实现" class="headerlink" title="18 kafka中的幂等如何实现"></a>18 kafka中的幂等如何实现</h4><p>只能保存同一个分区内保存幂等。通过produceId累加的方式保证幂等</p>
+<h4 id="19-kafka的事务"><a href="#19-kafka的事务" class="headerlink" title="19 kafka的事务"></a>19 kafka的事务</h4><p>设置read committed</p>
+<p>设置enable.idempotence = true</p>
+<p>上面代码段能够保证 Record1 和 Record2 被当作一个事务统一提交到 Kafka，要么它们全部提交成功，要么全部写入失败。实际上即使写入失败，Kafka 也会把它们写入到底层的日志中，也就是说 Consumer 还是会看到这些消息（如果事务失败中止了，Kafka没法像数据库一样执行回滚操作）。因此在 Consumer 端，读取事务型 Producer 发送的消息也是需要一些变更的。修改起来也很简单，设置 isolation.level 参数的值即可。</p>
+<h4 id="20-kafka哪些地方需要选举，这些地方的选举策略有哪些"><a href="#20-kafka哪些地方需要选举，这些地方的选举策略有哪些" class="headerlink" title="20 kafka哪些地方需要选举，这些地方的选举策略有哪些"></a>20 kafka哪些地方需要选举，这些地方的选举策略有哪些</h4><p>partition leader的选举，用到的选举是ISR</p>
+<p>然后是kafka的controller， 用到的是先到先得的策略</p>
+<h4 id="21-kafka中的延迟队列如何实现"><a href="#21-kafka中的延迟队列如何实现" class="headerlink" title="21 kafka中的延迟队列如何实现"></a>21 kafka中的延迟队列如何实现</h4><p>当你在网上购物的时候是否会遇到这样的提示：“三十分钟之内未付款，订单自动取消”？这个是延迟队列的一种典型应用场景。</p>
+<p>延迟队列存储的是对应的延迟消息，所谓“延迟消息”是指当消息被发送以后，并不想让消费者立刻拿到消息，而是等待特定时间后，消费者才能拿到这个消息进行消费。</p>
+<h4 id="22-kafka如何实现高吞吐"><a href="#22-kafka如何实现高吞吐" class="headerlink" title="22 kafka如何实现高吞吐"></a>22 kafka如何实现高吞吐</h4><p>使用分区的策略</p>
+<h4 id="生产者客户端"><a href="#生产者客户端" class="headerlink" title="生产者客户端"></a>生产者客户端</h4><p>​    生产者端可以自定义消息的分区策略，</p>
+<p>​    1)自定义一个实现类，继承producer.Partitioner接口，并实现其partition接口即可，接口参数（topic，key keyByte, value valueByte, Cluster）</p>
+<p>​    2)同时配置 kafkaProps.put(“partitioner.class”, “com.xx.partitioner.MyPartitioner”);</p>
+<h4 id="消费者客户端"><a href="#消费者客户端" class="headerlink" title="消费者客户端"></a>消费者客户端</h4><p>​    1）为了实现消费者的吞吐量，引入了消费者组的概念。指的是多个消费者实例共同组成一个组来消费一组主题。这组主题中的每个分区都只会被组内的一个消费者实例消费，其他消费者实例不能消费它。同时消费者组内的消费者中如果有新加入或者退出，kafka会自动检测，进行重平衡。</p>
+<p>​    2）Rebalance 就是让一个Consumer Group 下所有的Consumer实例就如何消费订阅主题的所有分区达成共识的过程。在 Rebalance 过程中，所有 Consumer 实例共同参与，在协调者组件的帮助下，完成订阅主题分区的分配。所谓协调者，在 Kafka 中对应的术语是 Coordinator，它专门为 Consumer Group 服务，负责为 Group 执行 Rebalance 以及提供位移管理和组成员管理等。</p>
+<p>​    具体来讲，Consumer 端应用程序在提交位移时，其实是向 Coordinator 所在的 Broker 提交位移。同样地，当 Consumer 应用启动时，也是向 Coordinator 所在的 Broker 发送各种请求，然后由 Coordinator 负责执行消费者组的注册、成员管理记录等元数据管理操作。</p>
+<p>​    3）根据groupId的hashcode，对分区数取模，找出一个分区id，然后根据该分区leader副本所在的broker作为对应的Coordinator。当kafka集群中的第一个consumer程序启动时，就会自动创建位移主题</p>
+<p>​    4）从Kafka 0.10.1.0 版本开始，KafkaConsumer就变为了双线程的设计，即用户主线程和心跳线程。但是心跳线程知识标识消费者是否存活。可以理解为KafkaConsumer仍是单线程设计。如何支持多线程有两个方案</p>
+<p>​    i）消费者程序启动多个线程，每个线程维护专属的kafkaconsumer实例</p>
+<p>​    ii）获取消费由一个或多个线程处理，处理消息交给特定的一个线程池来做，实现消息获取和处理的解耦。</p>
+<p>5）重平衡触发的条件：组成员数量发生变化、订阅主题数量发生变化、订阅主题的分区数发生变化</p>
+<h4 id="kafka如何实现高可用："><a href="#kafka如何实现高可用：" class="headerlink" title="kafka如何实现高可用："></a>kafka如何实现高可用：</h4><p>​    多个不同的broker分散在不同的机器上：当集群中一台机器宕机，即使它上面运行的所有broker进程都挂了，其他机器上的ebroker还能对外提供服务。</p>
+<p>​    副本机制：相同的数据拷贝在多台机器上。一个topic可以分为多个分区，对分区进行副本机制的管理，每个分区有一个leader分区和多个follower分区。</p>
+<p>kafka的伸缩性</p>
+<p>​    分区概念的引入：一个topic可以有多个分区。副本就是在分区这个层面定义的</p>
+<h4 id="kakfa服务器"><a href="#kakfa服务器" class="headerlink" title="kakfa服务器"></a>kakfa服务器</h4><p>​    kafka的服务器端由Broker服务进程构成，一个kafka集群由多个broker组成。broker负责接收和处理客户端发送过程的请求，以及对消息进行持久化。</p>
+<p>​    如何持久化数据：</p>
+<p>​        kafka使用消息日志（log）保存数据，一个日志就是磁盘上的一个只能追加写的物理文件。因为只能追加写是顺序io，实现了kafka高吞吐的一个重要手段。</p>
+<p>​        当然kafka也会定期的删除磁盘的一些数据。    使用的是日志段机制（log segemnt）。在kafka底层，一个日志又分为多个日志段，消息被追加写入到最新的日志段中。当一个日志段写满以后，kafka会自动切出一个新的日志段，并将老的日志段封存起来。kafka会在后台定期检查老的日志段是否能够被删除，从而实现磁盘空间的收回。</p>
+<h4 id="磁盘大小预估："><a href="#磁盘大小预估：" class="headerlink" title="磁盘大小预估："></a>磁盘大小预估：</h4><p>​    考虑因素：新增消息数、消息大小、消息存留时间、备份数、是否启用压缩    </p>
+<h4 id="broker端如何处理请求流程"><a href="#broker端如何处理请求流程" class="headerlink" title="broker端如何处理请求流程"></a>broker端如何处理请求流程</h4><p>kafka的客户端和broker的交互都是通过“请求/相应”的方式完成的，在tcp协议的基础上定义了一组自己的请求协议。比如PRODUCE请求用于生产消息；FETCH请求用于消息消息；METADATE请求用于请求集群元数据。所有请求都是通过tcp网络以socket的方式进行通讯</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h06wsc5z9rj30n30jygoc.jpg" alt="img"></p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h06wsn3r8aj30mv0msn04.jpg" alt="img"></p>
+<p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h06wt89flwj30mv0o1q8g.jpg" alt="img"></p>
+<h4 id="kafka的控制器组件"><a href="#kafka的控制器组件" class="headerlink" title="kafka的控制器组件"></a>kafka的控制器组件</h4><p>1）主要作用是在apache zookeeper帮助下管理和协调整个kafka集群，集群中任意一台 Broker 都能充当控制器的角色，但是只有一个broker充当控制器。</p>
+<p>2）zk是一个提供高可靠性的分布式协调服务框架。它使用的是类似于文件系统的树形结构，根节点以/开始，该结构的每个节点成为znode。用于保存元数据协调信息。</p>
+<p>3）ZooKeeper 赋予客户端监控 znode 变更的能力，即所谓的 Watch 通知功能。一旦 znode 节点被创建、删除，子节点数量发生变化，抑或是 znode 所存的数据本身变更，ZooKeeper 会通过节点变更监听器 (ChangeHandler) 的方式显式通知客户端。kafka大量使用watch功能实现对集群的协调管理。</p>
+<p>4）对于控制器的选取，kafka每个broker启动的时候，都会实例化一个KafkaController，会尝试去 ZooKeeper 中创建 /controller 节点。Kafka 当前选举控制器的规则是：第一个成功创建 /controller 节点的 Broker 会被指定为控制器。</p>
+<p>—=</p>
+<h4 id="控制器职责："><a href="#控制器职责：" class="headerlink" title="控制器职责："></a>控制器职责：</h4><p>主题管理（创建删除增加分区）</p>
+<p>分区重分配</p>
+<p>领导者选举（领导者选举主要是 Kafka 为了避免部分 Broker 负载过重而提供的一种换 Leader 的方案。这也是控制器的职责范围）</p>
+<p>集群成员管理（新增 Broker、Broker 主动关闭、Broker 宕机）</p>
+<h4 id="高水位的更新机制"><a href="#高水位的更新机制" class="headerlink" title="高水位的更新机制"></a>高水位的更新机制</h4><p>每个副本对象都保存了一组高水位值和 LEO 值，但实际上，在 Leader 副本所在的 Broker 上，还保存了其他 Follower 副本的 LEO 值。</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h06wthq5lvj30lb0lcwgq.jpg" alt="img"></p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h06wtrf9y7j30lo0cymyw.jpg" alt="img"></p>
+<p>在新一轮的拉取请求中，由于位移值是 0 的消息已经拉取成功，因此 Follower 副本这次请求拉取的是位移值 =1 的消息。Leader 副本接收到此请求后，更新远程副本 LEO 为 1，然后更新 Leader 高水位为 1。做完这些之后，它会将当前已更新过的高水位值 1 发送给 Follower 副本。Follower 副本接收到以后，也将自己的高水位值更新成 1。至此，一次完整的消息同步周期就结束了。事实上，Kafka 就是利用这样的机制，实现了 Leader 和 Follower 副本之间的同步。</p>
+<p>—数据丢失</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h06wu2gjjdj317w0mzn1k.jpg" alt="img"></p>
+<h4 id="Leader-Epoch实现高水位更新机制"><a href="#Leader-Epoch实现高水位更新机制" class="headerlink" title="Leader Epoch实现高水位更新机制"></a>Leader Epoch实现高水位更新机制</h4><p>上述的高水位更新需要额外多一次的拉取，当有多个follower时，就可能出现时间上的错配。</p>
+<p>所谓leader epoch可以认为是leader的版本，由两部分组成：</p>
+<p>i) Epoch 一个单调增加的版本号。每当leader副本变更时，都会增加该版本号。小版本号的leader表示已过期的leader，不再行使leader权利</p>
+<p>ii) 起始位置（start oddset）leader副本在该epoch值上写入的首条消息的位移。</p>
+<p>leader端多开辟一段内存保存leader的epoch信息。</p>
+<p>leader broker中会保存这样的一个缓存，并定期地写入到一个checkpoint文件中。</p>
+<p>当leader写底层log时它会尝试更新整个缓存——如果这个leader首次写消息，则会在缓存中增加一个条目；否则就不做更新。而每次副本重新成为leader时会查询这部分缓存，获取出对应leader版本的位移，这就不会发生数据不一致和丢失的情况。</p>
+<h4 id="调优kafka"><a href="#调优kafka" class="headerlink" title="调优kafka"></a>调优kafka</h4><p>kafka的性能一般指吞吐量和延时</p>
+<p>调优优先级：应用程序层 -&gt; 框架层 -&gt; JVM层  -&gt; 操作系统层</p>
+<p>第 1 层：应用程序层。它是指优化 Kafka 客户端应用程序代码。比如，使用合理的数据结构、缓存计算开销大的运算结果，抑或是复用构造成本高的对象实例等。这一层的优化效果最为明显，通常也是比较简单的。</p>
+<p>第 2 层：框架层。它指的是合理设置 Kafka 集群的各种参数。毕竟，直接修改 Kafka 源码进行调优并不容易，但根据实际场景恰当地配置关键参数的值，还是很容易实现的。</p>
+<p>第 3 层：JVM 层。Kafka Broker 进程是普通的 JVM 进程，各种对 JVM 的优化在这里也是适用的。优化这一层的效果虽然比不上前两层，但有时也能带来巨大的改善效果。</p>
+<p>第 4 层：操作系统层。对操作系统层的优化很重要，但效果往往不如想象得那么好。与应用程序层的优化效果相比，它是有很大差距的。</p>
+]]></content>
       <tags>
         <tag>中间件</tag>
       </tags>
