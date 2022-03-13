@@ -26,8 +26,11 @@
 <meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h08kkbe7coj30e808674k.jpg">
 <meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h08kjw381cj30hy0ctt9k.jpg">
 <meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h08kjijtdoj30hu09uaa5.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h08ksnfdk3j30go055aaj.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h08kyekp6nj30gz06wdg1.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h08kyv4bebj30f606adfx.jpg">
 <meta property="article:published_time" content="2022-03-12T14:01:04.000Z">
-<meta property="article:modified_time" content="2022-03-13T13:20:53.826Z">
+<meta property="article:modified_time" content="2022-03-13T13:42:04.779Z">
 <meta property="article:author" content="Keven He">
 <meta property="article:tag" content="Zookeeper">
 <meta name="twitter:card" content="summary_large_image">
@@ -302,8 +305,7 @@
 </blockquote>
 <p>比较推荐 <strong>写时修复</strong>，这种方式对性能消耗比较低。</p>
 <h3 id="一致性协议"><a href="#一致性协议" class="headerlink" title="一致性协议"></a>一致性协议</h3><p><strong>两阶段提交和三阶段提交</strong></p>
-<p><font color="red">两阶段提交</font></p>
-<blockquote>
+<h4 id="两阶段提交"><a href="#两阶段提交" class="headerlink" title="两阶段提交"></a>两阶段提交</h4><blockquote>
 <p>两阶段提交用来保持在分布式系统架构里的原子性和一致性，关于事务特性见前文，本文后面的PPT里也有简单补充。<br>其中包含的角色为：协调者，参与者</p>
 </blockquote>
 <p><strong>第一阶段：</strong></p>
@@ -343,8 +345,7 @@
 <li>设计太过保守：如果协调者无法获取参与者的信息，则只能通过自身的超时机制来确认是否中断事务，容错机制不是特别完善，任何一个节点失败都会导致整个事务的失败，失败影响的范围较大。</li>
 </ul>
 </blockquote>
-<p><font color="red">三阶段提交</font></p>
-<blockquote>
+<h4 id="三阶段提交"><a href="#三阶段提交" class="headerlink" title="三阶段提交"></a>三阶段提交</h4><blockquote>
 <p>三阶段针对两阶段的缺点，做出改进，将2PC的第一阶段拆分，并且在协调者和参与者中都引入超时机制。</p>
 </blockquote>
 <p><strong>第一阶段：</strong></p>
@@ -363,7 +364,7 @@
 <ol>
 <li>协调者发送预提交请求<br> 协调者向所有参与者发送PreCommit请求，协调者进入Prepare状态。</li>
 <li>事务预提交<br> 参与者收到preCommit之后，执行事务操作，写redo和undo信息到事务日志中。</li>
-<li>反馈预提交结果<br> 参与者如果成功执行了事务操作，反馈给协调者ACK响应，并等待协调者最终执行，commit或者abort（***注意此处的commit或者abort是对preCommit的处理，不是最终提交***）</li>
+<li>反馈预提交结果<br> 参与者如果成功执行了事务操作，反馈给协调者ACK响应，并等待协调者最终执行，commit或者abort（注意此处的commit或者abort是对preCommit的处理，不是最终提交）</li>
 </ol>
 <p>结果2：中断preCommit，任何一个参与者向协调者发送No，或者协调者等待响应超时，则开始中断。</p>
 <ol>
@@ -407,16 +408,112 @@
 <p>redo和undo日志：<br> redo日志用来重放，找到所有已经commit的事务，根据redo log重做，记&gt;录在MySQL存储页的物理修改；undo用来回滚，找到所有uncommitted的事务，利用undo来回滚，记录逻辑的修改（insert-&gt;delete)。另外undo也有自己的redo日志。对应的过程参考下图，过程A先于过程B：</p>
 </blockquote>
 <p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h08kjijtdoj30hu09uaa5.jpg" srcset="/img/loading.gif" lazyload></p>
-<h3 id="Zookeeper初识"><a href="#Zookeeper初识" class="headerlink" title="Zookeeper初识"></a>Zookeeper初识</h3><p><strong>什么是Zookeeper</strong></p>
-<p><strong>Zookeeper的ZAB协议</strong></p>
-<h3 id="Zookeeper典型场景"><a href="#Zookeeper典型场景" class="headerlink" title="Zookeeper典型场景"></a>Zookeeper典型场景</h3><p><strong>数据发布/订阅</strong></p>
-<p><strong>负载均衡</strong></p>
-<p><strong>命名服务</strong></p>
-<p><strong>分布式协调/通知</strong></p>
-<p><strong>集群管理</strong></p>
-<p><strong>Master选举</strong></p>
-<p><strong>分布式锁</strong></p>
-<p><strong>分布式队列</strong></p>
+<h3 id="Zookeeper初识"><a href="#Zookeeper初识" class="headerlink" title="Zookeeper初识"></a>Zookeeper初识</h3><h4 id="什么是Zookeeper"><a href="#什么是Zookeeper" class="headerlink" title="什么是Zookeeper"></a>什么是Zookeeper</h4><p>Zookeeper 是一个开源的分布式协调服务，。Zookeeper 可以用于实现分布式系统中常见的发布/订阅、负载均衡、命令服务、分布式协调/通知、集群管理、Master 选举、分布式锁和分布式队列等功能，特性如下：</p>
+<blockquote>
+<ul>
+<li><strong>顺序一致性</strong>：从一个客户端发起的事务请求，最终都会严格按照其发起顺序被应用到 Zookeeper 中；</li>
+<li><strong>原子性</strong>：所有事务请求的处理结果在整个集群中所有机器上都是一致的；不存在部分机器应用了该事务，而另一部分没有应用的情况；</li>
+<li><strong>单一视图</strong>：所有客户端看到的服务端数据模型都是一致的；</li>
+<li><strong>可靠性</strong>：一旦服务端成功应用了一个事务，则其引起的改变会一直保留，直到被另外一个事务所更改；</li>
+<li><strong>实时性</strong>：一旦一个事务被成功应用后，Zookeeper 可以保证客户端立即可以读取到这个事务变更后的最新状态的数据。</li>
+</ul>
+</blockquote>
+<p>Zookeeper 致力于为那些高吞吐的大型分布式系统提供一个高性能、高可用、且具有严格顺序访问控制能力的分布式协调服务,它具有以下四个目标：</p>
+<ol>
+<li>简单的数据模型</li>
+</ol>
+<p>Zookeeper 通过树形结构来存储数据，它由一系列被称为 ZNode 的数据节点组成，类似于常见的文件系统。不过和常见的文件系统不同，Zookeeper 将数据全量存储在内存中，以此来实现高吞吐，减少访问延迟。</p>
+<ol start="2">
+<li>构建集群</li>
+</ol>
+<p>可以由一组 Zookeeper 服务构成 Zookeeper 集群，集群中每台机器都会单独在内存中维护自身的状态，并且每台机器之间都保持着通讯，只要集群中有半数机器能够正常工作，那么整个集群就可以正常提供服务。</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h08ksnfdk3j30go055aaj.jpg" srcset="/img/loading.gif" lazyload></p>
+<ol start="3">
+<li>顺序访问</li>
+</ol>
+<p>对于来自客户端的每个更新请求，Zookeeper 都会分配一个全局唯一的递增 ID，这个 ID 反映了所有事务请求的先后顺序。</p>
+<ol start="4">
+<li>高性能高可用</li>
+</ol>
+<p>ZooKeeper 将数据存全量储在内存中以保持高性能，并通过服务集群来实现高可用，由于 Zookeeper 的所有更新和删除都是基于事务的，所以其在读多写少的应用场景中有着很高的性能表现。</p>
+<h4 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h4><ol>
+<li> 集群角色</li>
+</ol>
+<p>Zookeeper 集群中的机器分为以下三种角色：</p>
+<ul>
+<li><strong>Leader</strong> ：为客户端提供读写服务，并维护集群状态，它是由集群选举所产生的；</li>
+<li><strong>Follower</strong> ：为客户端提供读写服务，并定期向 Leader 汇报自己的节点状态。同时也参与写操作“过半写成功”的策略和 Leader 的选举；</li>
+<li><strong>Observer</strong> ：为客户端提供读写服务，并定期向 Leader 汇报自己的节点状态，但不参与写操作“过半写成功”的策略和 Leader 的选举，因此 Observer 可以在不影响写性能的情况下提升集群的读性能。</li>
+</ul>
+<ol start="2">
+<li>会话</li>
+</ol>
+<p>Zookeeper 客户端通过 TCP 长连接连接到服务集群，会话 (Session) 从第一次连接开始就已经建立，之后通过心跳检测机制来保持有效的会话状态。通过这个连接，客户端可以发送请求并接收响应，同时也可以接收到 Watch 事件的通知。</p>
+<p>关于会话中另外一个核心的概念是 sessionTimeOut(会话超时时间)，当由于网络故障或者客户端主动断开等原因，导致连接断开，此时只要在会话超时时间之内重新建立连接，则之前创建的会话依然有效。</p>
+<ol start="3">
+<li>数据节点</li>
+</ol>
+<p>Zookeeper 数据模型是由一系列基本数据单元 <code>Znode</code>(数据节点) 组成的节点树，其中根节点为 <code>/</code>。每个节点上都会保存自己的数据和节点信息。Zookeeper 中节点可以分为两大类：</p>
+<ul>
+<li><strong>持久节点</strong> ：节点一旦创建，除非被主动删除，否则一直存在；</li>
+<li><strong>临时节点</strong> ：一旦创建该节点的客户端会话失效，则所有该客户端创建的临时节点都会被删除。</li>
+</ul>
+<p>临时节点和持久节点都可以添加一个特殊的属性：<code>SEQUENTIAL</code>，代表该节点是否具有递增属性。如果指定该属性，那么在这个节点创建时，Zookeeper 会自动在其节点名称后面追加一个由父节点维护的递增数字。</p>
+<ol start="4">
+<li> 节点信息</li>
+</ol>
+<p>每个 ZNode 节点在存储数据的同时，都会维护一个叫做 <code>Stat</code> 的数据结构，里面存储了关于该节点的全部状态信息。</p>
+<ol start="5">
+<li>Watcher</li>
+</ol>
+<p>Zookeeper 中一个常用的功能是 Watcher(事件监听器)，它允许用户在指定节点上针对感兴趣的事件注册监听，当事件发生时，监听器会被触发，并将事件信息推送到客户端。该机制是 Zookeeper 实现分布式协调服务的重要特性。</p>
+<ol start="6">
+<li>ACL</li>
+</ol>
+<p>Zookeeper 采用 ACL(Access Control Lists) 策略来进行权限控制，类似于 UNIX 文件系统的权限控制。它定义了如下五种权限：</p>
+<ul>
+<li>CREATE：允许创建子节点；</li>
+<li>READ：允许从节点获取数据并列出其子节点；</li>
+<li>WRITE：允许为节点设置数据；</li>
+<li>DELETE：允许删除子节点；</li>
+<li>ADMIN：允许为节点设置权限。</li>
+</ul>
+<h4 id="Zookeeper的ZAB协议"><a href="#Zookeeper的ZAB协议" class="headerlink" title="Zookeeper的ZAB协议"></a>Zookeeper的ZAB协议</h4><p><strong>ZAB协议与数据一致性</strong></p>
+<p>ZAB 协议是 Zookeeper 专门设计的一种支持崩溃恢复的原子广播协议。通过该协议，Zookeeper 基于主从模式的系统架构来保持集群中各个副本之间数据的一致性。具体如下：</p>
+<p>Zookeeper 使用一个单一的主进程来接收并处理客户端的所有事务请求，并采用原子广播协议将数据状态的变更以事务 Proposal 的形式广播到所有的副本进程上去。如下图：</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h08kyekp6nj30gz06wdg1.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>具体流程如下：</p>
+<p>所有的事务请求必须由唯一的 Leader 服务来处理，Leader 服务将事务请求转换为事务 Proposal，并将该 Proposal 分发给集群中所有的 Follower 服务。如果有半数的 Follower 服务进行了正确的反馈，那么 Leader 就会再次向所有的 Follower 发出 Commit 消息，要求将前一个 Proposal 进行提交。</p>
+<p><strong>ZAB协议的内容</strong></p>
+<p>ZAB 协议包括两种基本的模式，分别是崩溃恢复和消息广播：</p>
+<ol>
+<li>崩溃恢复</li>
+</ol>
+<p>当整个服务框架在启动过程中，或者当 Leader 服务器出现异常时，ZAB 协议就会进入恢复模式，通过过半选举机制产生新的 Leader，之后其他机器将从新的 Leader 上同步状态，当有过半机器完成状态同步后，就退出恢复模式，进入消息广播模式。</p>
+<ol start="2">
+<li>消息广播</li>
+</ol>
+<p>ZAB 协议的消息广播过程使用的是原子广播协议。在整个消息的广播过程中，Leader 服务器会每个事物请求生成对应的 Proposal，并为其分配一个全局唯一的递增的事务 ID(ZXID)，之后再对其进行广播。具体过程如下：</p>
+<p>Leader 服务会为每一个 Follower 服务器分配一个单独的队列，然后将事务 Proposal 依次放入队列中，并根据 FIFO(先进先出) 的策略进行消息发送。Follower 服务在接收到 Proposal 后，会将其以事务日志的形式写入本地磁盘中，并在写入成功后反馈给 Leader 一个 Ack 响应。当 Leader 接收到超过半数 Follower 的 Ack 响应后，就会广播一个 Commit 消息给所有的 Follower 以通知其进行事务提交，之后 Leader 自身也会完成对事务的提交。而每一个 Follower 则在接收到 Commit 消息后，完成事务的提交。</p>
+<p><img src="https://tva3.sinaimg.cn/large/0082w7mmly8h08kyv4bebj30f606adfx.jpg" srcset="/img/loading.gif" lazyload></p>
+<h3 id="Zookeeper典型场景"><a href="#Zookeeper典型场景" class="headerlink" title="Zookeeper典型场景"></a>Zookeeper典型场景</h3><h4 id="数据的发布-订阅"><a href="#数据的发布-订阅" class="headerlink" title="数据的发布/订阅"></a>数据的发布/订阅</h4><p>数据的发布/订阅系统，通常也用作配置中心。在分布式系统中，你可能有成千上万个服务节点，如果想要对所有服务的某项配置进行更改，由于数据节点过多，你不可逐台进行修改，而应该在设计时采用统一的配置中心。之后发布者只需要将新的配置发送到配置中心，所有服务节点即可自动下载并进行更新，从而实现配置的集中管理和动态更新。</p>
+<p>Zookeeper 通过 Watcher 机制可以实现数据的发布和订阅。分布式系统的所有的服务节点可以对某个 ZNode 注册监听，之后只需要将新的配置写入该 ZNode，所有服务节点都会收到该事件。</p>
+<h4 id="命名服务"><a href="#命名服务" class="headerlink" title="命名服务"></a>命名服务</h4><p>在分布式系统中，通常需要一个全局唯一的名字，如生成全局唯一的订单号等，Zookeeper 可以通过顺序节点的特性来生成全局唯一 ID，从而可以对分布式系统提供命名服务。</p>
+<h4 id="Master选举"><a href="#Master选举" class="headerlink" title="Master选举"></a>Master选举</h4><p>分布式系统一个重要的模式就是主从模式 (Master/Salves)，Zookeeper 可以用于该模式下的 Matser 选举。可以让所有服务节点去竞争性地创建同一个 ZNode，由于 Zookeeper 不能有路径相同的 ZNode，必然只有一个服务节点能够创建成功，这样该服务节点就可以成为 Master 节点。</p>
+<h4 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h4><p>可以通过 Zookeeper 的临时节点和 Watcher 机制来实现分布式锁，这里以排它锁为例进行说明：</p>
+<p>分布式系统的所有服务节点可以竞争性地去创建同一个临时 ZNode，由于 Zookeeper 不能有路径相同的 ZNode，必然只有一个服务节点能够创建成功，此时可以认为该节点获得了锁。其他没有获得锁的服务节点通过在该 ZNode 上注册监听，从而当锁释放时再去竞争获得锁。锁的释放情况有以下两种：</p>
+<ul>
+<li>当正常执行完业务逻辑后，客户端主动将临时 ZNode 删除，此时锁被释放；</li>
+<li>当获得锁的客户端发生宕机时，临时 ZNode 会被自动删除，此时认为锁已经释放。</li>
+</ul>
+<p>当锁被释放后，其他服务节点则再次去竞争性地进行创建，但每次都只有一个服务节点能够获取到锁，这就是排他锁。</p>
+<h4 id="集群管理"><a href="#集群管理" class="headerlink" title="集群管理"></a>集群管理</h4><p>Zookeeper 还能解决大多数分布式系统中的问题：</p>
+<ul>
+<li>如可以通过创建临时节点来建立心跳检测机制。如果分布式系统的某个服务节点宕机了，则其持有的会话会超时，此时该临时节点会被删除，相应的监听事件就会被触发。</li>
+<li>分布式系统的每个服务节点还可以将自己的节点状态写入临时节点，从而完成状态报告或节点工作进度汇报。</li>
+<li>通过数据的订阅和发布功能，Zookeeper 还能对分布式系统进行模块的解耦和任务的调度。</li>
+<li>通过监听机制，还能对分布式系统的服务节点进行动态上下线，从而实现服务的动态扩容。</li>
+</ul>
 <h3 id="Zookeeper技术内幕"><a href="#Zookeeper技术内幕" class="headerlink" title="Zookeeper技术内幕"></a>Zookeeper技术内幕</h3><p><strong>系统模型</strong></p>
 <p><strong>会话</strong></p>
 <p><strong>Leader选举</strong></p>
