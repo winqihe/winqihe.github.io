@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h08kyekp6nj30gz06wdg1.jpg">
 <meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h08kyv4bebj30f606adfx.jpg">
 <meta property="article:published_time" content="2022-03-12T14:01:04.000Z">
-<meta property="article:modified_time" content="2022-03-13T13:51:25.508Z">
+<meta property="article:modified_time" content="2022-03-13T13:55:30.121Z">
 <meta property="article:author" content="Keven He">
 <meta property="article:tag" content="Zookeeper">
 <meta name="twitter:card" content="summary_large_image">
@@ -408,6 +408,7 @@
 <p>redo和undo日志：<br> redo日志用来重放，找到所有已经commit的事务，根据redo log重做，记&gt;录在MySQL存储页的物理修改；undo用来回滚，找到所有uncommitted的事务，利用undo来回滚，记录逻辑的修改（insert-&gt;delete)。另外undo也有自己的redo日志。对应的过程参考下图，过程A先于过程B：</p>
 </blockquote>
 <p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h08kjijtdoj30hu09uaa5.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>———&gt;</p>
 <h3 id="Zookeeper初识"><a href="#Zookeeper初识" class="headerlink" title="Zookeeper初识"></a>Zookeeper初识</h3><h4 id="什么是Zookeeper"><a href="#什么是Zookeeper" class="headerlink" title="什么是Zookeeper"></a>什么是Zookeeper</h4><p>Zookeeper 是一个开源的分布式协调服务，。Zookeeper 可以用于实现分布式系统中常见的发布/订阅、负载均衡、命令服务、分布式协调/通知、集群管理、Master 选举、分布式锁和分布式队列等功能，特性如下：</p>
 <blockquote>
 <p><strong>顺序一致性</strong>：从一个客户端发起的事务请求，最终都会严格按照其发起顺序被应用到 Zookeeper 中；</p>
