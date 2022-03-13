@@ -614,13 +614,11 @@
 <p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h08kjijtdoj30hu09uaa5.jpg"></p>
 <h3 id="Zookeeper初识"><a href="#Zookeeper初识" class="headerlink" title="Zookeeper初识"></a>Zookeeper初识</h3><h4 id="什么是Zookeeper"><a href="#什么是Zookeeper" class="headerlink" title="什么是Zookeeper"></a>什么是Zookeeper</h4><p>Zookeeper 是一个开源的分布式协调服务，。Zookeeper 可以用于实现分布式系统中常见的发布/订阅、负载均衡、命令服务、分布式协调/通知、集群管理、Master 选举、分布式锁和分布式队列等功能，特性如下：</p>
 <blockquote>
-<ul>
-<li><strong>顺序一致性</strong>：从一个客户端发起的事务请求，最终都会严格按照其发起顺序被应用到 Zookeeper 中；</li>
-<li><strong>原子性</strong>：所有事务请求的处理结果在整个集群中所有机器上都是一致的；不存在部分机器应用了该事务，而另一部分没有应用的情况；</li>
-<li><strong>单一视图</strong>：所有客户端看到的服务端数据模型都是一致的；</li>
-<li><strong>可靠性</strong>：一旦服务端成功应用了一个事务，则其引起的改变会一直保留，直到被另外一个事务所更改；</li>
-<li><strong>实时性</strong>：一旦一个事务被成功应用后，Zookeeper 可以保证客户端立即可以读取到这个事务变更后的最新状态的数据。</li>
-</ul>
+<p><strong>顺序一致性</strong>：从一个客户端发起的事务请求，最终都会严格按照其发起顺序被应用到 Zookeeper 中；</p>
+<p><strong>原子性</strong>：所有事务请求的处理结果在整个集群中所有机器上都是一致的；不存在部分机器应用了该事务，而另一部分没有应用的情况；</p>
+<p><strong>单一视图</strong>：所有客户端看到的服务端数据模型都是一致的；</p>
+<p><strong>可靠性</strong>：一旦服务端成功应用了一个事务，则其引起的改变会一直保留，直到被另外一个事务所更改；</p>
+<p><strong>实时性</strong>：一旦一个事务被成功应用后，Zookeeper 可以保证客户端立即可以读取到这个事务变更后的最新状态的数据。</p>
 </blockquote>
 <p>Zookeeper 致力于为那些高吞吐的大型分布式系统提供一个高性能、高可用、且具有严格顺序访问控制能力的分布式协调服务,它具有以下四个目标：</p>
 <ol>
