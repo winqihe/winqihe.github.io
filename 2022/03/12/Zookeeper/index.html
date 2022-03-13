@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://tva4.sinaimg.cn/large/0082w7mmly8h08kyekp6nj30gz06wdg1.jpg">
 <meta property="og:image" content="https://tva3.sinaimg.cn/large/0082w7mmly8h08kyv4bebj30f606adfx.jpg">
 <meta property="article:published_time" content="2022-03-12T14:01:04.000Z">
-<meta property="article:modified_time" content="2022-03-13T13:50:13.440Z">
+<meta property="article:modified_time" content="2022-03-13T13:51:25.508Z">
 <meta property="article:author" content="Keven He">
 <meta property="article:tag" content="Zookeeper">
 <meta name="twitter:card" content="summary_large_image">
@@ -434,28 +434,28 @@
 <li>高性能高可用</li>
 </ol>
 <p>ZooKeeper 将数据存全量储在内存中以保持高性能，并通过服务集群来实现高可用，由于 Zookeeper 的所有更新和删除都是基于事务的，所以其在读多写少的应用场景中有着很高的性能表现。</p>
-<h4 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h4><p><strong>集群角色</strong></p>
+<h4 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h4><p>集群角色</p>
 <p>Zookeeper 集群中的机器分为以下三种角色：</p>
 <ul>
 <li><strong>Leader</strong> ：为客户端提供读写服务，并维护集群状态，它是由集群选举所产生的；</li>
 <li><strong>Follower</strong> ：为客户端提供读写服务，并定期向 Leader 汇报自己的节点状态。同时也参与写操作“过半写成功”的策略和 Leader 的选举；</li>
 <li><strong>Observer</strong> ：为客户端提供读写服务，并定期向 Leader 汇报自己的节点状态，但不参与写操作“过半写成功”的策略和 Leader 的选举，因此 Observer 可以在不影响写性能的情况下提升集群的读性能。</li>
 </ul>
-<p><strong>会话</strong></p>
+<p>会话</p>
 <p>Zookeeper 客户端通过 TCP 长连接连接到服务集群，会话 (Session) 从第一次连接开始就已经建立，之后通过心跳检测机制来保持有效的会话状态。通过这个连接，客户端可以发送请求并接收响应，同时也可以接收到 Watch 事件的通知。</p>
 <p>关于会话中另外一个核心的概念是 sessionTimeOut(会话超时时间)，当由于网络故障或者客户端主动断开等原因，导致连接断开，此时只要在会话超时时间之内重新建立连接，则之前创建的会话依然有效。</p>
-<p><strong>数据节点</strong></p>
+<p>数据节点</p>
 <p>Zookeeper 数据模型是由一系列基本数据单元 <code>Znode</code>(数据节点) 组成的节点树，其中根节点为 <code>/</code>。每个节点上都会保存自己的数据和节点信息。Zookeeper 中节点可以分为两大类：</p>
 <ul>
 <li><strong>持久节点</strong> ：节点一旦创建，除非被主动删除，否则一直存在；</li>
 <li><strong>临时节点</strong> ：一旦创建该节点的客户端会话失效，则所有该客户端创建的临时节点都会被删除。</li>
 </ul>
 <p>临时节点和持久节点都可以添加一个特殊的属性：<code>SEQUENTIAL</code>，代表该节点是否具有递增属性。如果指定该属性，那么在这个节点创建时，Zookeeper 会自动在其节点名称后面追加一个由父节点维护的递增数字。</p>
-<p><strong>节点信息</strong></p>
+<p>节点信息</p>
 <p>每个 ZNode 节点在存储数据的同时，都会维护一个叫做 <code>Stat</code> 的数据结构，里面存储了关于该节点的全部状态信息。</p>
-<p><strong>Watcher</strong></p>
+<p>Watcher</p>
 <p>Zookeeper 中一个常用的功能是 Watcher(事件监听器)，它允许用户在指定节点上针对感兴趣的事件注册监听，当事件发生时，监听器会被触发，并将事件信息推送到客户端。该机制是 Zookeeper 实现分布式协调服务的重要特性。</p>
-<p><strong>ACL</strong></p>
+<p>ACL</p>
 <p>Zookeeper 采用 ACL(Access Control Lists) 策略来进行权限控制，类似于 UNIX 文件系统的权限控制。它定义了如下五种权限：</p>
 <blockquote>
 <ul>
