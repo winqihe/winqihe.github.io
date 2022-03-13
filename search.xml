@@ -451,7 +451,10 @@
   <entry>
     <title>Zookeeper</title>
     <url>/2022/03/12/Zookeeper/</url>
-    <content><![CDATA[<h3 id="分布式架构"><a href="#分布式架构" class="headerlink" title="分布式架构"></a>分布式架构</h3><h4 id="集中式到分布式的演变"><a href="#集中式到分布式的演变" class="headerlink" title="集中式到分布式的演变"></a><strong>集中式到分布式的演变</strong></h4><p>集中式向分布式演变是必然的</p>
+    <content><![CDATA[<p>本文部分内容摘录于《从Paxos到Zookeeper分布式一致性原理与实践》</p>
+<span id="more"></span>
+
+<h3 id="分布式架构"><a href="#分布式架构" class="headerlink" title="分布式架构"></a>分布式架构</h3><h4 id="集中式到分布式的演变"><a href="#集中式到分布式的演变" class="headerlink" title="集中式到分布式的演变"></a><strong>集中式到分布式的演变</strong></h4><p>集中式向分布式演变是必然的</p>
 <h4 id="ACID到CAP-BASE"><a href="#ACID到CAP-BASE" class="headerlink" title="ACID到CAP/BASE"></a><strong>ACID到CAP/BASE</strong></h4><p><strong>ACID 是数据库事务完整性的理论，CAP 是分布式系统设计理论，BASE 是 CAP 理论中 AP 方案的延伸。</strong></p>
 <p>事务具有四个特征：原子性(Atomicity)，一致性(Consistency),隔离性(Isolation)和持久性(Durability)，简称ACID</p>
 <p><strong>CAP</strong> 是 <strong>Consistency（一致性）</strong>、<strong>Availability（可用性）</strong>、<strong>Partition Tolerance（分区容错性）</strong> </p>
@@ -623,6 +626,9 @@
 <p><strong>请求处理</strong></p>
 <p><strong>数据与存储</strong></p>
 </center></center>]]></content>
+      <tags>
+        <tag>Zookeeper</tag>
+      </tags>
   </entry>
   <entry>
     <title>大数据项目</title>
