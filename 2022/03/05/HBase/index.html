@@ -48,7 +48,7 @@
 <meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h00haw7033j30ro0bcgmm.jpg">
 <meta property="og:image" content="https://tva2.sinaimg.cn/large/0082w7mmly8h00hcn988gj30p70agq3u.jpg">
 <meta property="article:published_time" content="2022-03-05T13:36:55.000Z">
-<meta property="article:modified_time" content="2022-03-12T03:06:51.634Z">
+<meta property="article:modified_time" content="2022-03-17T01:10:10.687Z">
 <meta property="article:author" content="Keven He">
 <meta property="article:tag" content="大数据">
 <meta name="twitter:card" content="summary_large_image">
@@ -477,9 +477,7 @@
 <li>修改hbase:meta表，将克隆表的Region信息添加到hbase:meta表中，注意克隆表的Region名称和原数据表的Region名称并不相同（Region名称与table名称相关，table名不同，Region名则肯定不同）</li>
 <li>将这些Region通过round-robin方式均匀分配到整个集群中，并在ZooKeeper上将克隆表的状态设置为enabled，正式对外提供服务。</li>
 </ol>
-<h4 id="面试题解"><a href="#面试题解" class="headerlink" title="面试题解"></a>面试题解</h4><p><strong>HBase如何写数据</strong></p>
-<p>Client写入，存入MemStore一直到MemStore满，Flush成一个StoreFile增长到一定阈值，出发Compact合并，多个StoreFile合并成一个StoreFile同时进行版本合并和数据删除，当StoreFiles Compact后形成越来与大的StoreFile，单个StoreFile大小超过一定阈值(10G)触发split，把当前Region Split成两个Region，Region会下线，新Split除两个Region会被HMaster分配到相应HRegionServer，Region得以分压</p>
-<p><strong>HDFS和HBase使用场景</strong></p>
+<h4 id="面试题解"><a href="#面试题解" class="headerlink" title="面试题解"></a>面试题解</h4><p><strong>HDFS和HBase使用场景</strong></p>
 <p>首先Hbase基于HDFS存储的</p>
 <p>HDFS：一次写入多次读取，数据一致性，容错和恢复机制</p>
 <p>HBase：瞬间写入量很大，数据需要长久保存，不适用于有join和多级索引及表关系复杂数据模型，大数据量且有快速随机访问的需求，业务场景简单</p>
@@ -517,6 +515,29 @@
 <p>MemStore叫做写缓存；HBase执行写操作会先将数据写入MemStore，并顺序写入HLog；MemStore达到一定阈值将数据刷新到磁盘</p>
 <p><strong>BlockCache</strong></p>
 <p>BlockCache叫做读缓存；HBase会将查找的Block块缓存到BlockCache中，方便后续同一请求或临近数据查找请求，可直接从内存中获取</p>
+<p><strong>HBase读数据</strong></p>
+<ol>
+<li>zookeeper存储了meta表的region信息，先从zookeeper中找到meta表region位置，读取meta表数据，meta表中存储了用户表的region信息</li>
+<li>根据namespace，表名，rowkey在meta表中找到对应的region信息</li>
+<li>找到这个region对应的regionserver</li>
+<li>查找对应的region</li>
+<li>先从MemStore中查找数据，如果没有数据，将从StoreFile中读取(读取之后将数据缓存到MemStore上)</li>
+</ol>
+<p><strong>HBase写数据</strong></p>
+<ol>
+<li><p>Zookeeper保存了meta表的region信息，从meta表获取相应的meta信息，找到对应meta表数据</p>
+</li>
+<li><p>根据namespace，表名，rowkey从meta表的数据中找到写入数据对应的region信息，找到对应的regionserver</p>
+</li>
+<li><p>数据分别写入到WAL(HLog)和MemStore上各一份</p>
+</li>
+<li><p>MemStore数据达到一定阈值后就会Flush成一个StoreFile文件，如果数据有丢失，可以从WAL中恢复</p>
+</li>
+<li><p>多个StoreFile文件数到一定值时，触发compact合并操作，合并为一个StoreFile，并进行版本的合并和数据删除</p>
+</li>
+<li><p>compact后，逐渐形成越来越大的StoreFile，将会触发Split操作，将当前的StoreFile 分割为两个，相当于把一个大的region切割成两个region</p>
+</li>
+</ol>
 
               
             </div>
