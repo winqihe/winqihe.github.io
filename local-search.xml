@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>sql</title>
+    <link href="/2022/03/24/sql/"/>
+    <url>/2022/03/24/sql/</url>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.nowcoder.com/practice/b626ff9e2ad04789954c2132c74c0512?tpId=82&tqId=35496&rp=1&ru=/ta/sql&qru=/ta/sql&difficulty=&judgeStatus=3&tags=/question-ranking">考试分数(五)_牛客题霸_牛客网 (nowcoder.com)</a></p><p>思路是：使用子查询和窗口函数，只有正序和反序都为中位数即为中位数。</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">select</span> *,<br>count(score) <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> job) <span class="hljs-keyword">as</span> total,<br>row_number() <span class="hljs-keyword">over</span>(partiton <span class="hljs-keyword">by</span> job <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> score) <span class="hljs-keyword">as</span> a,<br>row_number() <span class="hljs-keyword">over</span>(partion <span class="hljs-keyword">by</span> job <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> score) <span class="hljs-keyword">as</span> b<br><span class="hljs-keyword">from</span> grade<br></code></pre></td></tr></table></figure><p>=&gt;</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">with</span> base <span class="hljs-keyword">as</span>(<br>    <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,<br>    <span class="hljs-built_in">count</span>(score) <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> job) <span class="hljs-keyword">as</span> total,<br>    <span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> job <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> score) <span class="hljs-keyword">as</span> a,<br>    <span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> job <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> score <span class="hljs-keyword">desc</span>) <span class="hljs-keyword">as</span> b<br>    <span class="hljs-keyword">from</span> grade<br>)<br><span class="hljs-keyword">select</span> id,job,score,b <span class="hljs-keyword">from</span> base <br><span class="hljs-keyword">where</span> a<span class="hljs-operator">&gt;=</span>total<span class="hljs-operator">/</span><span class="hljs-number">2</span> <span class="hljs-keyword">and</span> b<span class="hljs-operator">&gt;=</span>total<span class="hljs-operator">/</span><span class="hljs-number">2</span><br><span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> id<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>sql</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Zookeeper</title>
     <link href="/2022/03/12/Zookeeper/"/>
     <url>/2022/03/12/Zookeeper/</url>
