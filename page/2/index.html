@@ -215,23 +215,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/03/04/Spark/" target="_self">
-          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="Spark">
+        <a href="/2022/03/25/doc/yarn%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B/" target="_self">
+          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/03/04/Spark/" target="_self">
-          Spark
+        <a href="/2022/03/25/doc/yarn%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B/" target="_self">
+          
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/03/04/Spark/" target="_self">
+      <a class="index-excerpt" href="/2022/03/25/doc/yarn%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B/" target="_self">
         <div>
           
-          Spark大数据的计算分析引擎  官网 https:&#x2F;&#x2F;spark.apache.org&#x2F;   本文摘录于《Spark大数据处理技术》
+          作业提交  Client调用job.waitForCompletion⽅法，向整个集群提交MapReduce作业。 Client向RM申请一个作业id。 RM给Client返回该job资源的提交路径和作业id。 Client提交jar包、切⽚信息和配置文件到指定的资源提交路径。 Client提交完资源后，向RM申请运行MrAppMaster。  作业初始化  当RM收到Client的请求后，将该
         </div>
       </a>
 
@@ -239,19 +239,363 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-04 21:01" pubdate>
-              2022-03-04
+            <time datetime="2022-03-25 21:24" pubdate>
+              2022-03-25
             </time>
           </div>
         
         
         
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%95%B0%E6%8D%AE-Spark/">#数据 Spark</a>
-            
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/25/doc/%E5%B0%8F%E6%96%87%E4%BB%B6/" target="_self">
+          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/25/doc/%E5%B0%8F%E6%96%87%E4%BB%B6/" target="_self">
+          
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/03/25/doc/%E5%B0%8F%E6%96%87%E4%BB%B6/" target="_self">
+        <div>
+          
+          小文件过多会有什么危害,如何避免?Hadoop上大量HDFS元数据信息存储在NameNode内存中,因此过多的小文件必定会压垮NameNode的内存. 每个元数据对象约占150byte，所以如果有1千万个小文件，每个文件占用一个block，则NameNode大约需要2G空间。如果存储1亿个文件，则NameNode需要20G空间. 显而易见的解决这个问题的方法就是合并小文件,可以选择在客户端上传时执
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-25 21:24" pubdate>
+              2022-03-25
+            </time>
           </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/25/doc/Kafka%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E6%9C%BA%E5%88%B6/" target="_self">
+          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/25/doc/Kafka%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E6%9C%BA%E5%88%B6/" target="_self">
+          
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/03/25/doc/Kafka%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E6%9C%BA%E5%88%B6/" target="_self">
+        <div>
+          
+          由于生产者生产的消息会不断追加到 log 文件末尾，为防止 log 文件过大导致数据定位效率低下，Kafka 采取了分片和索引机制，将每个 partition 分为多个 segment。 每个 segment 对应两个文件：“.index”文件和“.log”文件。 这些文件位于一个文件夹下，该文件夹的命名规则为：topic 名称 + 分区序号。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-25 21:24" pubdate>
+              2022-03-25
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/25/doc/Kafka%E6%9E%B6%E6%9E%84/" target="_self">
+          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/25/doc/Kafka%E6%9E%B6%E6%9E%84/" target="_self">
+          
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/03/25/doc/Kafka%E6%9E%B6%E6%9E%84/" target="_self">
+        <div>
+          
+          Kafak 总体架构图中包含多个概念：   ZooKeeper： Zookeeper 负责保存 broker 集群元数据，并对控制器进行选 举等操作。 Producer： 生产者负责创建消息，将消息发送到 Broker。 Broker: 一个独立的 Kafka 服务器被称作 broker，broker 负责接收来自生产 者的消息，为消息设置偏移量，并将消息存储在磁盘。broker 为消费者提供服
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-25 21:24" pubdate>
+              2022-03-25
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/25/doc/LEO%E3%80%81HW%E3%80%81LSO%E3%80%81LW/" target="_self">
+          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/25/doc/LEO%E3%80%81HW%E3%80%81LSO%E3%80%81LW/" target="_self">
+          
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/03/25/doc/LEO%E3%80%81HW%E3%80%81LSO%E3%80%81LW/" target="_self">
+        <div>
+          
+          LEO、HW、LSO、LW LEO ： 是 LogEndOffset 的简称，代表当前日志文件中下一条  HW： 水位或水印一词，也可称为高水位（high watermark）,通常被用在流式 处理领域（flink、spark），以表征元素或事件在基于时间层面上的进展。在 kafka 中，水位的概念与时间无关，而是与位置信息相关。严格来说，它表示的就是位置信息，即位移（offset）。取 part
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-25 21:24" pubdate>
+              2022-03-25
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/25/doc/Leader%E5%89%AF%E6%9C%AC%E9%80%89%E4%B8%BE/" target="_self">
+          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/25/doc/Leader%E5%89%AF%E6%9C%AC%E9%80%89%E4%B8%BE/" target="_self">
+          
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/03/25/doc/Leader%E5%89%AF%E6%9C%AC%E9%80%89%E4%B8%BE/" target="_self">
+        <div>
+          
+          Leader 副本选举每个分区的 leader 会维护一个 ISR 集合，ISR 列表里面就是 follower 副本的 Borker  编号，只有“跟得上” Leader 的 follower 副本才能加入到 ISR 里面，这个是通过 replica.lag.time.max.ms 参数配置的。只有 ISR 里的成员才有被选为 leader 的可能。 所以当 Leader 挂掉了，而且 uncl
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-25 21:24" pubdate>
+              2022-03-25
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/25/doc/MRShuffle/" target="_self">
+          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/25/doc/MRShuffle/" target="_self">
+          
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/03/25/doc/MRShuffle/" target="_self">
+        <div>
+          
+          MapReduce Shufflemapper 阶段处理的数据如何传递给 reducer 阶段，是 MapReduce 框架中 最关键的一个流程，就叫 Shuffle Shuffle: 数据混洗（核心机制：数据分区，排序，局部聚合，缓存，拉取，再合并 排序）,具体说就是就是将 MapTask 输出的处理结果数据，按照 Partitioner 组件制定的规则分发 给 ReduceTask，并在分发的
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-25 21:24" pubdate>
+              2022-03-25
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/25/doc/kafka%E7%9A%84ISR%E6%9C%BA%E5%88%B6/" target="_self">
+          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/25/doc/kafka%E7%9A%84ISR%E6%9C%BA%E5%88%B6/" target="_self">
+          
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/03/25/doc/kafka%E7%9A%84ISR%E6%9C%BA%E5%88%B6/" target="_self">
+        <div>
+          
+          kafka 的 ISR 机制在分区中，所有副本统称为 AR ，Leader 维护了一个动态的 in-sync  replica(ISR),ISR 是指与 leader 副本保持同步状态的副本集合。当然 leader 副本 本身也是这个集合中的一员。 当 ISR 中的 follower 完成数据同步之后， leader 就会给 follower 发送 ack ,如果其 中一个 follower 长时
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-25 21:24" pubdate>
+              2022-03-25
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/25/doc/leader%E9%80%89%E4%B8%BE/" target="_self">
+          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/25/doc/leader%E9%80%89%E4%B8%BE/" target="_self">
+          
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/03/25/doc/leader%E9%80%89%E4%B8%BE/" target="_self">
+        <div>
+          
+          1. 服务器启动时期的Leader选举 　若进行Leader选举，则至少需要两台机器，这里选取3台机器组成的服务器集群为例。在集群初始化阶段，当有一台服务器Server1启动时，其单独无法进行和完成Leader选举，当第二台服务器Server2启动时，此时两台机器可以相互通信，每台机器都试图找到Leader，于是进入Leader选举过程。选举过程如下 　　(1) 每个Server发出一个投票。由于
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-25 21:24" pubdate>
+              2022-03-25
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/25/doc/shuffle/" target="_self">
+          <img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/25/doc/shuffle/" target="_self">
+          
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/03/25/doc/shuffle/" target="_self">
+        <div>
+          
+          MapReduce ShuffleHadoop的核心思想是MapReduce，但shuffle又是MapReduce的核心。shuffle的主要工作是从Map结束到Reduce开始之间的过程。shuffle阶段又可以分为Map端的shuffle和Reduce端的shuffle。 Map端的shuffle下图是MapReduce Shuffle的官方流程：  因为频繁的磁盘I&#x2F;O操作会严重的降低效率
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-25 21:24" pubdate>
+              2022-03-25
+            </time>
+          </div>
+        
+        
         
       </div>
     </article>
@@ -261,7 +605,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

@@ -2245,4 +2245,675 @@
         <tag>MySQL</tag>
       </tags>
   </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/HA%E9%AB%98%E5%8F%AF%E7%94%A8/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/README/</url>
+    <content><![CDATA[<h1 id="BigDataLoading"><a href="#BigDataLoading" class="headerlink" title="BigDataLoading"></a>BigDataLoading</h1><table>
+    <tr>
+      <th><img width="50px" src="/./pic/hadoop.jpg"></th>
+      <th><img width="50px" src="/./pic/spark.jpg"></th>
+      <th><img width="50px" src="/./pic/hbase.png"></th>
+      <th><img width="50px" src="/./pic/kafka.png"></th>
+      <th><img width="50px" src="/./pic/zookeeper.jpg"></th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#一hadoop">Hadoop</a></td>
+      <td align="center"><a href="#二spark">Spark</a></td>
+      <td align="center"><a href="#三hbase">HBase</a></td>
+      <td align="center"><a href="#四kafka">Kafka</a></td>
+      <td align="center"><a href="#五zookeeper">Zookeeper</a></td>
+    </tr>
+  </table>
+
+
+<h2 id="一、Hadoop"><a href="#一、Hadoop" class="headerlink" title="一、Hadoop"></a>一、Hadoop</h2><ul>
+<li><a href="doc/HDFS%E8%AF%BB%E5%86%99.md">HDFS读写流程</a></li>
+<li><a href="doc/MRShuffle.md">MapReduce Shuffle流程</a></li>
+<li><a href="doc/YARN%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.md">YARN原理</a></li>
+<li><a href="doc/HDFS%E6%9E%B6%E6%9E%84.md">HDFS架构</a></li>
+<li><a href="doc/%E5%B0%8F%E6%96%87%E4%BB%B6.md">小文件过多会有什么危害,如何避免</a></li>
+<li><a href="doc/block%E6%8D%9F%E5%9D%8F.md"> HDFS 读取文件时,一个块突然损坏了怎么办</a></li>
+<li><a href="doc/datanode%E6%8C%82%E6%8E%89.md">HDFS 上传文件时,一个 DataNode 突然挂掉了怎么办</a></li>
+<li><a href>MapReduce执行流程</a></li>
+<li><a href="doc/yarn%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B">YARN调度流程</a></li>
+<li><a href>SeconderyNameNode 的作用</a></li>
+<li><a href="doc/hadoop%E8%B0%83%E5%BA%A6%E5%99%A8.md">Hadoop调度器</a></li>
+</ul>
+<h2 id="二、Spark"><a href="#二、Spark" class="headerlink" title="二、Spark"></a>二、Spark</h2><ul>
+<li><a href>Spark的架构</a></li>
+<li><a href="doc/Spark%E5%AE%BD%E7%AA%84%E4%BE%9D%E8%B5%96.md">Spark的宽窄依赖</a></li>
+<li><a href="doc/cache,persist,checkpoint.md">Spark的cache,persist和checkpoint</a></li>
+<li><a href="doc/%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C.md">Spark如何处理数据倾斜问题</a></li>
+<li><a href="doc/Spark%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AF%94MapReduce%E5%BF%AB.md">spark为什么比mapreduce快</a></li>
+<li><a href="doc/shuffle.md">Spark shuffle和MapReduce shuffle</a></li>
+<li><a href>Spark提交流程</a></li>
+<li><a href="doc/spark%E4%BC%98%E5%8C%96.md">Spark的优化</a></li>
+<li><a href="doc/spark%E4%BD%9C%E4%B8%9A%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86.md">Spark作业运行原理</a></li>
+<li><a href>Spark各种运行模式的比较</a></li>
+<li><a href>Spark常用的RDD算子</a></li>
+<li><a href="doc/groupbyKey%E5%92%8CreducebyKey%E7%9A%84%E5%8C%BA%E5%88%AB.md">groupbyKey和reducebyKey区别</a></li>
+</ul>
+<h2 id="三、HBase"><a href="#三、HBase" class="headerlink" title="三、HBase"></a>三、HBase</h2><ul>
+<li><a href>HBase的rowkey设计原则</a></li>
+<li><a href="doc/%E8%AF%BB%E5%86%99%E6%B5%81%E7%A8%8B.md">HBase读写数据流程</a></li>
+<li><a href="doc/hbase%E6%9E%B6%E6%9E%84.md">HBase的架构</a></li>
+<li><a href="doc/hbase%E4%B8%8Ehive%E5%AF%B9%E6%AF%94.md">HBase和Hive对比</a></li>
+</ul>
+<h2 id="四、Kafka"><a href="#四、Kafka" class="headerlink" title="四、Kafka"></a>四、Kafka</h2><ul>
+<li><a href="doc/Kafka%E6%9E%B6%E6%9E%84.md">Kafka架构</a></li>
+<li><a href="doc/kafka%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%90%9E%E5%90%90%E9%87%8F%E5%92%8C%E6%80%A7%E8%83%BD.md">Kafka怎么做到高吞吐和性能的?</a></li>
+<li><a href>生产者向Kafka发送消息执行流程</a></li>
+<li><a href="doc/Kafka%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E6%9C%BA%E5%88%B6.md">Kafka文件存储机制</a></li>
+<li><a href="doc/kafka%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%B6%88%E6%81%AF%E6%98%AF%E6%9C%89%E5%BA%8F%E7%9A%84.md">Kafka如何实现消息有序</a></li>
+<li><a href="doc/KafkaACK%E5%BA%94%E7%AD%94.md">Kafka消息确认(ack应答)机制</a></li>
+<li><a href="doc/kafka%E7%9A%84ISR%E6%9C%BA%E5%88%B6.md">Kafka的ISR机制</a></li>
+<li><a href="doc/LEO%E3%80%81HW%E3%80%81LSO%E3%80%81LW.md">LEO、HW、LSO、LW 分别代表什么?</a></li>
+<li><a href="doc/Leader%E5%89%AF%E6%9C%AC%E9%80%89%E4%B8%BE.md">如何进行 Leader 副本选举?</a></li>
+<li><a href="doc/brokerLeader%E9%80%89%E4%B8%BE.md">如何进行 broker Leader 选举?</a></li>
+<li><a href="doc/%E6%B6%88%E8%B4%B9%E6%A8%A1%E5%BC%8F.md">Kafka支持的消费模式</a></li>
+<li><a href="doc/kafka%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E7%9A%84%E4%B8%8D%E9%87%8D%E5%A4%8D%E5%92%8C%E4%B8%8D%E4%B8%A2%E5%A4%B1.md">Kafka如何保证数据不重复和不丢失</a></li>
+<li><a href>flink+kafka怎么保证精准一次性消费</a></li>
+</ul>
+<h2 id="五、Zookeeper"><a href="#五、Zookeeper" class="headerlink" title="五、Zookeeper"></a>五、Zookeeper</h2><ul>
+<li><a href="doc/leader%E9%80%89%E4%B8%BE.md">leader选举过程</a></li>
+<li><a href="doc/CAP%E7%90%86%E8%AE%BA.md">CAP理论</a></li>
+<li><a href>zk的watch机制</a></li>
+<li><a href>zk采用那种分布式一致性协议</a></li>
+<li><a href>zk分布式锁实现方式</a></li>
+<li><a href>zk如何保证主从节点状态同步</a></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/CAP%E7%90%86%E8%AE%BA/</url>
+    <content><![CDATA[<h2 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h2><p><strong>CAP</strong> 也就是 <strong>Consistency（一致性）</strong>、<strong>Availability（可用性）</strong>、<strong>Partition Tolerance（分区容错性）</strong> 这三个单词首字母组合。</p>
+<ul>
+<li><strong>一致性（Consistency）</strong> : 所有节点访问同一份最新的数据副本</li>
+<li><strong>可用性（Availability）</strong>: 非故障的节点在合理的时间内返回合理的响应（不是错误或者超时的响应）。</li>
+<li><strong>分区容错性（Partition tolerance）</strong> : 分布式系统出现网络分区的时候，仍然能够对外提供服务。</li>
+</ul>
+<p>因此，<strong>分布式系统理论上不可能选择 CA 架构，只能选择 CP 或者 AP 架构。</strong> 比如 ZooKeeper、HBase 就是 CP 架构，Cassandra、Eureka 就是 AP 架构，Nacos 不仅支持 CP 架构也支持 AP 架构。</p>
+<p><strong>为啥不可能选择 CA 架构呢？</strong> 举个例子：若系统出现“分区”，系统中的某个节点在进行写操作。为了保证 C， 必须要禁止其他节点的读写操作，这就和 A 发生冲突了。如果为了保证 A，其他节点的读写操作正常的话，那就和 C 发生冲突了。</p>
+<p><strong>选择 CP 还是 AP 的关键在于当前的业务场景，没有定论，比如对于需要确保强一致性的场景如银行一般会选择保证 CP 。</strong></p>
+<p>另外，需要补充说明的一点是： <strong>如果网络分区正常的话（系统在绝大部分时候所处的状态），也就说不需要保证 P 的时候，C 和 A 能够同时保证。</strong></p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/KafkaACK%E5%BA%94%E7%AD%94/</url>
+    <content><![CDATA[<h3 id="Kafka-消息确认-ack-应答-机制了解吗？"><a href="#Kafka-消息确认-ack-应答-机制了解吗？" class="headerlink" title="Kafka 消息确认(ack 应答)机制了解吗？"></a>Kafka 消息确认(ack 应答)机制了解吗？</h3><p>为保证 producer 发送的数据，能可靠的达到指定的 topic ,Producer 提供了消息确 认机制。 生产者往 Broker 的 topic 中发送消息时，可以通过配置来决定有几个副 本收到这条消息才算消息发送成功。可以在定义 Producer 时通过 acks 参数指定， 这个参数支持以下三种值：</p>
+<p><strong>（1）acks = 0：producer 不会等待任何来自 broker 的响应。</strong></p>
+<p>特点：低延迟，高吞吐，数据可能会丢失。 如果当中出现问题，导致 broker 没有收到消息，那么 producer 无从得知，会造成 消息丢失。</p>
+<p><strong>（2）acks = 1（默认值）：只要集群中 partition 的 Leader 节点收到消息，生产 者就会收到一个来自服务器的成功响应。</strong></p>
+<p>如果在 follower 同步之前，leader 出现故障，将会丢失数据。 此时的吞吐量主要取决于使用的是 同步发送 还是 异步发送 ，吞吐量还受到发送中 消息数量的限制，例如 producer 在收到 broker 响应之前可以发送多少个消息。</p>
+<p><strong>（3）acks = -1：只有当所有参与复制的节点全部都收到消息时，生产者才会收到 一个来自服务器的成功响应。</strong></p>
+<p>这种模式是最安全的，可以保证不止一个服务器收到消息，就算有服务器发生崩溃， 整个集群依然可以运行。 根据实际的应用场景，选择设置不同的 acks，以此保证数据的可靠性。</p>
+<p>另外，Producer 发送消息还可以选择同步或异步模式,如果设置成异步，虽然会极 大的提高消息发送的性能，但是这样会增加丢失数据的风险。如果需要确保消息 的可靠性，必须将 producer.type 设置为 sync。</p>
+<blockquote>
+<p>#同步模式 producer.type=sync </p>
+<p>#异步模式 producer.type=async </p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/HDFS%E8%AF%BB%E5%86%99/</url>
+    <content><![CDATA[<h3 id="HDFS读数据"><a href="#HDFS读数据" class="headerlink" title="HDFS读数据"></a>HDFS读数据</h3><p><img src="https://tva1.sinaimg.cn/large/0082w7mmly8h011xz364sj30gz0b1dgm.jpg" alt="img"></p>
+<ol>
+<li>client 向 NameNode 发送 RPC 请求。请求文件 block 的位置</li>
+<li>namenode 收到请求之后会检查用户权限以及是否有这个文件，返回部分或全部的 block 列表，对于每个 block，NameNode 都会返 回含有该 block 副本的 DataNode 地址； 这些返回的 DN 地址，会按照集群拓 扑结构得出 DataNode 与客户端的距离，然后进行排序</li>
+<li>Client 选取排序靠前的 DataNode 来读取 block（客户端本身就是 DataNode,将从本地直接获取数据，短路读取特性）<strong>底层上本质是建立 Socket Stream（FSDataInputStream），重复的调用父类 DataInputStream 的 read 方法，直到这个块上的数据读取完毕</strong> </li>
+<li>当读完列表的 block 后，若文件读取还没有结束，客户端会继续向 NameNode 获取下一批的 block 列表 </li>
+<li>读取完一个 block 都会进行 checksum 验证，如果读取 DataNode 时出现错误，客户端会通知 NameNode，然后再从下一个拥有该 block 副本的 DataNode 继续读 </li>
+<li> 最终读取来所有的 block 会合并成一个完整的最终文件</li>
+</ol>
+<p>注：</p>
+<blockquote>
+<p>read 方法是并行的读取 block 信息，不是一块一块的读取；NameNode 只是返回 Client 请求包含块的 DataNode 地址，并不是返回请求块的数据 </p>
+</blockquote>
+<h3 id="HDFS写数据"><a href="#HDFS写数据" class="headerlink" title="HDFS写数据"></a>HDFS写数据</h3><p><img src="https://tva2.sinaimg.cn/large/0082w7mmly8h011x3wtgbj30ku0c5q3y.jpg" alt="img"></p>
+<ol>
+<li>Client通过RPC与NameNode建立通信向NameNode请求上传文件(检查用户权限，上传文件在HDFS对应目录下是否重名)，NameNode返回是否可以上传</li>
+<li>Client(对文件进行切分)请求第一个Block上传到那个DataNode</li>
+<li>NameNode返回3个DataNode节点(根据网络拓扑，机架感知及副本策略)</li>
+<li>Client请求与datanode1进行通信，建立pipline，datanode1收到请求会继续调用datanode2，datanode2调用datanode3，完整pipline建立，datanode1，2，3逐级应答Client</li>
+<li>Client向datanode1上传第一个Block(Packet)，先从磁盘读数据放到本地进行缓存，datanode1收到一个Packet就会传给datanode2，datanode2传给datanode3，pipline反向传输ack</li>
+<li>当一个Block传输完，Client再次请求上传第二个Block,NameNode重新选择三台DataNode给Client</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/Kafka%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<p><img src="https://img2018.cnblogs.com/blog/1595409/201909/1595409-20190910170254352-941637793.png" alt="img"></p>
+<p>由于生产者生产的消息会不断追加到 log 文件末尾，为防止 log 文件过大导致数据定位效率低下，<strong>Kafka 采取了分片和索引机制，将每个 partition 分为多个 segment。</strong></p>
+<p>每个 segment 对应两个文件：“.index”文件和“.log”文件。</p>
+<p>这些文件位于一个文件夹下，该文件夹的命名规则为：topic 名称 + 分区序号。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/Kafka%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fblog-10039692.file.myqcloud.com%2F1503038310607_9038_1503038310779.png&refer=http%3A%2F%2Fblog-10039692.file.myqcloud.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1650527929&t=19f9d522b6a467f6cdd40e08abe1dfba" alt="img"></p>
+<p>Kafak 总体架构图中包含多个概念： </p>
+<ol>
+<li>ZooKeeper： Zookeeper 负责保存 broker 集群元数据，并对控制器进行选 举等操作。</li>
+<li>Producer： 生产者负责创建消息，将消息发送到 Broker。</li>
+<li>Broker: 一个独立的 Kafka 服务器被称作 broker，broker 负责接收来自生产 者的消息，为消息设置偏移量，并将消息存储在磁盘。broker 为消费者提供服务， 对读取分区的请求作出响应，返回已经提交到磁盘上的消息。 </li>
+<li>Consumer： 消费者负责从 Broker 订阅并消费消息。</li>
+<li>Consumer Group： Consumer Group 为消费者组，一个消费者组可以包含一 个或多个 Consumer 。 使用 多分区 + 多消费者 方式可以极大 提高数据下游的处理速度，同一消费者组中 的消费者不会重复消费消息，同样的，不同消费组中的消费者消费消息时互不影响。 Kafka 就是通过消费者组的方式来实现消息 P2P 模式和广播模式。</li>
+<li>Topic： Kafka 中的消息 以 Topic 为单位进行划分，生产者将消息发送到特 定的 Topic，而消费者负责订阅 Topic 的消息并进行消费。</li>
+<li>Partition： 一个 Topic 可以细分为多个分区，每个分区只属于单个主题。同 一个主题下不同分区包含的消息是不同的，分区在存储层面可以看作一个可追加的日志（Log）文件，消息在被追加到分区日志文件的时候都会分配一个特定的偏移 量（offset）。</li>
+<li>Offset： offset 是消息在分区中的唯一标识，Kafka 通过它来保证消息在分 区内的顺序性，不过 offset 并不跨越分区，也就是说，Kafka 保证的是分区有序性 而不是主题有序性。 </li>
+<li>Replication： 副本，是 Kafka 保证数据高可用的方式，Kafka 同一 Partition  的数据可以在多 Broker 上存在多个副本，通常只有主副本对外提供读写服务，当 主副本所在 broker 崩溃或发生网络异常，Kafka 会在 Controller 的管理下会重新选 择新的 Leader 副本对外提供读写服务。 </li>
+<li>Record： 实际写入 Kafka 中并可以被读取的消息记录。每个 record 包含了 key、value 和 timestamp</li>
+<li>Leader: 每个分区多个副本的 “主” leader,生产者发送数据的对象，以及消 费者消费数据的对象都是 leader。 </li>
+<li>follower: 每个分区多个副本中的”从” follower,实时从 Leader 中同步数据， 保持和 leader 数据的同步。Leader 发生故障时，某个 follow 会成为新的 leader。</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/LEO%E3%80%81HW%E3%80%81LSO%E3%80%81LW/</url>
+    <content><![CDATA[<h3 id="LEO、HW、LSO、LW"><a href="#LEO、HW、LSO、LW" class="headerlink" title="LEO、HW、LSO、LW"></a>LEO、HW、LSO、LW</h3><ul>
+<li><p>LEO ： 是 LogEndOffset 的简称，代表当前日志文件中下一条</p>
+</li>
+<li><p>HW： 水位或水印一词，也可称为高水位（high watermark）,通常被用在流式 处理领域（flink、spark），以表征元素或事件在基于时间层面上的进展。在 kafka 中，水位的概念与时间无关，而是与位置信息相关。严格来说，它表示的就是位置信息，即位移（offset）。取 partition 对应的 ISR 中最小的 LEO 作为 HW，consumer 最多只能消费到 HW 所在的上一条信息。</p>
+</li>
+<li><p>LSO: 是 LastStableOffset 的简称，对未完成的事务而言，LSO 的值等于事务 中第一条消息的位置（firstUnstableOffset），对已完成的事务而言，它的 值同 HW 相同。</p>
+</li>
+<li><p>LW: Low Watermark 低水位，代表 AR 集合中最小的 logStartOffset 值。</p>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/Leader%E5%89%AF%E6%9C%AC%E9%80%89%E4%B8%BE/</url>
+    <content><![CDATA[<h3 id="Leader-副本选举"><a href="#Leader-副本选举" class="headerlink" title="Leader 副本选举"></a>Leader 副本选举</h3><p>每个分区的 leader 会维护一个 ISR 集合，ISR 列表里面就是 follower 副本的 Borker  编号，只有“跟得上” Leader 的 follower 副本才能加入到 ISR 里面，这个是通过 replica.lag.time.max.ms 参数配置的。只有 ISR 里的成员才有被选为 leader 的可能。</p>
+<p>所以当 Leader 挂掉了，而且 unclean.leader.election.enable=false 的情况下， Kafka 会从ISR列表中选择 第一个 follower 作为新的 Leader，因为这个分区拥有最新的已经 committed 的消息。通过这个可以保证已经 committed 的消息的数据可靠性。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/Spark%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AF%94MapReduce%E5%BF%AB/</url>
+    <content><![CDATA[<h3 id="Spark为什么比MapReduce快？"><a href="#Spark为什么比MapReduce快？" class="headerlink" title="Spark为什么比MapReduce快？"></a>Spark为什么比MapReduce快？</h3><p><strong>1、Spark vs MapReduce ≠ 内存 vs 磁盘</strong></p>
+<p>其实Spark和MapReduce的计算都发生在内存中，区别在于：</p>
+<ul>
+<li>MapReduce通常需要将计算的中间结果写入磁盘，然后还要读取磁盘，从而导致了频繁的磁盘IO。</li>
+<li>Spark则不需要将计算的中间结果写入磁盘，这得益于Spark的RDD（弹性分布式数据集，很强大）和DAG（有向无环图），其中DAG记录了job的stage以及在job执行过程中父RDD和子RDD之间的依赖关系。中间结果能够以RDD的形式存放在内存中，且能够从DAG中恢复，大大减少了<a href="https://www.zhihu.com/search?q=%E7%A3%81%E7%9B%98IO&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:1247877997%7D">磁盘IO</a>。</li>
+</ul>
+<p><strong>2、Spark vs MapReduce Shuffle的不同</strong></p>
+<p>Spark和MapReduce在计算过程中通常都不可避免的会进行Shuffle，两者至少有一点不同：</p>
+<ul>
+<li>MapReduce在Shuffle时需要花费大量时间进行排序，排序在MapReduce的Shuffle中似乎是不可避免的；</li>
+<li>Spark在Shuffle时则只有部分场景才需要排序，支持基于Hash的分布式聚合，更加省时；</li>
+</ul>
+<p><strong>3、多进程模型 vs <a href="https://www.zhihu.com/search?q=%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:1247877997%7D">多线程模型</a>的区别</strong></p>
+<ul>
+<li>MapReduce采用了多进程模型，而Spark采用了多线程模型。多进程模型的好处是便于细粒度控制每个任务占用的资源，但每次任务的启动都会消耗一定的启动时间。就是说MapReduce的Map Task和Reduce Task是进程级别的，而Spark Task则是基于线程模型的，就是说mapreduce 中的 map 和 reduce 都是 jvm 进程，每次启动都需要重新申请资源，消耗了不必要的时间（假设容器启动时间大概1s，如果有1200个block，那么单独启动<a href="https://www.zhihu.com/search?q=map%E8%BF%9B%E7%A8%8B%E4%BA%8B%E4%BB%B6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:1247877997%7D">map进程事件</a>就需要20分钟）</li>
+<li>Spark则是通过复用线程池中的线程来减少启动、关闭task所需要的开销。（多线程模型也有缺点，由于同节点上所有任务运行在一个进程中，因此，会出现严重的资源争用，难以细粒度控制每个任务占用资源）</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/MRShuffle/</url>
+    <content><![CDATA[<h3 id="MapReduce-Shuffle"><a href="#MapReduce-Shuffle" class="headerlink" title="MapReduce Shuffle"></a>MapReduce Shuffle</h3><p>mapper 阶段处理的数据如何传递给 reducer 阶段，是 MapReduce 框架中 最关键的一个流程，就叫 Shuffle</p>
+<p>Shuffle: 数据混洗（核心机制：数据分区，排序，局部聚合，缓存，拉取，再合并 排序）,具体说就是就是将 MapTask 输出的处理结果数据，按照 Partitioner 组件制定的规则分发 给 ReduceTask，并在分发的过程中，对数据按 key 进行了分区和排序</p>
+<p><img src="https://tva4.sinaimg.cn/large/0082w7mmly8h018q2xrp5j30p60djq4e.jpg" alt="img"></p>
+<ol>
+<li>Collect阶段：MapTask的数据输出到环形缓冲区</li>
+<li>Spill阶段：当内存中数据量到一定阈值，会将数据写入本地磁盘(将数据写入磁盘前需要对数据进行一次排序)，如果配置combiner会将相同分区号和key的数据进行排序</li>
+<li>MapTask阶段的Merge：把所有溢出的临时文件进行一次merge，确保一个MapTask最终只产生一个中间数据文件</li>
+<li>Copy阶段：ReduceTask启动Fetcher线程到已完成MapTask节点上copy一份数据</li>
+<li>ReduceTask阶段的Merge：在ReduceTask复制数据同时，会在后台开启两个线程对内存到本地的数据文件进行merge</li>
+<li>Sort阶段：对数据进行merge同时，会进行排序，由于MapTask阶段已经对数据进行了局部排序，ReduceTask只需保证Copy数据的最终整体有效性</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/Spark%E4%BD%9C%E4%B8%9A%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<p><img src="/C:/Users\winqihe\Desktop\BigDataLoading\pic\1f1ddad5.png"></p>
+<p>spark-submit提交一个spark作业之后，作业就会启动一个对应的Driver进程。根据使用的部署模式（deploy-mode）不同：<br>1）Driver进程可能在本地启动，也可能在集群中的某个工作节点上启动；<br>2）Driver进程本身会根据我们设置的参数，占有一定数量的内存和CPU core。<br>Driver进程向集群管理器（可以是Spark Standlone集群，也可以是其他的资源管理集群，比如：YARN作为资源管理集群。）申请运行spark作业需要使用的资源，这里的资源指的是Executor进程。YARN集群管理器会根据我们为Spark作业设置的资源参数，在各个工作节点上，启动一定数据量的Executor进程，每个Executor进程都会占有一定数量的内存和CPU core。</p>
+<p>在申请到了作业执行所需要的资源之后，Driver进程就会开始调用和执行编写的作业代码。Driver进程会将编写的Spark作业代码拆分为多个stage，每个stage执行一部分代码片段，并为每个stage创建一批task，然后将这些task分配到各个Executor进程中执行。</p>
+<p>task是最小的计算单元，负责执行一模一样的计算逻辑（编写代码的某个片段），只是每个task处理的数据不同而已。一个stage的所有task都执行完成之后，会在各个节点本地的磁盘文件中写入计算中间结果，然后Driver就会调度运行下一个stage。下一个stage的task的输入数据就是上一个stage输出的中间结果。如此循往复，直到将我们自己的编写的代码全部执行完成，并且计算完所有的数据，得到我们想要的结果为止</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/Spark%E5%AE%BD%E7%AA%84%E4%BE%9D%E8%B5%96/</url>
+    <content><![CDATA[<h3 id="Spark宽窄依赖"><a href="#Spark宽窄依赖" class="headerlink" title="Spark宽窄依赖"></a>Spark宽窄依赖</h3><p>Spark中RDD的高效与DAG图有着莫大的关系，在DAG调度中需要对计算过程划分stage，而划分依据就是RDD之间的依赖关系。针对不同的转换函数，RDD之间的依赖关系分类窄依赖（narrow dependency）和宽依赖（wide dependency, 也称 shuffle dependency）.</p>
+<p><strong>窄依赖</strong></p>
+<p>窄依赖就是指父RDD的每个分区只被一个子RDD分区使用，子RDD分区通常只对应常数个父RDD分区，如下图所示【其中每个小方块代表一个RDD Partition】</p>
+<p><img src="/Spark%E5%AE%BD%E7%AA%84%E4%BE%9D%E8%B5%96.assets/%E7%AA%84%E4%BE%9D%E8%B5%96.png"></p>
+<p>窄依赖有分为两种：</p>
+<ul>
+<li>一种是一对一的依赖，即OneToOneDependency</li>
+<li>还有一个是范围的依赖，即RangeDependency，它仅仅被org.apache.spark.rdd.UnionRDD使用。UnionRDD是把多个RDD合成一个RDD，这些RDD是被拼接而成，即每个parent RDD的Partition的相对顺序不会变，只不过每个parent RDD在UnionRDD中的Partition的起始位置不同</li>
+</ul>
+<p><strong>宽依赖</strong></p>
+<p>宽依赖就是指父RDD的每个分区都有可能被多个子RDD分区使用，子RDD分区通常对应父RDD所有分区，如下图所示【其中每个小方块代表一个RDD Partition】</p>
+<p><img src="/Spark%E5%AE%BD%E7%AA%84%E4%BE%9D%E8%B5%96.assets/%E5%AE%BD%E4%BE%9D%E8%B5%96.png"></p>
+<p><strong>宽窄依赖对比：</strong></p>
+<ul>
+<li>宽依赖往往对应着shuffle操作，需要在运行的过程中将同一个RDD分区传入到不同的RDD分区中，中间可能涉及到多个节点之间数据的传输，而窄依赖的每个父RDD分区通常只会传入到另一个子RDD分区，通常在一个节点内完成。</li>
+<li>当RDD分区丢失时，对于窄依赖来说，由于父RDD的一个分区只对应一个子RDD分区，这样只需要重新计算与子RDD分区对应的父RDD分区就行。这个计算对数据的利用是100%的</li>
+<li>当RDD分区丢失时，对于宽依赖来说，重算的父RDD分区只有一部分数据是对应丢失的子RDD分区的，另一部分就造成了多余的计算。宽依赖中的子RDD分区通常来自多个父RDD分区，极端情况下，所有父RDD都有可能重新计算。如下图，par4丢失，则需要重新计算par1,par2,par3,产生了冗余数据par5</li>
+</ul>
+<p><img src="/Spark%E5%AE%BD%E7%AA%84%E4%BE%9D%E8%B5%96.assets/%E5%AF%B9%E6%AF%94.png"></p>
+<p><strong>宽依赖，窄依赖函数</strong></p>
+<ul>
+<li>窄依赖的函数有：<br>map, filter, union, join(父RDD是hash-partitioned ), mapPartitions, mapValues</li>
+<li>宽依赖的函数有：<br>groupByKey, join(父RDD不是hash-partitioned ), partitionBy</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/YARN%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h3 id="什么是YARN"><a href="#什么是YARN" class="headerlink" title="什么是YARN"></a>什么是YARN</h3><p>YARN是Hadoop2.0版本新引入的资源管理系统，直接从MR1演化而来。</p>
+<p> 核心思想：将MP1中JobTracker的资源管理和作业调度两个功能分开，分别由ResourceManager和ApplicationMaster进程来实现。</p>
+<p>1）ResourceManager：负责整个集群的资源管理和调度。</p>
+<p> 2）ApplicationMaster：负责应用程序相关的事务，比如任务调度、任务监控和容错等。</p>
+<p> YARN的出现，使得多个计算框架可以运行在一个集群当中。</p>
+<p> 1）每个应用程序对应一个ApplicationMaster。</p>
+<p> 2）目前可以支持多种计算框架运行在YARN上面比如MapReduce、Storm、Spark、Flink等。</p>
+<h3 id="YARN架构"><a href="#YARN架构" class="headerlink" title="YARN架构"></a>YARN架构</h3><p><img src="/YARN%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.assets/2018041510334870.png"></p>
+<p> 从YARN的架构图来看，它主要由ResourceManager和ApplicationMaster、NodeManager、ApplicationMaster和Container等组件组成。</p>
+<p><strong>ResourceManager（RM）</strong></p>
+<p>  YARN分层结构的本质是ResourceManager。这个实体控制整个集群并管理应用程序向基础计算资源的分配。ResourceManager 将各个资源部分（计算、内存、带宽等）精心安排给基础NodeManager（YARN 的每节点代理）。ResourceManager还与 ApplicationMaster 一起分配资源，与NodeManager 一起启动和监视它们的基础应用程序。在此上下文中，ApplicationMaster 承担了以前的 TaskTracker 的一些角色，ResourceManager 承担了 JobTracker 的角色。</p>
+<p> 1）处理客户端请求；</p>
+<p> 2）启动或监控ApplicationMaster；</p>
+<p> 3）监控NodeManager；</p>
+<p> 4）资源的分配与调度。</p>
+<p> <strong>NodeManager（NM</strong>）</p>
+<p> NodeManager管理一个YARN集群中的每个节点。NodeManager提供针对集群中每个节点的服务，从监督对一个容器的终生管理到监视资源和跟踪节点健康。MRv1通过插槽管理Map和Reduce任务的执行，而NodeManager 管理抽象容器，这些容器代表着可供一个特定应用程序使用的针对每个节点的资源。YARN继续使用HDFS层。它的主要 NameNode用于元数据服务，而DataNode用于分散在一个集群中的复制存储服务。</p>
+<p> 1）单个节点上的资源管理；</p>
+<p> 2）处理来自ResourceManager上的命令；</p>
+<p> 3）处理来自ApplicationMaster上的命令。</p>
+<p> <strong>ApplicationMaster（AM）</strong></p>
+<p> ApplicationMaster管理一个在YARN内运行的应用程序的每个实例。ApplicationMaster 负责协调来自 ResourceManager 的资源，并通过 NodeManager 监视容器的执行和资源使用（CPU、内存等的资源分配）。请注意，尽管目前的资源更加传统（CPU 核心、内存），但未来会带来基于手头任务的新资源类型（比如图形处理单元或专用处理设备）。从 YARN 角度讲，ApplicationMaster 是用户代码，因此存在潜在的安全问题。YARN 假设 ApplicationMaster 存在错误或者甚至是恶意的，因此将它们当作无特权的代码对待。</p>
+<p> 1）负责数据的切分；</p>
+<p> 2）为应用程序申请资源并分配给内部的任务；</p>
+<p> 3）任务的监控与容错。</p>
+<p> <strong>Container</strong></p>
+<p>   对任务运行环境进行抽象，封装CPU、内存等多维度的资源以及环境变量、启动命令等任务运行相关的信息。比如内存、CPU、磁盘、网络等，当AM向RM申请资源时，RM为AM返回的资源便是用Container表示的。YARN会为每个任务分配一个Container，且该任务只能使用该Container中描述的资源。</p>
+<p> 要使用一个YARN集群，首先需要来自包含一个应用程序的客户的请求。ResourceManager 协商一个容器的必要资源，启动一个ApplicationMaster 来表示已提交的应用程序。通过使用一个资源请求协议，ApplicationMaster协商每个节点上供应用程序使用的资源容器。执行应用程序时，ApplicationMaster 监视容器直到完成。当应用程序完成时，ApplicationMaster 从 ResourceManager 注销其容器，执行周期就完成了。</p>
+<h3 id="YARN原理"><a href="#YARN原理" class="headerlink" title="YARN原理"></a>YARN原理</h3><p>YARN 的作业运行，主要由以下几个步骤组成：</p>
+<p><img src="/YARN%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.assets/20180415111440631.png"></p>
+<h4 id="1）作业提交"><a href="#1）作业提交" class="headerlink" title="1）作业提交"></a>1）作业提交</h4><p>   client调用job.waitForCompletion方法，向整个集群提交MapReduce作业 (第1步) 。 新的作业ID(应用ID)由资源管理器分配(第2步). 作业的client核实作业的输出, 计算输入的split,将作业的资源(包括Jar包, 配置文件, split信息)拷贝给HDFS(第3步). 最后, 通过调用资源管理器的submitApplication()来提交作业(第4步).</p>
+<h4 id="2）作业初始化"><a href="#2）作业初始化" class="headerlink" title="2）作业初始化"></a>2）作业初始化</h4><p>   当资源管理器收到submitApplication()的请求时, 就将该请求发给调度器(scheduler), 调度器分配container, 然后资源管理器在该container内启动应用管理器进程, 由节点管理器监控(第5a和5b步)。<br> MapReduce作业的应用管理器是一个主类为MRAppMaster的Java应用。其通过创造一些bookkeeping对象来监控作业的进度, 得到任务的进度和完成报告(第6步)。然后其通过分布式文件系统得到由客户端计算好的输入split(第7步)。然后为每个输入split创建一个map任务, 根据mapreduce.job.reduces创建reduce任务对象。</p>
+<h4 id="3）任务分配"><a href="#3）任务分配" class="headerlink" title="3）任务分配"></a>3）任务分配</h4><p>   如果作业很小，应用管理器会选择在其自己的JVM中运行任务。如果不是小作业, 那么应用管理器向资源管理器请求container来运行所有的map和reduce任务(第8步). 这些请求是通过心跳来传输的, 包括每个map任务的数据位置, 比如存放输入split的主机名和机架(rack). 调度器利用这些信息来调度任务, 尽量将任务分配给存储数据的节点, 或者退而分配给和存放输入split的节点相同机架的节点.</p>
+<h4 id="4）任务运行"><a href="#4）任务运行" class="headerlink" title="4）任务运行"></a>4）任务运行</h4><p>​    当一个任务由资源管理器的调度分配给一个container后, 应用管理器通过联系节点管理器来启动container(第9a步和9b步). 任务由一个主类为YarnChild的Java应用执行. 在运行任务之前首先本地化任务需要的资源, 比如作业配置, JAR文件, 以及分布式缓存的所有文件(第10步). 最后, 运行map或reduce任务(第11步).<br> YarnChild运行在一个专用的JVM中, 但是YARN不支持JVM重用.</p>
+<h4 id="5）进度和状态更新"><a href="#5）进度和状态更新" class="headerlink" title="5）进度和状态更新"></a>5）进度和状态更新</h4><p>　　YARN中的任务将其进度和状态（包括counter）返回给应用管理器，客户端每秒（通过mapreduce.client.progressmonitor.pollinterval设置）向应用管理器请求进度更新，展示给用户。</p>
+<h4 id="6）作业完成"><a href="#6）作业完成" class="headerlink" title="6）作业完成"></a>6）作业完成</h4><p>​    除了向应用管理器请求作业进度外，客户端每5分钟都会通过调用waitForCompletion()来检查作业是否完成。时间间隔可以通过mapreduce.client.completion. pollinterval来设置。作业完成之后, 应用管理器和container会清理工作状态, OutputCommiter的作业清理方法也会被调用。作业的信息会被作业历史服务器存储以备之后用户核查。</p>
+<h3 id="MapReduce-on-YARN"><a href="#MapReduce-on-YARN" class="headerlink" title="MapReduce on YARN"></a><strong>MapReduce on YARN</strong></h3><p><strong>1、MapReduce on TARN</strong></p>
+<p> 1）YARN负责资源管理和调度；</p>
+<p> 2）ApplicationMaster负责任务管理。</p>
+<p> <strong>2、MapReduce ApplicationMaster</strong></p>
+<p> 1）MRAppMaster；</p>
+<p> 2）每个MapReduce启动一个MRAppMaster；</p>
+<p> 3）MRAppMaster负责任务切分、任务调度、任务监控和容错。</p>
+<p> <strong>3、MRAppMaster任务调度</strong></p>
+<p> 1）YARN将资源分配给MRAppMaster；</p>
+<p> 2）MRAppMaster进一步将资源分配给内部任务。</p>
+<p> <strong>4、MRAppMaster容错</strong></p>
+<p> 1）MRAppMaster运行失败后，由YARN重新启动；</p>
+<p> 2）任务运行失败后，由YARN重新申请资源。</p>
+<h3 id="YARN高可用-HA"><a href="#YARN高可用-HA" class="headerlink" title="YARN高可用(HA)"></a>YARN高可用(HA)</h3><p><img src="/YARN%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.assets/20180415111727498.png"></p>
+<p>ResourceManager由一对分别处于Active和Standby状态的ResourceManager组成，它使用基于Zookeeper的选举算法来决定ResourceManager的状态。其中，ZKFC仅为ResourceManager的一个进程服务，不是单独存在的（区别于HDFS，它是独立存在的进程），负责监控ResourceManager的健康状况并定期向Zookeeper发送心跳。ResourceManager通过RMStateStore（目前有基于内存的、基于文件系统的和基于Zookeeper的等，此处使用后者）来存储内部数据、主要应用数据和标记等。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/block%E6%8D%9F%E5%9D%8F/</url>
+    <content><![CDATA[<h3 id="HDFS-在读取文件的时候-如果其中一个块突然损坏了怎么办？"><a href="#HDFS-在读取文件的时候-如果其中一个块突然损坏了怎么办？" class="headerlink" title="HDFS 在读取文件的时候,如果其中一个块突然损坏了怎么办？"></a>HDFS 在读取文件的时候,如果其中一个块突然损坏了怎么办？</h3><p>客户端读取完 DataNode 上的块之后会进行 checksum 验证，也就是把客户端读取到 本地的块与 HDFS 上的原始块进行校验，如果发现校验结果不一致，客户端会通知 NameNode，然后再从下一个拥有该 block 副本的 DataNode 继续读</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/brokerLeader%E9%80%89%E4%B8%BE/</url>
+    <content><![CDATA[<h3 id="broker-Leader-选举"><a href="#broker-Leader-选举" class="headerlink" title="broker Leader 选举"></a>broker Leader 选举</h3><p>(1) 在 kafka 集群中，会有多个 broker 节点，集群中第一个启动的 broker 会通过 在 zookeeper 中创建临时节点 /controller 来让自己成为控制器，其他 broker 启动 时也会在 zookeeper 中创建临时节点，但是发现节点已经存在，所以它们会收到一个异常，意识到控制器已经存在，那么就会在 zookeeper 中创建 watch 对象，便 于它们收到控制器变更的通知。</p>
+<p>(2) 如果集群中有一个 broker 发生异常退出了，那么控制器就会检查这个 broker 是否有分区的副本 leader ，如果有那么这个分区就需要一个新的 leader，此时控 制器就会去遍历其他副本，决定哪一个成为新的 leader，同时更新分区的 ISR 集 合。</p>
+<p>(3) 如果有一个 broker 加入集群中，那么控制器就会通过 Broker ID 去判断新加入 的 broker 中是否含有现有分区的副本，如果有，就会从分区副本中去同步数据。</p>
+<p>(4) 集群中每选举一次控制器，就会通过 zookeeper 创建一个 controller epoch， 每一个选举都会创建一个更大，包含最新信息的 epoch，如果有 broker 收到比这 个 epoch 旧的数据，就会忽略它们，kafka 也通过这个 epoch 来防止集群产生“脑 裂”。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/cache,persist,checkpoint/</url>
+    <content><![CDATA[<p><strong>缓存(cache/persist)</strong></p>
+<p>cache和persist其实是RDD的两个API，并且cache底层调用的就是persist，区别之一就在于cache不能显示指定缓存方式，只能缓存在内存中，但是persist可以通过指定缓存方式，比如显示指定缓存在内存中、内存和磁盘并且序列化等。通过RDD的缓存，后续可以对此RDD或者是基于此RDD衍生出的其他的RDD处理中重用这些缓存的数据集</p>
+<p><strong>容错(checkpoint)</strong></p>
+<p>本质上是将RDD写入磁盘做检查点(通常是checkpoint到HDFS上，同时利用了hdfs的高可用、高可靠等特征)。上面提到了Spark lineage，但在实际的生产环境中，一个业务需求可能非常非常复杂，那么就可能会调用很多算子，产生了很多RDD，那么RDD之间的linage链条就会很长，一旦某个环节出现问题，容错的成本会非常高。此时，checkpoint的作用就体现出来了。使用者可以将重要的RDD checkpoint下来，出错后，只需从最近的checkpoint开始重新运算即可使用方式也很简单，指定checkpoint的地址[SparkContext.setCheckpointDir(“checkpoint的地址”)]，然后调用RDD的checkpoint的方法即可。</p>
+<p><strong>checkpoint与cache/persist对比</strong></p>
+<ol>
+<li><p>都是lazy操作，只有action算子触发后才会真正进行缓存或checkpoint操作（懒加载操作是Spark任务很重要的一个特性，不仅适用于Spark RDD还适用于Spark sql等组件）</p>
+</li>
+<li><p>cache只是缓存数据，但不改变lineage。通常存于内存，丢失数据可能性更大</p>
+</li>
+<li><p>改变原有lineage，生成新的CheckpointRDD。通常存于hdfs，高可用且更可靠</p>
+</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/datanode%E6%8C%82%E6%8E%89/</url>
+    <content><![CDATA[<h3 id="HDFS-上传文件时-一个-DataNode-突然挂掉了怎么办"><a href="#HDFS-上传文件时-一个-DataNode-突然挂掉了怎么办" class="headerlink" title="HDFS 上传文件时,一个 DataNode 突然挂掉了怎么办"></a>HDFS 上传文件时,一个 DataNode 突然挂掉了怎么办</h3><p>客户端上传文件时与 DataNode 建立 pipeline 管道，管道正向是客户端向 DataNode 发送的数据包，管道反向是 DataNode 向客户端发送 ack 确认，也就是正确接收到数据包之后发送一个已确认接收到的应答</p>
+<p>当 DataNode 突然挂掉了，客户 端接收不到这个 DataNode 发送的 ack 确认 ，客户端会通知 NameNode，NameNode 检查该块的副本与规定的不符， NameNode 会通知 DataNode 去复制副本，并将挂掉的 DataNode 作下线处理，不再让它参与文件上传与下载</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/groupbyKey%E5%92%8CreducebyKey%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h3 id="groupbyKey和reducebyKey的区别"><a href="#groupbyKey和reducebyKey的区别" class="headerlink" title="groupbyKey和reducebyKey的区别"></a>groupbyKey和reducebyKey的区别</h3><p>reducebyKey会先在本地机器上进行局部聚合，然后在移动数据，进行全局聚合</p>
+<p><img src="https://img2018.cnblogs.com/blog/1757230/201909/1757230-20190903173755217-1333035935.png" alt="img"></p>
+<p>groupbyKey会先将数据进行移动，再做聚合</p>
+<p><img src="https://img2018.cnblogs.com/blog/1757230/201909/1757230-20190903175542386-1077592795.png" alt="img"></p>
+<p>reducebyKey适合使用在大数据量上</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/hadoop%E8%B0%83%E5%BA%A6%E5%99%A8/</url>
+    <content><![CDATA[<p> Fifo schedular：默认，先进先出的原则</p>
+<p> Capacity schedular：计算能力调度器，选择占用最小、优先级高的先执行，依此类推。</p>
+<p> Fair schedular：公平调度，所有的 job 具有相同的资源。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/hbase%E4%B8%8Ehive%E5%AF%B9%E6%AF%94/</url>
+    <content><![CDATA[<p>1．Hive</p>
+<p> (1) 数据仓库 Hive 的本质其实就相当于将 HDFS 中已经存储的文件在 Mysql 中做了一个双射关系，以 方便使用 HQL 去管理查询。</p>
+<p> (2) 用于数据分析、清洗 Hive 适用于离线的数据分析和清洗，延迟较高。</p>
+<p> (3) 基于 HDFS、MapReduce Hive 存储的数据依旧在 DataNode 上，编写的 HQL 语句终将是转换为 MapReduce 代码执 行。</p>
+<p>2．HBase</p>
+<p> (1) 数据库 是一种面向列族存储的非关系型数据库。 </p>
+<p>(2) 用于存储结构化和非结构化的数据 适用于单表非关系型数据的存储，不适合做关联查询，类似 JOIN 等操作。 (3) 基于 HDFS 数据持久化存储的体现形式是 HFile，存放于 DataNode 中，被 ResionServer 以 region 的形 式进行管理。</p>
+<p> (4) 延迟较低，接入在线业务使用 面对大量的企业数据，HBase 可以直线单表大量数据的存储，同时提供了高效的数据访问 速度。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/hbase%E6%9E%B6%E6%9E%84/</url>
+    <content><![CDATA[<p>![](C:\Users\winqihe\Desktop\BigDataLoading\pic\Screenshot 2022-03-23 225135.jpg)</p>
+<ul>
+<li>StoreFile  保存实际数据的物理文件，StoreFile 以 HFile 的形式存储在 HDFS 上。每个 Store 会有 一个或多个 StoreFile（HFile），数据在每个 StoreFile 中都是有序的。</li>
+<li>MemStore  写缓存，由于 HFile 中的数据要求是有序的，所以数据是先存储在 MemStore 中，排好序后，等到达刷写时机才会刷写到 HFile，每次刷写都会形成一个新的 HFile。 </li>
+<li>WAL  由于数据要经 MemStore 排序后才能刷写到 HFile，但把数据保存在内存中会有很高的 概率导致数据丢失，为了解决这个问题，数据会先写在一个叫做 Write-Ahead logfile 的文件 中，然后再写入 MemStore 中。所以在系统出现故障的时候，数据可以通过这个日志文件重 建。</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/hbase%E8%AF%BB%E5%86%99%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[<h3 id="写流程："><a href="#写流程：" class="headerlink" title="写流程："></a>写流程：</h3><p><img src="/hbase%E8%AF%BB%E5%86%99%E6%B5%81%E7%A8%8B.assets/image-20220323225618774.png" alt="image-20220323225618774"></p>
+<p>写流程： </p>
+<ol>
+<li>Client 先访问 zookeeper，获取 hbase:meta 表位于哪个 Region Server。</li>
+<li>访问对应的 Region Server，获取 hbase:meta 表，根据读请求的 namespace:table/rowkey， 查询出目标数据位于哪个 Region Server 中的哪个 Region 中。并将该 table 的 region 信息以 及 meta 表的位置信息缓存在客户端的 meta cache，方便下次访问</li>
+<li>与目标 Region Server 进行通讯； </li>
+<li>将数据顺序写入（追加）到 WAL；</li>
+<li>将数据写入对应的 MemStore，数据会在 MemStore 进行排序；</li>
+<li>向客户端发送 ack；</li>
+<li>等达到 MemStore 的刷写时机后，将数据刷写到 HFile</li>
+</ol>
+<h3 id="读流程："><a href="#读流程：" class="headerlink" title="读流程："></a>读流程：</h3><p><img src="/hbase%E8%AF%BB%E5%86%99%E6%B5%81%E7%A8%8B.assets/image-20220323225716873.png" alt="image-20220323225716873"></p>
+<ol>
+<li>Client 先访问 zookeeper，获取 hbase:meta 表位于哪个 Region Server。</li>
+<li>访问对应的 Region Server，获取 hbase:meta 表，根据读请求的 namespace:table/rowkey， 查询出目标数据位于哪个 Region Server 中的哪个 Region 中。并将该 table 的 region 信息以 及 meta 表的位置信息缓存在客户端的 meta cache，方便下次访问。</li>
+<li>与目标 Region Server 进行通讯；</li>
+<li>分别在 Block Cache（读缓存），MemStore 和 Store File（HFile）中查询目标数据，并将 查到的所有数据进行合并。此处所有数据是指同一条数据的不同版本（time stamp）或者不 同的类型（Put/Delete）。</li>
+<li> 将从文件中查询到的数据块（Block，HFile 数据存储单元，默认大小为 64KB）缓存到 Block Cache。</li>
+<li>将合并后的最终结果返回给客户端。</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/kafka%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E7%9A%84%E4%B8%8D%E9%87%8D%E5%A4%8D%E5%92%8C%E4%B8%8D%E4%B8%A2%E5%A4%B1/</url>
+    <content><![CDATA[<h3 id="kafka-如何保证数据的不重复和不丢失"><a href="#kafka-如何保证数据的不重复和不丢失" class="headerlink" title="kafka 如何保证数据的不重复和不丢失"></a>kafka 如何保证数据的不重复和不丢失</h3><p><strong>exactly once 模式 精确传递一次</strong>。将 offset 作为唯一 id 与消息同时处理，并且 保证处理的原子性。消息只会处理一次，不丢失也不会重复。但这种方式很难做到。 </p>
+<p>kafka 默认的模式是 at least once ，但这种模式可能会产生重复消费的问题，所以 在业务逻辑必须做幂等设计。</p>
+<p> 使用 exactly Once + 幂等操作，可以保证数据不重复，不丢失。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/kafka%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%B6%88%E6%81%AF%E6%98%AF%E6%9C%89%E5%BA%8F%E7%9A%84/</url>
+    <content><![CDATA[<h3 id="kafka-如何实现消息是有序的？"><a href="#kafka-如何实现消息是有序的？" class="headerlink" title="kafka 如何实现消息是有序的？"></a>kafka 如何实现消息是有序的？</h3><p>生产者：通过分区的 leader 副本负责数据以先进先出的顺序写入，来保证消息顺 序性。</p>
+<p>消费者：同一个分区内的消息只能被一个 group 里的一个消费者消费，保证分区内 消费有序。</p>
+<p>kafka 每个 partition 中的消息在写入时都是有序的，消费时， 每个 partition 只能 被每一个消费者组中的一个消费者消费，保证了消费时也是有序的。</p>
+<p>整个 kafka 不保证有序。如果为了保证 kafka 全局有序，那么设置一个生产者，一 个分区，一个消费者。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/kafka%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%90%9E%E5%90%90%E9%87%8F%E5%92%8C%E6%80%A7%E8%83%BD/</url>
+    <content><![CDATA[<p>kafka 实现高吞吐量和性能，主要通过以下几点： </p>
+<p><strong>1、页缓存技术</strong> </p>
+<p>Kafka 是基于 操作系统 的页缓存来实现文件写入的。 </p>
+<p>操作系统本身有一层缓存，叫做 page cache，是在 内存里的缓存，我们也可以称 之为 os cache，意思就是操作系统自己管理的缓存。</p>
+<p> Kafka 在写入磁盘文件的时候，可以直接写入这个 os cache 里，也就是仅仅写入内 存中，接下来由操作系统自己决定什么时候把 os cache 里的数据真的刷入磁盘文 件中。通过这一个步骤，就可以将磁盘文件写性能提升很多了，因为其实这里相 当于是在写内存，不是在写磁盘</p>
+<p>2、磁盘顺序写 </p>
+<p>另一个主要功能是 kafka 写数据的时候，是以磁盘顺序写的方式来写的。也就是说， 仅仅将数据追加到文件的末尾，不是在文件的随机位置来修改数据。 </p>
+<p>普通的机械磁盘如果你要是随机写的话，确实性能极差，也就是随便找到文件的某 个位置来写数据。</p>
+<p> 但是如果你是 追加文件末尾 按照顺序的方式来写数据的话，那么这种磁盘顺序写 的性能基本上可以跟写内存的性能相差无几。 基于上面两点，kafka 就实现了写入数据的超高性能。</p>
+<p><strong>3、零拷贝</strong> </p>
+<p>从 Kafka 里经常要消费数据，那么消费的时候实际上就是要从 kafka 的磁盘文件里读取某条数据然后发送给下游的消费者，里如果频繁的从磁盘读数据然后发给消费者，会增加两次没必要的拷贝</p>
+<p>一次是从操作系统的 cache 里拷贝到应用进程的缓存里，接着又从应用程序缓存里 拷贝回操作系统的 Socket 缓存里。 </p>
+<p>而且为了进行这两次拷贝，中间还发生了好几次上下文切换，一会儿是应用程序在 执行，一会儿上下文切换到操作系统来执行。所以这种方式来读取数据是比较消耗 性能的。</p>
+<p><strong>Kafka 为了解决这个问题，在读数据的时候是引入零拷贝技术。</strong></p>
+<p>直接让操作系统的 cache 中的数据发送到网卡后传输给下游的消费者， 中间跳过了两次拷贝数据的步骤，Socket 缓存中仅仅会拷贝一个描述符过去，不会拷贝数据到 Socket 缓存</p>
+<p>通过 零拷贝技术，就不需要把 os cache 里的数据拷贝到应用缓存，再从应用缓存 拷贝到 Socket 缓存了，两次拷贝都省略了，所以叫做零拷贝。</p>
+<p>对 Socket 缓存仅仅就是拷贝数据的描述符过去，然后数据就直接从 os cache 中发 送到网卡上去了，这个过程大大的提升了数据消费时读取文件数据的性能。 </p>
+<p>Kafka 从磁盘读数据的时候，会先看看 os cache 内存中是否有，如果有的话，其实 读数据都是直接读内存的。 </p>
+<p>kafka 集群经过良好的调优，数据直接写入 os cache 中，然后读数据的时候也是从 os cache 中读。相当于 Kafka 完全基于内存提供数据的写和读了，所以这个整体性 能会极其的高。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/kafka%E7%9A%84ISR%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h3 id="kafka-的-ISR-机制"><a href="#kafka-的-ISR-机制" class="headerlink" title="kafka 的 ISR 机制"></a>kafka 的 ISR 机制</h3><p>在分区中，所有副本统称为 AR ，Leader 维护了一个动态的 in-sync  replica(ISR),ISR 是指与 leader 副本保持同步状态的副本集合。当然 leader 副本 本身也是这个集合中的一员。</p>
+<p>当 ISR 中的 follower 完成数据同步之后， leader 就会给 follower 发送 ack ,如果其 中一个 follower 长时间未向 leader 同步数据，该 follower 将会被踢出 ISR 集合， 该时间阈值由 replica.log.time.max.ms 参数设定。当 leader 发生故障后，就会从 ISR 集合中重新选举出新的 leader。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/leader%E9%80%89%E4%B8%BE/</url>
+    <content><![CDATA[<p><strong>1. 服务器启动时期的Leader选举</strong></p>
+<p>　若进行Leader选举，则至少需要两台机器，这里选取3台机器组成的服务器集群为例。在集群初始化阶段，当有一台服务器Server1启动时，其单独无法进行和完成Leader选举，当第二台服务器Server2启动时，此时两台机器可以相互通信，每台机器都试图找到Leader，于是进入Leader选举过程。选举过程如下</p>
+<p>　　<strong>(1) 每个Server发出一个投票</strong>。由于是初始情况，Server1和Server2都会将自己作为Leader服务器来进行投票，每次投票会包含所推举的服务器的myid和ZXID，使用(myid, ZXID)来表示，此时Server1的投票为(1, 0)，Server2的投票为(2, 0)，然后各自将这个投票发给集群中其他机器。</p>
+<p>　　<strong>(2) 接受来自各个服务器的投票</strong>。集群的每个服务器收到投票后，首先判断该投票的有效性，如检查是否是本轮投票、是否来自LOOKING状态的服务器。</p>
+<p>　　<strong>(3) 处理投票</strong>。针对每一个投票，服务器都需要将别人的投票和自己的投票进行PK，PK规则如下</p>
+<p>　　　　<strong>· 优先检查ZXID</strong>。ZXID比较大的服务器优先作为Leader。</p>
+<p>　　　　<strong>· 如果ZXID相同，那么就比较myid</strong>。myid较大的服务器作为Leader服务器。</p>
+<p>　　对于Server1而言，它的投票是(1, 0)，接收Server2的投票为(2, 0)，首先会比较两者的ZXID，均为0，再比较myid，此时Server2的myid最大，于是更新自己的投票为(2, 0)，然后重新投票，对于Server2而言，其无须更新自己的投票，只是再次向集群中所有机器发出上一次投票信息即可。</p>
+<p>　　<strong>(4) 统计投票</strong>。每次投票后，服务器都会统计投票信息，判断是否已经有过半机器接受到相同的投票信息，对于Server1、Server2而言，都统计出集群中已经有两台机器接受了(2, 0)的投票信息，此时便认为已经选出了Leader。</p>
+<p>　　<strong>(5) 改变服务器状态</strong>。一旦确定了Leader，每个服务器就会更新自己的状态，如果是Follower，那么就变更为FOLLOWING，如果是Leader，就变更为LEADING。</p>
+<p><strong>2.  服务器运行时期的Leader选举</strong></p>
+<p>　　在Zookeeper运行期间，Leader与非Leader服务器各司其职，即便当有非Leader服务器宕机或新加入，此时也不会影响Leader，但是一旦Leader服务器挂了，那么整个集群将暂停对外服务，进入新一轮Leader选举，其过程和启动时期的Leader选举过程基本一致。假设正在运行的有Server1、Server2、Server3三台服务器，当前Leader是Server2，若某一时刻Leader挂了，此时便开始Leader选举。选举过程如下</p>
+<p>　　(1) <strong>变更状态</strong>。Leader挂后，余下的非Observer服务器都会讲自己的服务器状态变更为LOOKING，然后开始进入Leader选举过程。</p>
+<p>　　(2) <strong>每个Server会发出一个投票</strong>。在运行期间，每个服务器上的ZXID可能不同，此时假定Server1的ZXID为123，Server3的ZXID为122；在第一轮投票中，Server1和Server3都会投自己，产生投票(1, 123)，(3, 122)，然后各自将投票发送给集群中所有机器。</p>
+<p>　　(3) <strong>接收来自各个服务器的投票</strong>。与启动时过程相同。</p>
+<p>　　(4) <strong>处理投票</strong>。与启动时过程相同，此时，Server1将会成为Leader。</p>
+<p>　　(5) <strong>统计投票</strong>。与启动时过程相同。</p>
+<p>　　(6) <strong>改变服务器的状态</strong>。与启动时过程相同。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/shuffle/</url>
+    <content><![CDATA[<h2 id="MapReduce-Shuffle"><a href="#MapReduce-Shuffle" class="headerlink" title="MapReduce Shuffle"></a>MapReduce Shuffle</h2><p>Hadoop的核心思想是MapReduce，但shuffle又是MapReduce的核心。shuffle的主要工作是从Map结束到Reduce开始之间的过程。shuffle阶段又可以分为Map端的shuffle和Reduce端的shuffle。</p>
+<h4 id="Map端的shuffle"><a href="#Map端的shuffle" class="headerlink" title="Map端的shuffle"></a>Map端的shuffle</h4><p>下图是MapReduce Shuffle的官方流程：</p>
+<p><img src="/shuffle.assets/mapshuffle.jpg"></p>
+<p>因为频繁的磁盘I/O操作会严重的降低效率，因此“中间结果”不会立马写入磁盘，而是优先存储到map节点的“环形内存缓冲区”，在写入的过程中进行分区（partition），也就是对于每个键值对来说，都增加了一个partition属性值，然后连同键值对一起序列化成字节数组写入到缓冲区（缓冲区采用的就是字节数组，默认大小为100M）。</p>
+<p>当写入的数据量达到预先设置的阙值后便会启动溢写出线程将缓冲区中的那部分数据溢出写（spill）到磁盘的临时文件中，并在写入前根据key进行排序（sort）和合并（combine，可选操作）。</p>
+<p>溢出写过程按轮询方式将缓冲区中的内容写到mapreduce.cluster.local.dir属性指定的本地目录中。当整个map任务完成溢出写后，会对磁盘中这个map任务产生的所有临时文件（spill文件）进行归并（merge）操作生成最终的正式输出文件，此时的归并是将所有spill文件中的相同partition合并到一起，并对各个partition中的数据再进行一次排序（sort），生成key和对应的value-list，文件归并时，如果溢写文件数量超过参数min.num.spills.for.combine的值（默认为3）时，可以再次进行合并。</p>
+<p>至此map端的工作已经全部结束，最终生成的文件也会存储在TaskTracker能够访问的位置。每个reduce task不间断的通过RPC从JobTracker那里获取map task是否完成的信息，如果得到的信息是map task已经完成，那么Shuffle的后半段开始启动。</p>
+<h4 id="Reduce端的shuffle"><a href="#Reduce端的shuffle" class="headerlink" title="Reduce端的shuffle"></a>Reduce端的shuffle</h4><p>当mapreduce任务提交后，reduce task就不断通过RPC从JobTracker那里获取map task是否完成的信息，如果获知某台TaskTracker上的map task执行完成，Shuffle的后半段过程就开始启动。Reduce端的shuffle主要包括三个阶段，copy、merge和reduce。</p>
+<p><img src="/shuffle.assets/reduceshuffle.jpg"></p>
+<p>每个reduce task负责处理一个分区的文件，以下是reduce task的处理流程：</p>
+<ol>
+<li>reduce task从每个map task的结果文件中拉取对应分区的数据。因为数据在map阶段已经是分好区了，并且会有一个额外的索引文件记录每个分区的起始偏移量。所以reduce task取数的时候直接根据偏移量去拉取数据就ok。</li>
+<li>reduce task从每个map task拉取分区数据的时候会进行再次合并，排序，按照自定义的reducer的逻辑代码去处理。</li>
+<li>最后就是Reduce过程了，在这个过程中产生了最终的输出结果，并将其写到HDFS上。</li>
+</ol>
+<h4 id="为什么要排序"><a href="#为什么要排序" class="headerlink" title="为什么要排序"></a>为什么要排序</h4><ol>
+<li>key存在combine操作，排序之后相同的key放到一块显然方便做合并操作。</li>
+<li>reduce task是按key去处理数据的。 如果没有排序那必须从所有数据中把当前相同key的所有value数据拿出来，然后进行reduce逻辑处理。显然每个key到这个逻辑都需要做一次全量数据扫描，影响性能，有了排序很方便的得到一个key对于的value集合。</li>
+<li>reduce task按key去处理数据时，如果key按顺序排序，那么reduce task就按key顺序去读取，显然当读到的key是文件末尾的key那么就标志数据处理完毕。如果没有排序那还得有其他逻辑来记录哪些key处理完了，哪些key没有处理完。</li>
+</ol>
+<p>虽有千万种理由需要这么做，但是很耗资源，并且像排序其实我们有些业务并不需要排序。</p>
+<h4 id="为什么要文件合并"><a href="#为什么要文件合并" class="headerlink" title="为什么要文件合并"></a>为什么要文件合并</h4><ol>
+<li>因为内存放不下就会溢写文件，就会发生多次溢写，形成很多小文件，如果不合并，显然会小文件泛滥，集群需要资源开销去管理这些小文件数据。</li>
+<li>任务去读取文件的数增多，打开的文件句柄数也会增多。</li>
+<li>mapreduce是全局有序。单个文件有序，不代表全局有序，只有把小文件合并一起排序才会全局有序。</li>
+</ol>
+<h2 id="Spark的Shuffle"><a href="#Spark的Shuffle" class="headerlink" title="Spark的Shuffle"></a>Spark的Shuffle</h2><p>Spark的Shuffle是在MapReduce Shuffle基础上进行的调优。其实就是对排序、合并逻辑做了一些优化。在Spark中Shuffle write相当于MapReduce 的map，Shuffle read相当于MapReduce 的reduce。</p>
+<p>Spark丰富了任务类型，有些任务之间数据流转不需要通过Shuffle，但是有些任务之间还是需要通过Shuffle来传递数据，比如宽依赖的group by key以及各种by key算子。宽依赖之间会划分stage，而Stage之间就是Shuffle，如下图中的stage0，stage1和stage3之间就会产生Shuffle。</p>
+<p><img src="/shuffle.assets/sparkshuffle.jpg"></p>
+<p>在Spark的中，负责shuffle过程的执行、计算和处理的组件主要就是ShuffleManager，也即shuffle管理器。ShuffleManager随着Spark的发展有两种实现的方式，分别为HashShuffleManager和SortShuffleManager，因此spark的Shuffle有Hash Shuffle和Sort Shuffle两种。</p>
+<p>在Spark的版本的发展，ShuffleManager在不断迭代，变得越来越先进。<br>在Spark 1.2以前，默认的shuffle计算引擎是HashShuffleManager。该ShuffleManager而HashShuffleManager有着一个非常严重的弊端，就是会产生大量的中间磁盘文件，进而由大量的磁盘IO操作影响了性能。因此在Spark 1.2以后的版本中，默认的ShuffleManager改成了SortShuffleManager。</p>
+<p>SortShuffleManager相较于HashShuffleManager来说，有了一定的改进。主要就在于，每个Task在进行shuffle操作时，虽然也会产生较多的临时磁盘文件，但是最后会将所有的临时文件合并(merge)成一个磁盘文件，因此每个Task就只有一个磁盘文件。在下一个stage的shuffle read task拉取自己的数据时，只要根据索引读取每个磁盘文件中的部分数据即可。</p>
+<h3 id="Hash-Shuffle"><a href="#Hash-Shuffle" class="headerlink" title="Hash Shuffle"></a>Hash Shuffle</h3><p>HashShuffleManager的运行机制主要分成两种，一种是普通运行机制，另一种是合并的运行机制。合并机制主要是通过复用buffer来优化Shuffle过程中产生的小文件的数量。Hash shuffle是不具有排序的Shuffle。</p>
+<h4 id="普通机制的Hash-Shuffle"><a href="#普通机制的Hash-Shuffle" class="headerlink" title="普通机制的Hash Shuffle"></a>普通机制的Hash Shuffle</h4><p>最开始使用的Hash Based Shuffle，每个Mapper会根据Reducer的数量创建对应的bucket，bucket的数量是M * R，M是map的数量，R是Reduce的数量。<br>如下图所示：2个core 4个map task 3 个reduce task，会产生4*3=12个小文件。</p>
+<p><img src="/shuffle.assets/852983-20190510151040429-1028493074.jpg"></p>
+<h4 id="优化后的Hash-Shuffle"><a href="#优化后的Hash-Shuffle" class="headerlink" title="优化后的Hash Shuffle"></a>优化后的Hash Shuffle</h4><p>普通机制Hash Shuffle会产生大量的小文件(M * R），对文件系统的压力也很大，也不利于IO的吞吐量，后来做了优化（设置spark.shuffle.consolidateFiles=true开启，默认false），把在同一个core上的多个Mapper输出到同一个文件，这样文件数就变成core * R 个了。<br>如下图所示：2个core 4个map task 3 个reduce task，会产生2*3=6个小文件。</p>
+<p><img src="/shuffle.assets/852983-20190510151107342-948307325.jpg"></p>
+<p>Hash shuffle合并机制的问题：<br>如果 Reducer 端的并行任务或者是数据分片过多的话则 Core * Reducer Task 依旧过大，也会产生很多小文件。进而引出了更优化的sort shuffle。<br>在Spark 1.2以后的版本中，默认的ShuffleManager改成了SortShuffleManager。</p>
+<h3 id="Sort-Shuffle"><a href="#Sort-Shuffle" class="headerlink" title="Sort Shuffle"></a>Sort Shuffle</h3><p>SortShuffleManager的运行机制主要分成两种，一种是普通运行机制，另一种是bypass运行机制。当shuffle read task的数量小于等于spark.shuffle.sort.bypassMergeThreshold参数的值时(默认为200)，就会启用bypass机制。</p>
+<h4 id="普通机制的Sort-Shuffle"><a href="#普通机制的Sort-Shuffle" class="headerlink" title="普通机制的Sort Shuffle"></a>普通机制的Sort Shuffle</h4><p>这种机制和mapreduce差不多，在该模式下，数据会先写入一个内存数据结构中，此时根据不同的shuffle算子，可能选用不同的数据结构。如果是reduceByKey这种聚合类的shuffle算子，那么会选用Map数据结构，一边通过Map进行聚合，一边写入内存；如果是join这种普通的shuffle算子，那么会选用Array数据结构，直接写入内存。接着，每写一条数据进入内存数据结构之后，就会判断一下，是否达到了某个临界阈值。如果达到临界阈值的话，那么就会尝试将内存数据结构中的数据溢写到磁盘，然后清空内存数据结构。</p>
+<p><img src="/shuffle.assets/852983-20190510151135510-2018946002.jpg"></p>
+<p>在溢写到磁盘文件之前，会先根据key对内存数据结构中已有的数据进行排序。排序过后，会分批将数据写入磁盘文件。默认的batch数量是10000条，也就是说，排序好的数据，会以每批1万条数据的形式分批写入磁盘文件。<br>一个task将所有数据写入内存数据结构的过程中，会发生多次磁盘溢写操作，也会产生多个临时文件。最后会将之前所有的临时磁盘文件都进行合并，由于一个task就只对应一个磁盘文件因此还会单独写一份索引文件，其中标识了下游各个task的数据在文件中的start offset与end offset。<br>SortShuffleManager由于有一个磁盘文件merge的过程，因此大大减少了文件数量，由于每个task最终只有一个磁盘文件所以文件个数等于上游shuffle write个数。</p>
+<h4 id="bypass机制的Sort-Shuffle"><a href="#bypass机制的Sort-Shuffle" class="headerlink" title="bypass机制的Sort Shuffle"></a>bypass机制的Sort Shuffle</h4><p><img src="/shuffle.assets/852983-20190510151151027-712712994.jpg"></p>
+<p>bypass运行机制的触发条件如下：<br>1)shuffle map task数量小于spark.shuffle.sort.bypassMergeThreshold参数的值，默认值200。<br>2)不是聚合类的shuffle算子(比如reduceByKey)。</p>
+<p>此时task会为每个reduce端的task都创建一个临时磁盘文件，并将数据按key进行hash然后根据key的hash值，将key写入对应的磁盘文件之中。当然，写入磁盘文件时也是先写入内存缓冲，缓冲写满之后再溢写到磁盘文件的。最后，同样会将所有临时磁盘文件都合并成一个磁盘文件，并创建一个单独的索引文件。</p>
+<p>该过程的磁盘写机制其实跟未经优化的HashShuffleManager是一模一样的，因为都要创建数量惊人的磁盘文件，只是在最后会做一个磁盘文件的合并而已。因此少量的最终磁盘文件，也让该机制相对未经优化的HashShuffleManager来说，shuffle read的性能会更好。</p>
+<p>而该机制与普通SortShuffleManager运行机制的不同在于：<br>第一，磁盘写机制不同;<br>第二，不会进行排序。也就是说，启用该机制的最大好处在于，shuffle write过程中，不需要进行数据的排序操作，也就节省掉了这部分的性能开销。</p>
+<h3 id="Spark-Shuffle总结"><a href="#Spark-Shuffle总结" class="headerlink" title="Spark Shuffle总结"></a>Spark Shuffle总结</h3><p>Shuffle 过程本质上都是将 Map 端获得的数据使用分区器进行划分，并将数据发送给对应的 Reducer 的过程。</p>
+<p>Shuffle作为处理连接map端和reduce端的枢纽，其shuffle的性能高低直接影响了整个程序的性能和吞吐量。map端的shuffle一般为shuffle的Write阶段，reduce端的shuffle一般为shuffle的read阶段。Hadoop和spark的shuffle在实现上面存在很大的不同，spark的shuffle分为两种实现，分别为HashShuffle和SortShuffle。</p>
+<p>HashShuffle又分为普通机制和合并机制，普通机制因为其会产生M<em>R个数的巨量磁盘小文件而产生大量性能低下的Io操作，从而性能较低，因为其巨量的磁盘小文件还可能导致OOM，HashShuffle的合并机制通过重复利用buffer从而将磁盘小文件的数量降低到Core</em>R个，但是当Reducer 端的并行任务或者是数据分片过多的时候，依然会产生大量的磁盘小文件。</p>
+<p>SortShuffle也分为普通机制和bypass机制，普通机制在内存数据结构(默认为5M)完成排序，会产生2M个磁盘小文件。而当shuffle map task数量小于spark.shuffle.sort.bypassMergeThreshold参数的值。或者算子不是聚合类的shuffle算子(比如reduceByKey)的时候会触发SortShuffle的bypass机制，SortShuffle的bypass机制不会进行排序，极大的提高了其性能。</p>
+<p>在Spark 1.2以前，默认的shuffle计算引擎是HashShuffleManager，因为HashShuffleManager会产生大量的磁盘小文件而性能低下，在Spark 1.2以后的版本中，默认的ShuffleManager改成了SortShuffleManager。</p>
+<p>SortShuffleManager相较于HashShuffleManager来说，有了一定的改进。主要就在于，每个Task在进行shuffle操作时，虽然也会产生较多的临时磁盘文件，但是最后会将所有的临时文件合并(merge)成一个磁盘文件，因此每个Task就只有一个磁盘文件。在下一个stage的shuffle read task拉取自己的数据时，只要根据索引读取每个磁盘文件中的部分数据即可。</p>
+<h2 id="Spark与MapReduce-Shuffle的异同"><a href="#Spark与MapReduce-Shuffle的异同" class="headerlink" title="Spark与MapReduce Shuffle的异同"></a>Spark与MapReduce Shuffle的异同</h2><ol>
+<li>从整体功能上看，两者并没有大的差别。 都是将 mapper（Spark 里是 ShuffleMapTask）的输出进行 partition，不同的 partition 送到不同的 reducer（Spark 里 reducer 可能是下一个 stage 里的 ShuffleMapTask，也可能是 ResultTask）。Reducer 以内存作缓冲区，边 shuffle 边 aggregate 数据，等到数据 aggregate 好以后进行 reduce（Spark 里可能是后续的一系列操作）。</li>
+<li>从流程的上看，两者差别不小。 Hadoop MapReduce 是 sort-based，进入 combine和 reduce的 records 必须先 sort。这样的好处在于 combine/reduce可以处理大规模的数据，因为其输入数据可以通过外排得到（mapper 对每段数据先做排序，reducer 的 shuffle 对排好序的每段数据做归并）。以前 Spark 默认选择的是 hash-based，通常使用 HashMap 来对 shuffle 来的数据进行合并，不会对数据进行提前排序。如果用户需要经过排序的数据，那么需要自己调用类似 sortByKey的操作。在Spark 1.2之后，sort-based变为默认的Shuffle实现。</li>
+<li>从流程实现角度来看，两者也有不少差别。 Hadoop MapReduce 将处理流程划分出明显的几个阶段：map, spill, merge, shuffle, sort, reduce等。每个阶段各司其职，可以按照过程式的编程思想来逐一实现每个阶段的功能。在 Spark 中，没有这样功能明确的阶段，只有不同的 stage 和一系列的 transformation，所以 spill, merge, aggregate 等操作需要蕴含在 transformation中。</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/spark%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<p>Spark性能优化的第一步，就是要在开发Spark作业的过程中注意和应用一些性能优化的基本原则。开发调优，就是要让大家了解以下一些Spark基本开发原则，包括：RDD lineage设计、算子的合理使用、特殊操作的优化等。在开发过程中，时时刻刻都应该注意以上原则，并将这些原则根据具体的业务以及实际的应用场景，灵活地运用到自己的Spark作业中</p>
+<ul>
+<li><p>避免创建重复的RDD</p>
+</li>
+<li><p>尽可能复用同一个RDD</p>
+</li>
+<li><p>对多次使用的RDD进行持久化</p>
+</li>
+<li><p>尽量避免使用shuffle类算子</p>
+</li>
+<li><p>使用map-side预聚合的shuffle操作</p>
+</li>
+<li><p>使用高性能的算子</p>
+</li>
+<li><p>广播大变量</p>
+</li>
+<li><p>使用Kryo优化序列化性能</p>
+</li>
+<li><p>优化数据结构</p>
+</li>
+</ul>
+<p>资源参数调优:</p>
+<ul>
+<li>num-executors</li>
+<li>executor-memory</li>
+<li>executor-cores</li>
+<li>driver-memory</li>
+<li>spark.default.parallelism</li>
+<li>spark.storage.memoryFraction</li>
+<li>spark.shuffle.memoryFraction</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/yarn%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[<p><img src="/yarn%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B.assets/2134332-20210102120810363-647992757.png"></p>
+<p><strong>作业提交</strong></p>
+<ul>
+<li>Client调用job.waitForCompletion⽅法，向整个集群提交MapReduce作业。</li>
+<li>Client向RM申请一个作业id。</li>
+<li>RM给Client返回该job资源的提交路径和作业id。</li>
+<li>Client提交jar包、切⽚信息和配置文件到指定的资源提交路径。</li>
+<li>Client提交完资源后，向RM申请运行MrAppMaster。</li>
+</ul>
+<p><strong>作业初始化</strong></p>
+<ul>
+<li>当RM收到Client的请求后，将该job添加到容量调度器中。</li>
+<li>某⼀个空闲的NM领取到该Job。</li>
+<li>该NM创建Container，并产生MRAppmaster。</li>
+<li>下载Client提交的资源到本地。</li>
+</ul>
+<p><strong>任务分配</strong></p>
+<ul>
+<li>MrAppMaster向RM申请运行多个MapTask任务资源。</li>
+<li>RM将运行MapTask任务分配给另外两个NodeManager，另两个NodeManager分别领取任务并创建容器。</li>
+</ul>
+<p><strong>任务运行</strong></p>
+<ul>
+<li>MrAppMaster向两个接收到任务的NodeManager发送程序启动脚本，这两个NodeManager分别启动MapTask，MapTask对数据分区排序。</li>
+<li>MrAppMaster等待所有MapTask运行完毕后，向RM申请容器，运行ReduceTask。</li>
+<li>ReduceTask向MapTask获取相应分区的数据。</li>
+<li>程序运行完毕后，MrAppMaster会向RM申请注销⾃己。</li>
+</ul>
+<p><strong>进度和状态更新</strong></p>
+<p>YARN中的任务将其进度和状态返回给应⽤管理器, 客户端每秒(通过mapreduce.client.progressmonitor.pollinterval设置)向应⽤管理器请求进度更新, 展示给用户。</p>
+<p><strong>作业完成</strong></p>
+<p>除了向应用管理器请求作业进度外, 客户端每5秒都会通过调用waitForCompletion()来检查作业是否完成。时间间隔可以通过mapreduce.client.completion.pollinterval来设置。作业完成之后, 应用管理器和Container会清理工作状态。作业的信息会被作业历史服务器存储以备之后用户核查。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/%E5%B0%8F%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="小文件过多会有什么危害-如何避免"><a href="#小文件过多会有什么危害-如何避免" class="headerlink" title="小文件过多会有什么危害,如何避免?"></a>小文件过多会有什么危害,如何避免?</h2><p>Hadoop上大量HDFS元数据信息存储在NameNode内存中,因此过多的小文件必定会压垮NameNode的内存.</p>
+<p>每个元数据对象约占150byte，所以如果有1千万个小文件，每个文件占用一个block，则NameNode大约需要2G空间。如果存储1亿个文件，则NameNode需要20G空间.</p>
+<p>显而易见的解决这个问题的方法就是合并小文件,可以选择在客户端上传时执行一定的策略先合并,或者是使用Hadoop的CombineFileInputFormat&lt;K,V&gt;实现小文件的合并</p>
+<p><a href="https://blog.csdn.net/luofazha2012/article/details/80904791">参考文章</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/03/25/doc/%E6%B6%88%E8%B4%B9%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h3 id="消费模式"><a href="#消费模式" class="headerlink" title="消费模式"></a>消费模式</h3><p>kafka 消费消息时支持三种模式：</p>
+<ul>
+<li><p> at most once 模式 最多一次。保证每一条消息 commit 成功之后，再进行消费 处理。消息可能会丢失，但不会重复。 </p>
+</li>
+<li><p> at least once 模式 至少一次。保证每一条消息处理成功之后，再进行 commit。 消息不会丢失，但可能会重复。 </p>
+</li>
+<li><p>exactly once 模式 精确传递一次。将 offset 作为唯一 id 与消息同时处理，并且 保证处理的原子性。消息只会处理一次，不丢失也不会重复。但这种方式很难 做到。 </p>
+<p>kafka 默认的模式是 at least once ，但这种模式可能会产生重复消费的问题，所以 在业务逻辑必须做幂等设计。</p>
+<p> 在业务场景保存数据时使用了 INSERT INTO …ON DUPLICATE KEY UPDATE 语法， 不存在时插入，存在时更新，是天然支持幂等性的。</p>
+</li>
+</ul>
+]]></content>
+  </entry>
 </search>
