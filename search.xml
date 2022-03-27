@@ -470,6 +470,32 @@
       </tags>
   </entry>
   <entry>
+    <title>大数据常用的一些脚本</title>
+    <url>/2022/03/27/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[<p>Zookeeper群起脚本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="language-bash">!/bin/bash</span><br><br>case $1 in<br>&quot;start&quot;)&#123;<br>	for i in hadoop102 hadoop103 hadoop104<br>	do<br>        echo ---------- zookeeper $i 启动 ------------<br>		ssh $i &quot;/opt/module/zookeeper-3.5.7/bin/zkServer.sh start&quot;<br>	done<br>&#125;;;<br>&quot;stop&quot;)&#123;<br>	for i in hadoop102 hadoop103 hadoop104<br>	do<br>        echo ---------- zookeeper $i 停止 ------------    <br>		ssh $i &quot;/opt/module/zookeeper-3.5.7/bin/zkServer.sh stop&quot;<br>	done<br>&#125;;;<br>&quot;status&quot;)&#123;<br>	for i in hadoop102 hadoop103 hadoop104<br>	do<br>        echo ---------- zookeeper $i 状态 ------------    <br>		ssh $i &quot;/opt/module/zookeeper-3.5.7/bin/zkServer.sh status&quot;<br>	done<br>&#125;;;<br>esac<br></code></pre></td></tr></table></figure>
+
+<p>集群分发脚本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta">#</span><span class="language-bash">1. 判断参数个数</span><br>if [ $# -lt 1 ]<br>then<br>  echo Not Enough Arguement!<br>  exit;<br>fi<br><span class="hljs-meta">#</span><span class="language-bash">2. 遍历集群所有机器</span><br>for host in hadoop102 hadoop103 hadoop104<br>do<br>  echo ====================  $host  ====================<br><span class="hljs-meta">  #</span><span class="language-bash">3. 遍历所有目录，挨个发送</span><br>  for file in $@<br>  do<br>    #4 判断文件是否存在<br>    if [ -e $file ]<br>    then<br>      #5. 获取父目录<br>      pdir=$(cd -P $(dirname $file); pwd)<br>      #6. 获取当前文件的名称<br>      fname=$(basename $file)<br>      ssh $host &quot;mkdir -p $pdir&quot;<br>      rsync -av $pdir/$fname $host:$pdir<br>    else<br>      echo $file does not exists!<br>    fi<br>  done<br>done<br></code></pre></td></tr></table></figure>
+
+<p>Flume群起：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">! /bin/bash</span><br><br>case $1 in<br>&quot;start&quot;)&#123;<br>        for i in hadoop102 hadoop103<br>        do<br>                echo &quot; --------启动 $i 采集flume-------&quot;<br>                ssh $i &quot;nohup /opt/module/flume/bin/flume-ng agent --conf-file /opt/module/flume/conf/file-flume-kafka.conf --name a1 -Dflume.root.logger=INFO,LOGFILE &gt;/opt/module/flume/log1.txt 2&gt;&amp;1  &amp;&quot;<br>        done<br>&#125;;;	<br>&quot;stop&quot;)&#123;<br>        for i in hadoop102 hadoop103<br>        do<br>                echo &quot; --------停止 $i 采集flume-------&quot;<br>                ssh $i &quot;ps -ef | grep file-flume-kafka | grep -v grep |awk  &#x27;&#123;print \$2&#125;&#x27; | xargs -n1 kill -9 &quot;<br>        done<br><br>&#125;;;<br>esac	<br></code></pre></td></tr></table></figure>
+
+<p>xcall.sh jps</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">! /bin/bash</span><br> <br>for i in hadoop102 hadoop103 hadoop104<br>do<br>    echo --------- $i ----------<br>    ssh $i &quot;$*&quot;<br>done<br></code></pre></td></tr></table></figure>
+
+<p>Kafka群起：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">! /bin/bash</span><br>case $1 in<br>&quot;start&quot;)&#123;<br>    for i in hadoop102 hadoop103 hadoop104<br>    do<br>        echo &quot; --------启动 $i Kafka-------&quot;<br>        ssh $i &quot;/opt/module/kafka/bin/kafka-server-start.sh -daemon /opt/module/kafka/config/server.properties&quot;<br>    done<br>&#125;;;<br>&quot;stop&quot;)&#123;<br>    for i in hadoop102 hadoop103 hadoop104<br>    do<br>        echo &quot; --------停止 $i Kafka-------&quot;<br>        ssh $i &quot;/opt/module/kafka/bin/kafka-server-stop.sh stop&quot;<br>    done<br>&#125;;;<br>esac<br></code></pre></td></tr></table></figure>
+
+<p>组件群起脚本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">!/bin/bash</span><br><br>case $1 in<br>&quot;start&quot;)&#123;<br>        echo ================== 启动 集群 ==================<br><br>        #启动 Zookeeper集群<br>        zk.sh start<br><br>        #启动 Hadoop集群<br>        hdp.sh start<br><br>        #启动 Kafka采集集群<br>        kf.sh start<br><br>        #启动 Flume采集集群<br>        f1.sh start<br><br>        #启动 Flume消费集群<br>        f2.sh start<br><br>        &#125;;;<br>&quot;stop&quot;)&#123;<br>        echo ================== 停止 集群 ==================<br><br>        #停止 Flume消费集群<br>        f2.sh stop<br><br>        #停止 Flume采集集群<br>        f1.sh stop<br><br>        #停止 Kafka采集集群<br>        kf.sh stop<br><br>        #停止 Hadoop集群<br>        hdp.sh stop<br><br>        #停止 Zookeeper集群<br>        zk.sh stop<br><br>&#125;;;<br>esac<br></code></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL</title>
     <url>/2022/03/25/MySQL/</url>
     <content><![CDATA[<h2 id="MySQL-基础"><a href="#MySQL-基础" class="headerlink" title="MySQL 基础"></a>MySQL 基础</h2><h3 id="关系型数据库介绍"><a href="#关系型数据库介绍" class="headerlink" title="关系型数据库介绍"></a>关系型数据库介绍</h3><p>顾名思义，关系型数据库就是一种建立在关系模型的基础上的数据库。关系模型表明了数据库中所存储的数据之间的联系（一对一、一对多、多对多）。</p>
