@@ -16,12 +16,12 @@
   <meta name="author" content="Keven He">
   <meta name="keywords" content="大数据开发,Spark,Flink,Kafka">
   
-    <meta name="description" content="今天把留存率再熟悉一下，留存率是用户在某段时间内开始使用网站&#x2F;应用（一般定义是注册），一段时间后，仍然使用的人被认作是留存用户。 留存率计算：留存率&#x3D;登录用户数&#x2F;新增用户数*100%一般会计算如次日留存，三日留存，七日，30日等等 面试题：手机中的相机是深受大家喜爱的应用之一，下图是某手机厂商数据库中的用户行为信息表中部分数据   用户 id：用户唯一标识；应用名称：是手机中的某个应用，例如相机、">
+    <meta name="description" content="留存率是用户在某段时间内开始使用网站&#x2F;应用（一般定义是注册），一段时间后，仍然使用的人被认作是留存用户。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据留存的计算">
 <meta property="og:url" content="http://example.com/2022/04/18/%E6%95%B0%E6%8D%AE%E7%95%99%E5%AD%98%E7%9A%84%E8%AE%A1%E7%AE%97/index.html">
 <meta property="og:site_name" content="WenQi&#96;s Blog">
-<meta property="og:description" content="今天把留存率再熟悉一下，留存率是用户在某段时间内开始使用网站&#x2F;应用（一般定义是注册），一段时间后，仍然使用的人被认作是留存用户。 留存率计算：留存率&#x3D;登录用户数&#x2F;新增用户数*100%一般会计算如次日留存，三日留存，七日，30日等等 面试题：手机中的相机是深受大家喜爱的应用之一，下图是某手机厂商数据库中的用户行为信息表中部分数据   用户 id：用户唯一标识；应用名称：是手机中的某个应用，例如相机、">
+<meta property="og:description" content="留存率是用户在某段时间内开始使用网站&#x2F;应用（一般定义是注册），一段时间后，仍然使用的人被认作是留存用户。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jBBpMrcni_HLs6KU%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_2.png?alt=media&token=4918360e-9591-4b67-ab3e-ae97ca2a18b4">
 <meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jBBpMrcni_HLs6KU%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_2.png?alt=media&token=4918360e-9591-4b67-ab3e-ae97ca2a18b4">
@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5kBM3IhsnEN8AZQiT%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_15.webp?alt=media&token=c97e8d0f-04b3-42c0-aa94-b02998d5dc42">
 <meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5kG45e_d4iWEuQ6Uz%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_16.webp?alt=media&token=ec39580c-4f69-45f8-b246-7cea045f2350">
 <meta property="article:published_time" content="2022-04-18T12:41:39.000Z">
-<meta property="article:modified_time" content="2022-04-18T12:42:08.996Z">
+<meta property="article:modified_time" content="2022-04-18T12:45:13.375Z">
 <meta property="article:author" content="Keven He">
 <meta property="article:tag" content="留存计算">
 <meta name="twitter:card" content="summary_large_image">
@@ -257,7 +257,9 @@
             
             <div class="markdown-body">
               
-              <p>今天把留存率再熟悉一下，留存率是用户在某段时间内开始使用网站/应用（一般定义是注册），一段时间后，仍然使用的人被认作是留存用户。</p>
+              <p>留存率是用户在某段时间内开始使用网站/应用（一般定义是注册），一段时间后，仍然使用的人被认作是留存用户。</p>
+<span id="more"></span>
+
 <p><strong>留存率计算：</strong>留存率=登录用户数/新增用户数*100%<br>一般会计算如次日留存，三日留存，七日，30日等等</p>
 <p>面试题：<br>手机中的相机是深受大家喜爱的应用之一，下图是某手机厂商数据库中的用户行为信息表中部分数据</p>
 <p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jBBpMrcni_HLs6KU%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_2.png?alt=media&token=4918360e-9591-4b67-ab3e-ae97ca2a18b4" srcset="/img/loading.gif" lazyload alt="img"></p>
