@@ -16,21 +16,21 @@
   <meta name="author" content="Keven He">
   <meta name="keywords" content="大数据开发,Spark,Flink,Kafka">
   
-    <meta name="description" content="Zookeeper群起脚本： 1234567891011121314151617181920212223242526#!&#x2F;bin&#x2F;bashcase $1 in&quot;start&quot;)&amp;#123;	for i in hadoop102 hadoop103 hadoop104	do        echo ---------- zookeeper $i 启动 ------------		s">
+    <meta name="description" content="Java：  java容器 hashmap arraylist jvm垃圾回收 jvm内存模型  Mysql  b树和b+树  innodb引擎   系统  进程和线程  网络  http和https的区别 三次握手和四次挥手 计算机网络七层模型 tcp和udp协议  hadoop  hadoop常用端口号 hdfs读写流程 hdfs小文件处理 shuffle优化 yarn工作机制 yarn调度器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大数据常用的一些脚本">
-<meta property="og:url" content="http://example.com/2022/03/27/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E8%84%9A%E6%9C%AC/index.html">
+<meta property="og:title" content="每日一阅">
+<meta property="og:url" content="http://example.com/2022/04/08/%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/index.html">
 <meta property="og:site_name" content="WenQi&#96;s Blog">
-<meta property="og:description" content="Zookeeper群起脚本： 1234567891011121314151617181920212223242526#!&#x2F;bin&#x2F;bashcase $1 in&quot;start&quot;)&amp;#123;	for i in hadoop102 hadoop103 hadoop104	do        echo ---------- zookeeper $i 启动 ------------		s">
+<meta property="og:description" content="Java：  java容器 hashmap arraylist jvm垃圾回收 jvm内存模型  Mysql  b树和b+树  innodb引擎   系统  进程和线程  网络  http和https的区别 三次握手和四次挥手 计算机网络七层模型 tcp和udp协议  hadoop  hadoop常用端口号 hdfs读写流程 hdfs小文件处理 shuffle优化 yarn工作机制 yarn调度器">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-27T12:53:38.000Z">
-<meta property="article:modified_time" content="2022-03-27T12:57:19.278Z">
+<meta property="article:published_time" content="2022-04-08T07:40:54.000Z">
+<meta property="article:modified_time" content="2022-04-08T07:57:03.063Z">
 <meta property="article:author" content="Keven He">
-<meta property="article:tag" content="Shell">
+<meta property="article:tag" content="琢磨">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>大数据常用的一些脚本 - WenQi`s Blog</title>
+  <title>每日一阅 - WenQi`s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -187,7 +187,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="大数据常用的一些脚本"></span>
+            <span id="subtitle" data-typed-text="每日一阅"></span>
           
         </div>
 
@@ -236,28 +236,107 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">大数据常用的一些脚本</h1>
+            <h1 style="display: none">每日一阅</h1>
             
             <div class="markdown-body">
               
-              <p>Zookeeper群起脚本：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="language-bash">!/bin/bash</span><br><br>case $1 in<br>&quot;start&quot;)&#123;<br>	for i in hadoop102 hadoop103 hadoop104<br>	do<br>        echo ---------- zookeeper $i 启动 ------------<br>		ssh $i &quot;/opt/module/zookeeper-3.5.7/bin/zkServer.sh start&quot;<br>	done<br>&#125;;;<br>&quot;stop&quot;)&#123;<br>	for i in hadoop102 hadoop103 hadoop104<br>	do<br>        echo ---------- zookeeper $i 停止 ------------    <br>		ssh $i &quot;/opt/module/zookeeper-3.5.7/bin/zkServer.sh stop&quot;<br>	done<br>&#125;;;<br>&quot;status&quot;)&#123;<br>	for i in hadoop102 hadoop103 hadoop104<br>	do<br>        echo ---------- zookeeper $i 状态 ------------    <br>		ssh $i &quot;/opt/module/zookeeper-3.5.7/bin/zkServer.sh status&quot;<br>	done<br>&#125;;;<br>esac<br></code></pre></td></tr></table></figure>
-
-<p>集群分发脚本：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta">#</span><span class="language-bash">1. 判断参数个数</span><br>if [ $# -lt 1 ]<br>then<br>  echo Not Enough Arguement!<br>  exit;<br>fi<br><span class="hljs-meta">#</span><span class="language-bash">2. 遍历集群所有机器</span><br>for host in hadoop102 hadoop103 hadoop104<br>do<br>  echo ====================  $host  ====================<br><span class="hljs-meta">  #</span><span class="language-bash">3. 遍历所有目录，挨个发送</span><br>  for file in $@<br>  do<br>    #4 判断文件是否存在<br>    if [ -e $file ]<br>    then<br>      #5. 获取父目录<br>      pdir=$(cd -P $(dirname $file); pwd)<br>      #6. 获取当前文件的名称<br>      fname=$(basename $file)<br>      ssh $host &quot;mkdir -p $pdir&quot;<br>      rsync -av $pdir/$fname $host:$pdir<br>    else<br>      echo $file does not exists!<br>    fi<br>  done<br>done<br></code></pre></td></tr></table></figure>
-
-<p>Flume群起：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">! /bin/bash</span><br><br>case $1 in<br>&quot;start&quot;)&#123;<br>        for i in hadoop102 hadoop103<br>        do<br>                echo &quot; --------启动 $i 采集flume-------&quot;<br>                ssh $i &quot;nohup /opt/module/flume/bin/flume-ng agent --conf-file /opt/module/flume/conf/file-flume-kafka.conf --name a1 -Dflume.root.logger=INFO,LOGFILE &gt;/opt/module/flume/log1.txt 2&gt;&amp;1  &amp;&quot;<br>        done<br>&#125;;;	<br>&quot;stop&quot;)&#123;<br>        for i in hadoop102 hadoop103<br>        do<br>                echo &quot; --------停止 $i 采集flume-------&quot;<br>                ssh $i &quot;ps -ef | grep file-flume-kafka | grep -v grep |awk  &#x27;&#123;print \$2&#125;&#x27; | xargs -n1 kill -9 &quot;<br>        done<br><br>&#125;;;<br>esac	<br></code></pre></td></tr></table></figure>
-
-<p>xcall.sh jps</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">! /bin/bash</span><br> <br>for i in hadoop102 hadoop103 hadoop104<br>do<br>    echo --------- $i ----------<br>    ssh $i &quot;$*&quot;<br>done<br></code></pre></td></tr></table></figure>
-
-<p>Kafka群起：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">! /bin/bash</span><br>case $1 in<br>&quot;start&quot;)&#123;<br>    for i in hadoop102 hadoop103 hadoop104<br>    do<br>        echo &quot; --------启动 $i Kafka-------&quot;<br>        ssh $i &quot;/opt/module/kafka/bin/kafka-server-start.sh -daemon /opt/module/kafka/config/server.properties&quot;<br>    done<br>&#125;;;<br>&quot;stop&quot;)&#123;<br>    for i in hadoop102 hadoop103 hadoop104<br>    do<br>        echo &quot; --------停止 $i Kafka-------&quot;<br>        ssh $i &quot;/opt/module/kafka/bin/kafka-server-stop.sh stop&quot;<br>    done<br>&#125;;;<br>esac<br></code></pre></td></tr></table></figure>
-
-<p>组件群起脚本：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">!/bin/bash</span><br><br>case $1 in<br>&quot;start&quot;)&#123;<br>        echo ================== 启动 集群 ==================<br><br>        #启动 Zookeeper集群<br>        zk.sh start<br><br>        #启动 Hadoop集群<br>        hdp.sh start<br><br>        #启动 Kafka采集集群<br>        kf.sh start<br><br>        #启动 Flume采集集群<br>        f1.sh start<br><br>        #启动 Flume消费集群<br>        f2.sh start<br><br>        &#125;;;<br>&quot;stop&quot;)&#123;<br>        echo ================== 停止 集群 ==================<br><br>        #停止 Flume消费集群<br>        f2.sh stop<br><br>        #停止 Flume采集集群<br>        f1.sh stop<br><br>        #停止 Kafka采集集群<br>        kf.sh stop<br><br>        #停止 Hadoop集群<br>        hdp.sh stop<br><br>        #停止 Zookeeper集群<br>        zk.sh stop<br><br>&#125;;;<br>esac<br></code></pre></td></tr></table></figure>
-
+              <p><strong>Java</strong>：</p>
+<ul>
+<li>java容器</li>
+<li>hashmap</li>
+<li>arraylist</li>
+<li>jvm垃圾回收</li>
+<li>jvm内存模型</li>
+</ul>
+<p>Mysql</p>
+<ul>
+<li><p>b树和b+树</p>
+</li>
+<li><p>innodb引擎</p>
+</li>
+</ul>
+<p>系统</p>
+<ul>
+<li>进程和线程</li>
+</ul>
+<p>网络</p>
+<ul>
+<li>http和https的区别</li>
+<li>三次握手和四次挥手</li>
+<li>计算机网络七层模型</li>
+<li>tcp和udp协议</li>
+</ul>
+<p>hadoop</p>
+<ul>
+<li>hadoop常用端口号</li>
+<li>hdfs读写流程</li>
+<li>hdfs小文件处理</li>
+<li>shuffle优化</li>
+<li>yarn工作机制</li>
+<li>yarn调度器</li>
+<li>hadoop解决数据倾斜问题</li>
+<li>hadoop宕机</li>
+</ul>
+<p>zookeeper</p>
+<ul>
+<li>leader选举机制</li>
+<li>常用命令</li>
+</ul>
+<p>Kafka</p>
+<ul>
+<li>kafka架构</li>
+<li>kafka副本数</li>
+<li>kafka日志保存时间</li>
+<li>kafka分区数</li>
+<li>kafka有多少个topic</li>
+<li>kafka的ISR副本同步机制</li>
+<li>kafka分区分配策略</li>
+<li>kafka挂掉</li>
+<li>kafka消息不丢失</li>
+<li>kafka消息消费重复</li>
+<li>kafka消息数据积压，kafka消费能力不足怎么办</li>
+<li>kafka保证数据有序性</li>
+</ul>
+<p>hive</p>
+<ul>
+<li><p>hive的架构</p>
+</li>
+<li><p>hive和传统数据的区别</p>
+</li>
+<li><p>内部表和外部表</p>
+</li>
+<li><p>udf，udtf函数</p>
+</li>
+<li><p>窗口函数</p>
+</li>
+<li><p>hive优化</p>
+</li>
+<li><p>hive解决数据倾斜问题</p>
+</li>
+<li><p>Order By，Sort By，Distrbute By，Cluster By区别</p>
+</li>
+</ul>
+<p>hbase：</p>
+<ul>
+<li>hbase存储结构</li>
+<li>rowkey设计原则</li>
+<li>简单的操作命令</li>
+<li>hbase读写流程</li>
+</ul>
+<p>spark</p>
+<ul>
+<li>spark部署方式</li>
+<li>spark作业提交流程</li>
+<li>spark中的lineage(rdd)</li>
+<li>spark的宽窄依赖，spark如何划分stage，每个stage根据什么决定task数</li>
+<li>spark的行动和转换算子</li>
+<li>简述Spark的两种核心Shuffle（HashShuffle与SortShuffle）的工作流程（包括未优化的HashShuffle、优化的HashShuffle、普通的SortShuffle与bypass的SortShuffle）</li>
+<li>Spark常用算子reduceByKey与groupByKey的区别，哪一种更具优势？</li>
+<li>分别简述Spark中的缓存机制（cache和persist）与checkpoint机制，并指出两者的区别与联系</li>
+<li>简述Spark中共享变量（广播变量和累加器）的基本原理与用途。</li>
+<li>当Spark涉及到数据库的操作时，如何减少Spark运行中的数据库连接数？</li>
+<li>如何使用Spark实现TopN的获取</li>
+</ul>
 
               
             </div>
@@ -269,7 +348,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Shell/">#Shell</a>
+        <a href="/tags/%E7%90%A2%E7%A3%A8/">#琢磨</a>
       
     </div>
   
@@ -281,8 +360,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>大数据常用的一些脚本</div>
-      <div>http://example.com/2022/03/27/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E8%84%9A%E6%9C%AC/</div>
+      <div>每日一阅</div>
+      <div>http://example.com/2022/04/08/%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/</div>
     </div>
     <div class="license-meta">
       
@@ -294,7 +373,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年3月27日</div>
+          <div>2022年4月8日</div>
         </div>
       
       
@@ -324,9 +403,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/08/%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" title="每日一阅">
+                      <a href="/2022/04/18/%E6%95%B0%E6%8D%AE%E7%95%99%E5%AD%98%E7%9A%84%E8%AE%A1%E7%AE%97/" title="数据留存的计算">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">每日一阅</span>
+                        <span class="hidden-mobile">数据留存的计算</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -334,8 +413,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/25/MySQL/" title="MySQL">
-                        <span class="hidden-mobile">MySQL</span>
+                      <a href="/2022/03/27/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E8%84%9A%E6%9C%AC/" title="大数据常用的一些脚本">
+                        <span class="hidden-mobile">大数据常用的一些脚本</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

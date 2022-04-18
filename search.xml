@@ -470,6 +470,171 @@
       </tags>
   </entry>
   <entry>
+    <title>数据留存的计算</title>
+    <url>/2022/04/18/%E6%95%B0%E6%8D%AE%E7%95%99%E5%AD%98%E7%9A%84%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<p>今天把留存率再熟悉一下，留存率是用户在某段时间内开始使用网站/应用（一般定义是注册），一段时间后，仍然使用的人被认作是留存用户。</p>
+<p><strong>留存率计算：</strong>留存率=登录用户数/新增用户数*100%<br>一般会计算如次日留存，三日留存，七日，30日等等</p>
+<p>面试题：<br>手机中的相机是深受大家喜爱的应用之一，下图是某手机厂商数据库中的用户行为信息表中部分数据</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jBBpMrcni_HLs6KU%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_2.png?alt=media&token=4918360e-9591-4b67-ab3e-ae97ca2a18b4" alt="img"></p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jBBpMrcni_HLs6KU%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_2.png?alt=media&token=4918360e-9591-4b67-ab3e-ae97ca2a18b4" alt="img"></p>
+<p>用户 id：用户唯一标识；<br>应用名称：是手机中的某个应用，例如相机、微信、大众点评等。<br>启动时长：某一天中使用某应用多长时间（分钟）。<br>启动次数：某一天中启动了某应用多少次。<br>登陆时间：使用手机的日期。例如 2018-05-01。<br>现在该手机厂商想要分析手机中的应用（相机）的活跃情况，需统计如下数据：<br>某日活跃用户（用户 id）在后续的一周内的留存情况（计算次日留存用户数，3 日留存用户数，7 日留存用户数）<br>指标定义：<br>某日活跃用户数，某日活跃的去重用户数。<br>N 日活跃用户数，某日活跃的用户数在之后的第 N 日活跃用户数。<br>N 日活跃留存率，N 日留存用户数 / 某日活跃用户数<br>例：登陆时间（20180501 日）去重用户数 10000，这批用户在 20180503 日仍有 7000 人活跃，则 3 日活跃留存率为 7000/10000=70%<br>所需获得结果格式如下：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jEe_MsEI4JTk58qv%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_3.webp?alt=media&token=68aaf526-4ec7-4def-94b8-f80a03d933e6" alt="img"></p>
+<p>思路：该业务分析要求查询结果中包括：日期（说明是按每天来汇总数据）、用户活跃数、N 日留存数、N 日留存率。<br><strong>1. 每天的活跃用户数</strong><br>先来分析出活跃用户数</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jRf1OoSMX0UWsEHG%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_5.png?alt=media&token=6e95a292-b116-48a9-981d-c354c637b14d" alt="img"></p>
+<p>活跃用户数对应的日期，表示每一行记录的是当天的活跃用户数。<br>按每天（登陆时间）分组（group by ），统计应用（相机）每天的活跃用户数（计数函数 count）。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> 登陆时间,<span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> 用户id) <span class="hljs-keyword">as</span> 活跃用户数 <br><span class="hljs-keyword">from</span> 用户行为信息表 <br><span class="hljs-keyword">where</span> 应用名称 <span class="hljs-operator">=</span><span class="hljs-string">&#x27;相机&#x27;</span> <br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> 登陆时间;<br></code></pre></td></tr></table></figure>
+
+<p>查询结果如下：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jWKT6bo3WWrwrgik%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_6.png?alt=media&token=c230febb-0abd-4c78-9f6e-7d7f7489296e" alt="img"></p>
+<p><strong>2. 次日留存用户数</strong><br>再来看查询结果中的次日留存用户数</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jZpIxMc0pWli8WRq%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_7.png?alt=media&token=71509662-01e2-4fa7-82a8-6124baa407e7" alt="img"></p>
+<p>次日留存用户数：在今日登录，明天也有登录的用户数。也就是<strong>时间间隔 = 1</strong>。一个表如果涉及到时间间隔，就需要用到自联结，也就是将两个相同的表进行联结。</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jcI7WG--4sPOOpih%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_8.png?alt=media&token=56933a97-80cb-48e9-8fbb-844e05d51402" alt="img"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> a.用户id,a.登陆时间,b.登陆时间<br><span class="hljs-keyword">from</span> 用户行为信息表 <span class="hljs-keyword">as</span> a  <br><span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> 用户行为信息表 <span class="hljs-keyword">as</span> b<br><span class="hljs-keyword">on</span> a.用户id <span class="hljs-operator">=</span> b.用户id<br><span class="hljs-keyword">where</span> a.应用名称<span class="hljs-operator">=</span> <span class="hljs-string">&#x27;相机&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>联结后的临时表记为表 c，那么如何从表 c 中查找出时间间隔（明天登陆时间 - 今天登陆时间）=1 的数据呢？这涉及到计算两个日期之间的差值,，timestampdiff</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jhdoTd5EsStBZYWg%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_9.png?alt=media&token=2ea534cd-18e9-467b-b1e5-1216a898a505" alt="img"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,timestampdiff(<span class="hljs-keyword">day</span>,a.登陆时间,b.登陆时间) <span class="hljs-keyword">as</span> 时间间隔<br><span class="hljs-keyword">from</span> c;<br></code></pre></td></tr></table></figure>
+
+<p>用 case 语句选出时间间隔 = 1 的数据，并计数就是次日留存用户数</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">case</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">then</span> 用户id<br>     <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span><br>     <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  次日留存数<br></code></pre></td></tr></table></figure>
+
+<p>代入上面的 sql 就是：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,<span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">then</span> 用户id<br>     <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span><br>     <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  次日留存数<br> <span class="hljs-keyword">from</span><br>(<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,timestampdiff(<span class="hljs-keyword">day</span>,a.登陆时间,b.登陆时间) <span class="hljs-keyword">as</span> 时间间隔<br><span class="hljs-keyword">from</span> c);<br></code></pre></td></tr></table></figure>
+
+<p>将临时表 c 的 sql 代入上面就得到了查询结果如下：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jnrxpisHutAXFXjw%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_10.png?alt=media&token=603ec06e-cebd-42aa-b0e5-fee8e0b2a8dd" alt="img"></p>
+<p><strong>3. 次日留存率</strong></p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jt2KganCqLZHX_NI%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_11.png?alt=media&token=87be94e1-77a5-4526-9d33-fcb8bb00a9dc" alt="img"></p>
+<p>留存率 = 新增用户中登录用户数 / 新增用户数，所以次日留存率 = 次日留存用户数 / 当日用户活跃数当日活跃用户数是 <code>count(distinct 用户 id)</code><br>在上面分析次日留存数中，用次日留存用户数 / 当日用户活跃数就是次日留存率</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,<span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">then</span> 用户id<br>     <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span><br>     <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  次日留存数 <span class="hljs-operator">/</span> <span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> 用户id) <span class="hljs-keyword">as</span> 次日留存率<br> <span class="hljs-keyword">from</span><br>(<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,timestampdiff(<span class="hljs-keyword">day</span>,a.登陆时间,b.登陆时间) <span class="hljs-keyword">as</span> 时间间隔<br><span class="hljs-keyword">from</span> c);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jwyMXxCIe3p13nQq%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_12.png?alt=media&token=66d62f0a-b9f9-4c6c-8506-eb9c7e161284" alt="img"></p>
+<p>将临时表 c 的 sql 代入就是：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5k36U212rul95IbmQ%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_13.png?alt=media&token=85be843c-72f0-420a-9fed-5eb69a5fde7d" alt="img"></p>
+<p>查询结果：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5k76jpbVXOUlXjbl6%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_14.webp?alt=media&token=22d75985-3eeb-4425-aa49-8bf5fa68b9da" alt="img"></p>
+<p>查询结果：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5k76jpbVXOUlXjbl6%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_14.webp?alt=media&token=22d75985-3eeb-4425-aa49-8bf5fa68b9da" alt="img"></p>
+<p><strong>4. 三日的留存数，三日留存率, 七日的留存数, 七日留存率</strong></p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5kBM3IhsnEN8AZQiT%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_15.webp?alt=media&token=c97e8d0f-04b3-42c0-aa94-b02998d5dc42" alt="img"></p>
+<p>和次日留存用户数，次日留存率分析思路一样，只需要更改时间间隔 =N（日留存）即可。</p>
+<p>最终 sql 代码如下：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> a.登陆时间,<span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> a.用户id) <span class="hljs-keyword">as</span> 活跃用户数,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  次日留存数,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  次日留存数 <span class="hljs-operator">/</span> <span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> a.用户id) <span class="hljs-keyword">as</span> 次日留存率,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">3</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  三日留存数,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">3</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  三日留存数 <span class="hljs-operator">/</span> <span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> a.用户id) <span class="hljs-keyword">as</span> 三日留存率,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">7</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  七日留存数,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">7</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  七日留存数 <span class="hljs-operator">/</span> <span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> a.用户id) <span class="hljs-keyword">as</span> 七日留存率<br> <span class="hljs-keyword">from</span><br>(<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,timestampdiff(<span class="hljs-keyword">day</span>,a.登陆时间,b.登陆时间) <span class="hljs-keyword">as</span> 时间间隔<br><span class="hljs-keyword">from</span> <br>(<span class="hljs-keyword">select</span> a.用户id,a.登陆时间,b.登陆时间<br><span class="hljs-keyword">from</span> 用户行为信息表 <span class="hljs-keyword">as</span> a  <br><span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> 用户行为信息表 <span class="hljs-keyword">as</span> b<br><span class="hljs-keyword">on</span> a.用户id <span class="hljs-operator">=</span> b.用户id<br><span class="hljs-keyword">where</span> a.应用名称<span class="hljs-operator">=</span> <span class="hljs-string">&#x27;相机&#x27;</span>) <span class="hljs-keyword">as</span> c<br>) <span class="hljs-keyword">as</span> d<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> a.登陆时间;<br></code></pre></td></tr></table></figure>
+
+<p>查询结果：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5kG45e_d4iWEuQ6Uz%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_16.webp?alt=media&token=ec39580c-4f69-45f8-b246-7cea045f2350" alt="img"></p>
+]]></content>
+      <tags>
+        <tag>留存计算</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>每日一阅</title>
+    <url>/2022/04/08/%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/</url>
+    <content><![CDATA[<p><strong>Java</strong>：</p>
+<ul>
+<li>java容器</li>
+<li>hashmap</li>
+<li>arraylist</li>
+<li>jvm垃圾回收</li>
+<li>jvm内存模型</li>
+</ul>
+<p>Mysql</p>
+<ul>
+<li><p>b树和b+树</p>
+</li>
+<li><p>innodb引擎</p>
+</li>
+</ul>
+<p>系统</p>
+<ul>
+<li>进程和线程</li>
+</ul>
+<p>网络</p>
+<ul>
+<li>http和https的区别</li>
+<li>三次握手和四次挥手</li>
+<li>计算机网络七层模型</li>
+<li>tcp和udp协议</li>
+</ul>
+<p>hadoop</p>
+<ul>
+<li>hadoop常用端口号</li>
+<li>hdfs读写流程</li>
+<li>hdfs小文件处理</li>
+<li>shuffle优化</li>
+<li>yarn工作机制</li>
+<li>yarn调度器</li>
+<li>hadoop解决数据倾斜问题</li>
+<li>hadoop宕机</li>
+</ul>
+<p>zookeeper</p>
+<ul>
+<li>leader选举机制</li>
+<li>常用命令</li>
+</ul>
+<p>Kafka</p>
+<ul>
+<li>kafka架构</li>
+<li>kafka副本数</li>
+<li>kafka日志保存时间</li>
+<li>kafka分区数</li>
+<li>kafka有多少个topic</li>
+<li>kafka的ISR副本同步机制</li>
+<li>kafka分区分配策略</li>
+<li>kafka挂掉</li>
+<li>kafka消息不丢失</li>
+<li>kafka消息消费重复</li>
+<li>kafka消息数据积压，kafka消费能力不足怎么办</li>
+<li>kafka保证数据有序性</li>
+</ul>
+<p>hive</p>
+<ul>
+<li><p>hive的架构</p>
+</li>
+<li><p>hive和传统数据的区别</p>
+</li>
+<li><p>内部表和外部表</p>
+</li>
+<li><p>udf，udtf函数</p>
+</li>
+<li><p>窗口函数</p>
+</li>
+<li><p>hive优化</p>
+</li>
+<li><p>hive解决数据倾斜问题</p>
+</li>
+<li><p>Order By，Sort By，Distrbute By，Cluster By区别</p>
+</li>
+</ul>
+<p>hbase：</p>
+<ul>
+<li>hbase存储结构</li>
+<li>rowkey设计原则</li>
+<li>简单的操作命令</li>
+<li>hbase读写流程</li>
+</ul>
+<p>spark</p>
+<ul>
+<li>spark部署方式</li>
+<li>spark作业提交流程</li>
+<li>spark中的lineage(rdd)</li>
+<li>spark的宽窄依赖，spark如何划分stage，每个stage根据什么决定task数</li>
+<li>spark的行动和转换算子</li>
+<li>简述Spark的两种核心Shuffle（HashShuffle与SortShuffle）的工作流程（包括未优化的HashShuffle、优化的HashShuffle、普通的SortShuffle与bypass的SortShuffle）</li>
+<li>Spark常用算子reduceByKey与groupByKey的区别，哪一种更具优势？</li>
+<li>分别简述Spark中的缓存机制（cache和persist）与checkpoint机制，并指出两者的区别与联系</li>
+<li>简述Spark中共享变量（广播变量和累加器）的基本原理与用途。</li>
+<li>当Spark涉及到数据库的操作时，如何减少Spark运行中的数据库连接数？</li>
+<li>如何使用Spark实现TopN的获取</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>琢磨</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>大数据常用的一些脚本</title>
     <url>/2022/03/27/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E8%84%9A%E6%9C%AC/</url>
     <content><![CDATA[<p>Zookeeper群起脚本：</p>

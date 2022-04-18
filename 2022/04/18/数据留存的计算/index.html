@@ -1,0 +1,724 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avator.png">
+  <link rel="icon" href="/img/avator.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Keven He">
+  <meta name="keywords" content="大数据开发,Spark,Flink,Kafka">
+  
+    <meta name="description" content="今天把留存率再熟悉一下，留存率是用户在某段时间内开始使用网站&#x2F;应用（一般定义是注册），一段时间后，仍然使用的人被认作是留存用户。 留存率计算：留存率&#x3D;登录用户数&#x2F;新增用户数*100%一般会计算如次日留存，三日留存，七日，30日等等 面试题：手机中的相机是深受大家喜爱的应用之一，下图是某手机厂商数据库中的用户行为信息表中部分数据   用户 id：用户唯一标识；应用名称：是手机中的某个应用，例如相机、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据留存的计算">
+<meta property="og:url" content="http://example.com/2022/04/18/%E6%95%B0%E6%8D%AE%E7%95%99%E5%AD%98%E7%9A%84%E8%AE%A1%E7%AE%97/index.html">
+<meta property="og:site_name" content="WenQi&#96;s Blog">
+<meta property="og:description" content="今天把留存率再熟悉一下，留存率是用户在某段时间内开始使用网站&#x2F;应用（一般定义是注册），一段时间后，仍然使用的人被认作是留存用户。 留存率计算：留存率&#x3D;登录用户数&#x2F;新增用户数*100%一般会计算如次日留存，三日留存，七日，30日等等 面试题：手机中的相机是深受大家喜爱的应用之一，下图是某手机厂商数据库中的用户行为信息表中部分数据   用户 id：用户唯一标识；应用名称：是手机中的某个应用，例如相机、">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jBBpMrcni_HLs6KU%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_2.png?alt=media&token=4918360e-9591-4b67-ab3e-ae97ca2a18b4">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jBBpMrcni_HLs6KU%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_2.png?alt=media&token=4918360e-9591-4b67-ab3e-ae97ca2a18b4">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jEe_MsEI4JTk58qv%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_3.webp?alt=media&token=68aaf526-4ec7-4def-94b8-f80a03d933e6">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jRf1OoSMX0UWsEHG%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_5.png?alt=media&token=6e95a292-b116-48a9-981d-c354c637b14d">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jWKT6bo3WWrwrgik%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_6.png?alt=media&token=c230febb-0abd-4c78-9f6e-7d7f7489296e">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jZpIxMc0pWli8WRq%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_7.png?alt=media&token=71509662-01e2-4fa7-82a8-6124baa407e7">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jcI7WG--4sPOOpih%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_8.png?alt=media&token=56933a97-80cb-48e9-8fbb-844e05d51402">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jhdoTd5EsStBZYWg%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_9.png?alt=media&token=2ea534cd-18e9-467b-b1e5-1216a898a505">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jnrxpisHutAXFXjw%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_10.png?alt=media&token=603ec06e-cebd-42aa-b0e5-fee8e0b2a8dd">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jt2KganCqLZHX_NI%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_11.png?alt=media&token=87be94e1-77a5-4526-9d33-fcb8bb00a9dc">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jwyMXxCIe3p13nQq%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_12.png?alt=media&token=66d62f0a-b9f9-4c6c-8506-eb9c7e161284">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5k36U212rul95IbmQ%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_13.png?alt=media&token=85be843c-72f0-420a-9fed-5eb69a5fde7d">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5k76jpbVXOUlXjbl6%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_14.webp?alt=media&token=22d75985-3eeb-4425-aa49-8bf5fa68b9da">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5k76jpbVXOUlXjbl6%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_14.webp?alt=media&token=22d75985-3eeb-4425-aa49-8bf5fa68b9da">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5kBM3IhsnEN8AZQiT%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_15.webp?alt=media&token=c97e8d0f-04b3-42c0-aa94-b02998d5dc42">
+<meta property="og:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5kG45e_d4iWEuQ6Uz%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_16.webp?alt=media&token=ec39580c-4f69-45f8-b246-7cea045f2350">
+<meta property="article:published_time" content="2022-04-18T12:41:39.000Z">
+<meta property="article:modified_time" content="2022-04-18T12:42:08.996Z">
+<meta property="article:author" content="Keven He">
+<meta property="article:tag" content="留存计算">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jBBpMrcni_HLs6KU%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_2.png?alt=media&token=4918360e-9591-4b67-ab3e-ae97ca2a18b4">
+  
+  
+  <title>数据留存的计算 - WenQi`s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"Java"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>KevenHe</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archive
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Category
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tag
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="数据留存的计算"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+  </div>
+
+  <div class="mt-1">
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">数据留存的计算</h1>
+            
+            <div class="markdown-body">
+              
+              <p>今天把留存率再熟悉一下，留存率是用户在某段时间内开始使用网站/应用（一般定义是注册），一段时间后，仍然使用的人被认作是留存用户。</p>
+<p><strong>留存率计算：</strong>留存率=登录用户数/新增用户数*100%<br>一般会计算如次日留存，三日留存，七日，30日等等</p>
+<p>面试题：<br>手机中的相机是深受大家喜爱的应用之一，下图是某手机厂商数据库中的用户行为信息表中部分数据</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jBBpMrcni_HLs6KU%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_2.png?alt=media&token=4918360e-9591-4b67-ab3e-ae97ca2a18b4" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jBBpMrcni_HLs6KU%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_2.png?alt=media&token=4918360e-9591-4b67-ab3e-ae97ca2a18b4" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>用户 id：用户唯一标识；<br>应用名称：是手机中的某个应用，例如相机、微信、大众点评等。<br>启动时长：某一天中使用某应用多长时间（分钟）。<br>启动次数：某一天中启动了某应用多少次。<br>登陆时间：使用手机的日期。例如 2018-05-01。<br>现在该手机厂商想要分析手机中的应用（相机）的活跃情况，需统计如下数据：<br>某日活跃用户（用户 id）在后续的一周内的留存情况（计算次日留存用户数，3 日留存用户数，7 日留存用户数）<br>指标定义：<br>某日活跃用户数，某日活跃的去重用户数。<br>N 日活跃用户数，某日活跃的用户数在之后的第 N 日活跃用户数。<br>N 日活跃留存率，N 日留存用户数 / 某日活跃用户数<br>例：登陆时间（20180501 日）去重用户数 10000，这批用户在 20180503 日仍有 7000 人活跃，则 3 日活跃留存率为 7000/10000=70%<br>所需获得结果格式如下：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jEe_MsEI4JTk58qv%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_3.webp?alt=media&token=68aaf526-4ec7-4def-94b8-f80a03d933e6" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>思路：该业务分析要求查询结果中包括：日期（说明是按每天来汇总数据）、用户活跃数、N 日留存数、N 日留存率。<br><strong>1. 每天的活跃用户数</strong><br>先来分析出活跃用户数</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jRf1OoSMX0UWsEHG%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_5.png?alt=media&token=6e95a292-b116-48a9-981d-c354c637b14d" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>活跃用户数对应的日期，表示每一行记录的是当天的活跃用户数。<br>按每天（登陆时间）分组（group by ），统计应用（相机）每天的活跃用户数（计数函数 count）。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> 登陆时间,<span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> 用户id) <span class="hljs-keyword">as</span> 活跃用户数 <br><span class="hljs-keyword">from</span> 用户行为信息表 <br><span class="hljs-keyword">where</span> 应用名称 <span class="hljs-operator">=</span><span class="hljs-string">&#x27;相机&#x27;</span> <br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> 登陆时间;<br></code></pre></td></tr></table></figure>
+
+<p>查询结果如下：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jWKT6bo3WWrwrgik%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_6.png?alt=media&token=c230febb-0abd-4c78-9f6e-7d7f7489296e" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>2. 次日留存用户数</strong><br>再来看查询结果中的次日留存用户数</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jZpIxMc0pWli8WRq%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_7.png?alt=media&token=71509662-01e2-4fa7-82a8-6124baa407e7" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>次日留存用户数：在今日登录，明天也有登录的用户数。也就是<strong>时间间隔 = 1</strong>。一个表如果涉及到时间间隔，就需要用到自联结，也就是将两个相同的表进行联结。</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jcI7WG--4sPOOpih%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_8.png?alt=media&token=56933a97-80cb-48e9-8fbb-844e05d51402" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> a.用户id,a.登陆时间,b.登陆时间<br><span class="hljs-keyword">from</span> 用户行为信息表 <span class="hljs-keyword">as</span> a  <br><span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> 用户行为信息表 <span class="hljs-keyword">as</span> b<br><span class="hljs-keyword">on</span> a.用户id <span class="hljs-operator">=</span> b.用户id<br><span class="hljs-keyword">where</span> a.应用名称<span class="hljs-operator">=</span> <span class="hljs-string">&#x27;相机&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>联结后的临时表记为表 c，那么如何从表 c 中查找出时间间隔（明天登陆时间 - 今天登陆时间）=1 的数据呢？这涉及到计算两个日期之间的差值,，timestampdiff</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jhdoTd5EsStBZYWg%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_9.png?alt=media&token=2ea534cd-18e9-467b-b1e5-1216a898a505" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,timestampdiff(<span class="hljs-keyword">day</span>,a.登陆时间,b.登陆时间) <span class="hljs-keyword">as</span> 时间间隔<br><span class="hljs-keyword">from</span> c;<br></code></pre></td></tr></table></figure>
+
+<p>用 case 语句选出时间间隔 = 1 的数据，并计数就是次日留存用户数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">case</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">then</span> 用户id<br>     <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span><br>     <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  次日留存数<br></code></pre></td></tr></table></figure>
+
+<p>代入上面的 sql 就是：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,<span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">then</span> 用户id<br>     <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span><br>     <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  次日留存数<br> <span class="hljs-keyword">from</span><br>(<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,timestampdiff(<span class="hljs-keyword">day</span>,a.登陆时间,b.登陆时间) <span class="hljs-keyword">as</span> 时间间隔<br><span class="hljs-keyword">from</span> c);<br></code></pre></td></tr></table></figure>
+
+<p>将临时表 c 的 sql 代入上面就得到了查询结果如下：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jnrxpisHutAXFXjw%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_10.png?alt=media&token=603ec06e-cebd-42aa-b0e5-fee8e0b2a8dd" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>3. 次日留存率</strong></p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jt2KganCqLZHX_NI%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_11.png?alt=media&token=87be94e1-77a5-4526-9d33-fcb8bb00a9dc" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>留存率 = 新增用户中登录用户数 / 新增用户数，所以次日留存率 = 次日留存用户数 / 当日用户活跃数当日活跃用户数是 <code>count(distinct 用户 id)</code><br>在上面分析次日留存数中，用次日留存用户数 / 当日用户活跃数就是次日留存率</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,<span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">then</span> 用户id<br>     <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span><br>     <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  次日留存数 <span class="hljs-operator">/</span> <span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> 用户id) <span class="hljs-keyword">as</span> 次日留存率<br> <span class="hljs-keyword">from</span><br>(<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,timestampdiff(<span class="hljs-keyword">day</span>,a.登陆时间,b.登陆时间) <span class="hljs-keyword">as</span> 时间间隔<br><span class="hljs-keyword">from</span> c);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5jwyMXxCIe3p13nQq%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_12.png?alt=media&token=66d62f0a-b9f9-4c6c-8506-eb9c7e161284" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>将临时表 c 的 sql 代入就是：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5k36U212rul95IbmQ%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_13.png?alt=media&token=85be843c-72f0-420a-9fed-5eb69a5fde7d" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>查询结果：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5k76jpbVXOUlXjbl6%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_14.webp?alt=media&token=22d75985-3eeb-4425-aa49-8bf5fa68b9da" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>查询结果：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5k76jpbVXOUlXjbl6%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_14.webp?alt=media&token=22d75985-3eeb-4425-aa49-8bf5fa68b9da" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>4. 三日的留存数，三日留存率, 七日的留存数, 七日留存率</strong></p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5kBM3IhsnEN8AZQiT%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_15.webp?alt=media&token=c97e8d0f-04b3-42c0-aa94-b02998d5dc42" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>和次日留存用户数，次日留存率分析思路一样，只需要更改时间间隔 =N（日留存）即可。</p>
+<p>最终 sql 代码如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> a.登陆时间,<span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> a.用户id) <span class="hljs-keyword">as</span> 活跃用户数,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  次日留存数,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  次日留存数 <span class="hljs-operator">/</span> <span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> a.用户id) <span class="hljs-keyword">as</span> 次日留存率,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">3</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  三日留存数,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">3</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  三日留存数 <span class="hljs-operator">/</span> <span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> a.用户id) <span class="hljs-keyword">as</span> 三日留存率,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">7</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  七日留存数,<br><span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">when</span> 时间间隔<span class="hljs-operator">=</span><span class="hljs-number">7</span> <span class="hljs-keyword">then</span> 用户id <span class="hljs-keyword">else</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">end</span>) <span class="hljs-keyword">as</span>  七日留存数 <span class="hljs-operator">/</span> <span class="hljs-built_in">count</span>(<span class="hljs-keyword">distinct</span> a.用户id) <span class="hljs-keyword">as</span> 七日留存率<br> <span class="hljs-keyword">from</span><br>(<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>,timestampdiff(<span class="hljs-keyword">day</span>,a.登陆时间,b.登陆时间) <span class="hljs-keyword">as</span> 时间间隔<br><span class="hljs-keyword">from</span> <br>(<span class="hljs-keyword">select</span> a.用户id,a.登陆时间,b.登陆时间<br><span class="hljs-keyword">from</span> 用户行为信息表 <span class="hljs-keyword">as</span> a  <br><span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> 用户行为信息表 <span class="hljs-keyword">as</span> b<br><span class="hljs-keyword">on</span> a.用户id <span class="hljs-operator">=</span> b.用户id<br><span class="hljs-keyword">where</span> a.应用名称<span class="hljs-operator">=</span> <span class="hljs-string">&#x27;相机&#x27;</span>) <span class="hljs-keyword">as</span> c<br>) <span class="hljs-keyword">as</span> d<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> a.登陆时间;<br></code></pre></td></tr></table></figure>
+
+<p>查询结果：</p>
+<p><img src="https://812105878-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-MTuZ3PxkXf2a7UbRybW%2F-MV5itKjJAsDr-9780YA%2F-MV5kG45e_d4iWEuQ6Uz%2F%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E7%95%99%E5%AD%98%E7%8E%87_16.webp?alt=media&token=ec39580c-4f69-45f8-b246-7cea045f2350" srcset="/img/loading.gif" lazyload alt="img"></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%95%99%E5%AD%98%E8%AE%A1%E7%AE%97/">#留存计算</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>数据留存的计算</div>
+      <div>http://example.com/2022/04/18/%E6%95%B0%E6%8D%AE%E7%95%99%E5%AD%98%E7%9A%84%E8%AE%A1%E7%AE%97/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Keven He</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年4月18日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/08/%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" title="每日一阅">
+                        <span class="hidden-mobile">每日一阅</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
