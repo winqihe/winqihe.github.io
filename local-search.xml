@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>spark实时项目</title>
+    <link href="/2022/06/15/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/"/>
+    <url>/2022/06/15/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Spark实时项目"><a href="#Spark实时项目" class="headerlink" title="Spark实时项目"></a>Spark实时项目</h2><p>看看这些问题，然后带着问题去思考!</p><h4 id="（数据采集）"><a href="#（数据采集）" class="headerlink" title="（数据采集）"></a>（数据采集）</h4><blockquote><p>开胃小菜</p></blockquote><ul><li><p>什么是离线计算</p></li><li><p>什么是实时计算</p></li><li><p>离线计算和实时计算的特点</p></li><li><p>离线数据架构和实时数仓架构</p></li><li><p>流畅介绍项目需求</p></li></ul><blockquote><p>日志数据采集和分流</p></blockquote><ul><li><p>整体架构</p></li><li><p>概述下整体流程</p></li><li><p>遇到的问题？</p></li></ul><blockquote><p>业务数据采集和分流</p></blockquote><ul><li>整体架构</li><li>概述下整体流程</li><li>用到了Maxwell，它是做什么的？</li><li>遇到了什么问题？</li></ul><h4 id="（分层处理）"><a href="#（分层处理）" class="headerlink" title="（分层处理）"></a>（分层处理）</h4><ul><li><p>DWD到DWS层数据处理概述</p></li><li><p>日活宽表设计以及遇到的问题</p></li><li><p>订单业务宽表设计以及遇到的问题</p></li></ul><h4 id="（ES）"><a href="#（ES）" class="headerlink" title="（ES）"></a>（ES）</h4><h4 id="（可视化）"><a href="#（可视化）" class="headerlink" title="（可视化）"></a>（可视化）</h4><ul><li><p>BI搭建数据可视化</p></li><li><p>SpringBoot简单使用</p></li><li><p>数据接口需求：（日活实时监控）</p></li><li><p>灵活查询数据接口开发</p></li><li><p>项目总结</p></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>大数据项目</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>数据留存的计算</title>
     <link href="/2022/04/18/%E6%95%B0%E6%8D%AE%E7%95%99%E5%AD%98%E7%9A%84%E8%AE%A1%E7%AE%97/"/>
     <url>/2022/04/18/%E6%95%B0%E6%8D%AE%E7%95%99%E5%AD%98%E7%9A%84%E8%AE%A1%E7%AE%97/</url>
