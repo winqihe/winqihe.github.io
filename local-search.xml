@@ -232,25 +232,6 @@
   
   
   <entry>
-    <title>随笔</title>
-    <link href="/2022/03/11/%E9%9A%8F%E7%AC%94/"/>
-    <url>/2022/03/11/%E9%9A%8F%E7%AC%94/</url>
-    
-    <content type="html"><![CDATA[<p> offer！offer！offer！！！</p><span id="more"></span><ul><li><p>Zookeeper</p></li><li><p>Kafka</p></li><li><p>Hadoop</p></li><li><p>HBase</p></li><li><p>Spark</p></li><li><p>MySQL</p></li></ul>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>随笔</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>HBase</title>
     <link href="/2022/03/05/HBase/"/>
     <url>/2022/03/05/HBase/</url>
